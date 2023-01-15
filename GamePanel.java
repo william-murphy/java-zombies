@@ -9,7 +9,7 @@ public class GamePanel extends JPanel implements Runnable {
     //screen dimensions
     private final int originalTileSize = 16;
     private final int scale = 3;
-    private final int tileSize = 16 * 3;
+    public final int tileSize = 16 * 3;
 
     private final int maxColumns = 16;
     private final int maxRows = 12;
@@ -20,11 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     KeyHandler kh = new KeyHandler();
     Thread gameThread;
-
-    //default player variables
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
+    Player player = new Player(this, kh);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(width, height));
@@ -66,18 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        if (kh.upPressed == true) {
-            playerY -= playerSpeed;
-        }
-        if (kh.downPressed == true) {
-            playerY += playerSpeed;
-        }
-        if (kh.leftPressed == true) {
-            playerX -= playerSpeed;
-        }
-        if (kh.rightPressed == true) {
-            playerX += playerSpeed;
-        }
+        player.move();
     }
 
     public void paintComponent(Graphics g) {
@@ -86,9 +71,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2d = (Graphics2D)g;
 
-        g2d.setColor(Color.WHITE);
-
-        g2d.fillRect(playerX, playerY, tileSize, tileSize);
+        player.draw(g2d);
 
         g2d.dispose();
     }

@@ -1,6 +1,7 @@
 import java.awt.Graphics2D;
 import java.awt.Color;
-import java.awt.image.ImageIO;
+import javax.imageio.ImageIO;
+import java.io.IOException;
 import java.awt.image.BufferedImage;
 
 public class Player extends Entity {
@@ -72,7 +73,7 @@ public class Player extends Entity {
                 break;
         }
 
-        g2d.drawImage(image, x, y, gp.tileSize, gp.tileSize);
+        g2d.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
     }
 
 }

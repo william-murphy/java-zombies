@@ -29,7 +29,6 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
         try {
-            System.out.println("hello");
             standingNorth = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-n.png"));
             standingSouth = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-s.png"));
             standingEast = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-e.png"));

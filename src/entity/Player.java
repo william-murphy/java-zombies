@@ -17,6 +17,7 @@ public class Player extends Entity {
         this.gp = gp;
         this.kh = kh;
         this.setDefaultValues();
+        getPlayerImage();
     }
 
     public void setDefaultValues() {
@@ -28,10 +29,11 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
         try {
-            standingNorth = ImageIO.read(getClass().getResourceAsStream("../../assets/player/standing-n.png"));
-            standingSouth = ImageIO.read(getClass().getResourceAsStream("../../assets/player/standing-s.png"));
-            standingEast = ImageIO.read(getClass().getResourceAsStream("../../assets/player/standing-e.png"));
-            standingWest = ImageIO.read(getClass().getResourceAsStream("../../assets/player/standing-w.png"));
+            System.out.println("hello");
+            standingNorth = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-n.png"));
+            standingSouth = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-s.png"));
+            standingEast = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-e.png"));
+            standingWest = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-w.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

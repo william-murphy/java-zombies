@@ -1,4 +1,9 @@
+package game;
+
 import javax.swing.JPanel;
+
+import entity.Player;
+
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;

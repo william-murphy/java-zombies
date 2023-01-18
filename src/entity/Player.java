@@ -1,5 +1,9 @@
+package entity;
+
+import game.GamePanel;
+import game.KeyHandler;
+
 import java.awt.Graphics2D;
-import java.awt.Color;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.image.BufferedImage;

@@ -3,6 +3,7 @@ package game;
 import javax.swing.JPanel;
 
 import entity.Player;
+import tile.TileManager;
 
 import java.awt.Dimension;
 import java.awt.Color;
@@ -13,16 +14,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     //screen dimensions
     public final int tileSize = 64;
-    private final int maxColumns = 16;
-    private final int maxRows = 12;
-    private final int width = maxColumns * tileSize;
-    private final int height = maxRows * tileSize;
+    public final int maxColumns = 16;
+    public final int maxRows = 12;
+    public final int width = maxColumns * tileSize;
+    public final int height = maxRows * tileSize;
 
     int FPS = 60;
 
     KeyHandler kh = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, kh);
+    TileManager tm = new TileManager(this);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(width, height));
@@ -72,6 +74,8 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D)g;
+
+        tm.drawTiles(g2d);
 
         player.draw(g2d);
 

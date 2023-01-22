@@ -2,6 +2,7 @@ package entity;
 
 import game.GamePanel;
 import game.KeyHandler;
+import game.Camera;
 
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
@@ -10,19 +11,21 @@ import java.awt.image.BufferedImage;
 
 public class Player extends Entity {
 
-    GamePanel gp;
-    KeyHandler kh;
+    public Camera camera;
+    private GamePanel gp;
+    private KeyHandler kh;
 
     public Player(GamePanel gp, KeyHandler kh) {
         this.gp = gp;
         this.kh = kh;
-        this.setDefaultValues();
+        this.camera = new Camera(this, gp);
+        setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues() {
-        x = 100;
-        y = 100;
+        x = gp.spawnX;
+        y = gp.spawnY;
         speed = 4;
         direction = "south";
         moving = false;
@@ -100,7 +103,7 @@ public class Player extends Entity {
                 break;
         }
 
-        g2d.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        g2d.drawImage(image, camera.x, camera.y, gp.tileSize, gp.tileSize, null);
     }
 
 }

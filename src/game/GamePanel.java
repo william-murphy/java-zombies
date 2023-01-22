@@ -18,13 +18,14 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxRows = 12;
     public final int width = maxColumns * tileSize;
     public final int height = maxRows * tileSize;
+    public final int spawnX = (width / 2) - (tileSize / 2);
+    public final int spawnY  = (height / 2) - (tileSize / 2);
 
-    int FPS = 60;
-
-    KeyHandler kh = new KeyHandler();
-    Thread gameThread;
-    Player player = new Player(this, kh);
-    TileManager tm = new TileManager(this);
+    private int FPS = 60;
+    private Thread gameThread;
+    private KeyHandler kh = new KeyHandler();
+    private TileManager tm = new TileManager(this);
+    public Player player = new Player(this, kh);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(width, height));

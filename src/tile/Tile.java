@@ -3,7 +3,6 @@ package tile;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.awt.Graphics2D;
 
 public class Tile {
     
@@ -17,14 +16,10 @@ public class Tile {
 
     private void getTileImage(String imageName) {
         try {
-            image = ImageIO.read(getClass().getResourceAsStream(imageName));
+            image = ImageIO.read(getClass().getResourceAsStream(String.format("/res/tile/%s.png", imageName)));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void drawTile(Graphics2D g2d, int x, int y, int tileSize) {
-        g2d.drawImage(image, x, y, tileSize, tileSize, null);
     }
 
 }

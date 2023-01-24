@@ -18,14 +18,16 @@ public class Player extends Entity {
     public Player(GamePanel gp, KeyHandler kh) {
         this.gp = gp;
         this.kh = kh;
-        this.camera = new Camera(this, gp);
+        this.camera = new Camera(gp);
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues() {
-        x = gp.spawnX;
-        y = gp.spawnY;
+        x = gp.playerSpawnX;
+        y = gp.playerSpawnY;
+        screenX = camera.calculateScreenX(this.x);
+        screenY = camera.calculateScreenY(this.y);
         speed = 4;
         direction = "south";
         moving = false;
@@ -79,6 +81,8 @@ public class Player extends Entity {
                 animationCounter = 0;
             }
 
+            camera.update(this.x, this.y);
+
         } else {
             moving = false;
         }
@@ -103,7 +107,7 @@ public class Player extends Entity {
                 break;
         }
 
-        g2d.drawImage(image, camera.x, camera.y, gp.tileSize, gp.tileSize, null);
+        g2d.drawImage(image, camera.calculateScreenX(this.x), camera.calculateScreenY(this.y), gp.tileSize, gp.tileSize, null);
     }
 
 }

@@ -11,7 +11,8 @@ public class TileManager {
     GamePanel gp;
     Tile[] tiles;
     int[][] map;
-    int dimension;
+    public int mapRows;
+    public int mapCols;
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
@@ -27,10 +28,11 @@ public class TileManager {
             while (br.ready()) {
                 String[] listOfStrings = br.readLine().split(" ");
                 if (map == null) {
-                    dimension = listOfStrings.length;
-                    map = new int[dimension][dimension];
+                    mapCols = listOfStrings.length;
+                    mapRows = mapCols;
+                    map = new int[mapRows][mapCols];
                 } else {
-                    for (int i=0; i<dimension; i++) {
+                    for (int i=0; i<mapCols; i++) {
                         map[row][i] = Integer.valueOf(listOfStrings[i]);
                     }
                 }
@@ -54,17 +56,14 @@ public class TileManager {
     }
 
     public void drawTiles(Graphics2D g2d) {
-        int renderCount = 0;
-        for (int i=0; i<dimension; i++) {
-            for (int j=0; j<dimension; j++) {
+        for (int i=0; i<mapRows; i++) {
+            for (int j=0; j<mapCols; j++) {
                 //only render visible tiles to improve rendering efficiency
                 if (gp.player.camera.shouldRender(i, j)) {
-                    g2d.drawImage(tiles[map[i][j]].image, gp.player.camera.getX(i), gp.player.camera.getY(j), gp.tileSize, gp.tileSize, null);
-                    renderCount++;
+                    g2d.drawImage(tiles[map[i][j]].image, gp.player.camera.calculateTileX(i), gp.player.camera.calculateTileY(j), gp.tileSize, gp.tileSize, null);
                 }
             }
         }
-        System.out.println(renderCount);
     }
 
 }

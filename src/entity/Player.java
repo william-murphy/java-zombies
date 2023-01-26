@@ -56,7 +56,7 @@ public class Player extends Entity {
         if (kh.upPressed) {
             moving = true;
             direction = "north";
-            y -= speed
+            y -= speed;
         } else if (kh.downPressed) {
             moving = true;
             direction = "south";

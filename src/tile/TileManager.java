@@ -9,8 +9,8 @@ import java.io.BufferedReader;
 
 public class TileManager {
     GamePanel gp;
-    Tile[] tiles;
-    int[][] map;
+    private Tile[] tiles;
+    public int[][] map;
     public int mapRows;
     public int mapCols;
 
@@ -18,6 +18,17 @@ public class TileManager {
         this.gp = gp;
         setTiles();
         setMap();
+    }
+
+    private void setTiles() {
+        tiles = new Tile[7];
+        tiles[0] = new Tile("cobblestone", false);
+        tiles[1] = new Tile("barrier-vertical", true);
+        tiles[2] = new Tile("barrier-horizontal", true);
+        tiles[3] = new Tile("barrier-ne", true);
+        tiles[4] = new Tile("barrier-nw", true);
+        tiles[5] = new Tile("barrier-se", true);
+        tiles[6] = new Tile("barrier-sw", true);
     }
 
     private void setMap() {
@@ -44,16 +55,9 @@ public class TileManager {
         }
     }
 
-    private void setTiles() {
-        tiles = new Tile[7];
-        tiles[0] = new Tile("cobblestone", false);
-        tiles[1] = new Tile("barrier-vertical", true);
-        tiles[2] = new Tile("barrier-horizontal", true);
-        tiles[3] = new Tile("barrier-ne", true);
-        tiles[4] = new Tile("barrier-nw", true);
-        tiles[5] = new Tile("barrier-se", true);
-        tiles[6] = new Tile("barrier-sw", true);
-    }
+    // public boolean collidesWithTerrain(Player player, int distance) {
+    //     return ()
+    // }
 
     public void drawTiles(Graphics2D g2d) {
         for (int i=0; i<mapRows; i++) {

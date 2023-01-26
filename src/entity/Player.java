@@ -53,39 +53,33 @@ public class Player extends Entity {
     }
 
     public void move() {
-
-        if (kh.upPressed || kh.downPressed || kh.leftPressed || kh.rightPressed) {
-
+        if (kh.upPressed) {
             moving = true;
-
-            if (kh.upPressed) {
-                direction = "north";
-                y -= speed;
-            }
-            if (kh.downPressed) {
-                direction = "south";
-                y += speed;
-            }
-            if (kh.leftPressed) {
-                direction = "west";
-                x -= speed;
-            }
-            if (kh.rightPressed) {
-                direction = "east";
-                x += speed;
-            }
-
-            animationCounter++;
-            if (animationCounter > 15) {
-                animationStep = !animationStep;
-                animationCounter = 0;
-            }
-
-            camera.update(this.x, this.y);
-
+            direction = "north";
+            y -= speed
+        } else if (kh.downPressed) {
+            moving = true;
+            direction = "south";
+            y += speed;
+        } else if (kh.leftPressed) {
+            moving = true;
+            direction = "west";
+            x -= speed;
+        } else if (kh.rightPressed) {
+            moving = true;
+            direction = "east";
+            x += speed;
         } else {
             moving = false;
         }
+        camera.update(x, y);
+
+        animationCounter++;
+        if (animationCounter > 15) {
+            animationStep = !animationStep;
+            animationCounter = 0;
+        }
+
     }
 
     public void draw(Graphics2D g2d) {

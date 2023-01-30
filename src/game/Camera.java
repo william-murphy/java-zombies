@@ -1,5 +1,7 @@
 package game;
 
+import entity.Player;
+
 public class Camera {
     public int x, y;
     public final int screenX, screenY;
@@ -7,10 +9,10 @@ public class Camera {
     int cameraBoundaryX;
     int cameraBoundaryY;
 
-    public Camera(GamePanel gp) {
+    public Camera(Player player, GamePanel gp) {
         this.gp = gp;
-        this.x = gp.playerSpawnX;
-        this.y = gp.playerSpawnY;
+        this.x = player.x;
+        this.y = player.y;
         this.screenX = (gp.width / 2) - (gp.tileSize / 2);
         this.screenY = (gp.height / 2) - (gp.tileSize / 2);
         this.cameraBoundaryX = gp.width / 2 + gp.tileSize / 2;
@@ -27,11 +29,9 @@ public class Camera {
     }
 
     //given an x and y coordinate, check if that is in the bounds of the camera and thus should be rendered
-    public boolean shouldRender(int col, int row) {
+    public boolean shouldRenderTile(int col, int row) {
         int mapCol = col * gp.tileSize;
         int mapRow = row * gp.tileSize;
-        // int halfScreenWidth = this.gp.width / 2 + gp.tileSize / 2;
-        // int halfScreenHeight = this.gp.height / 2 + gp.tileSize / 2;
         return(
             mapCol >= this.x - cameraBoundaryX && 
             mapCol <= this.x + cameraBoundaryX && 

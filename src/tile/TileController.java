@@ -1,20 +1,21 @@
 package tile;
 
-import game.GamePanel;
-
 import java.awt.Graphics2D;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import game.GamePanel;
+
 import java.io.BufferedReader;
 
-public class TileManager {
+public class TileController {
     GamePanel gp;
     private Tile[] tiles;
     public int[][] map;
     public int mapRows;
     public int mapCols;
 
-    public TileManager(GamePanel gp) {
+    public TileController(GamePanel gp) {
         this.gp = gp;
         setTiles();
         setMap();
@@ -63,7 +64,7 @@ public class TileManager {
         for (int i=0; i<mapRows; i++) {
             for (int j=0; j<mapCols; j++) {
                 //only render visible tiles to improve rendering efficiency
-                if (gp.player.camera.shouldRender(i, j)) {
+                if (gp.player.camera.shouldRenderTile(i, j)) {
                     g2d.drawImage(tiles[map[i][j]].image, gp.player.camera.calculateTileX(i), gp.player.camera.calculateTileY(j), gp.tileSize, gp.tileSize, null);
                 }
             }

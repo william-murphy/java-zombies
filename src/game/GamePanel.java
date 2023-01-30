@@ -3,7 +3,7 @@ package game;
 import javax.swing.JPanel;
 
 import entity.Player;
-import tile.TileManager;
+import tile.TileController;
 
 import java.awt.Dimension;
 import java.awt.Color;
@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable {
     private int FPS = 60;
     private Thread gameThread;
     private KeyHandler kh = new KeyHandler();
-    public TileManager tm = new TileManager(this);
+    public TileController tm = new TileController(this);
     public Player player = new Player(this, kh);
 
     public GamePanel() {

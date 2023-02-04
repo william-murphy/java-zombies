@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import game.GamePanel;
+import entity.Entity;
 
 import java.io.BufferedReader;
 
@@ -24,12 +25,7 @@ public class TileController {
     private void setTiles() {
         tiles = new Tile[7];
         tiles[0] = new Tile("cobblestone", false);
-        tiles[1] = new Tile("barrier-vertical", true);
-        tiles[2] = new Tile("barrier-horizontal", true);
-        tiles[3] = new Tile("barrier-ne", true);
-        tiles[4] = new Tile("barrier-nw", true);
-        tiles[5] = new Tile("barrier-se", true);
-        tiles[6] = new Tile("barrier-sw", true);
+        tiles[1] = new Tile("wall", true);
     }
 
     private void setMap() {
@@ -56,9 +52,34 @@ public class TileController {
         }
     }
 
-    // public boolean collidesWithTerrain(Player player, int distance) {
-    //     return ()
-    // }
+    public boolean collides(Entity entity) {
+        //find where entity's hitbox is in the world
+        int hitboxLeft = entity.x + entity.hitbox.x;
+        int hitboxRight = entity.x + entity.hitbox.x + entity.hitbox.width;
+        int hitboxTop = entity.y + entity.hitbox.y;
+        int hitboxBottom = entity.y + entity.hitbox.y + entity.hitbox.height;
+
+        switch (entity.direction) {
+            case "north":
+                hitboxTop -= entity.speed;
+                hitboxBottom -= entity.speed;
+                return (tiles[map[hitboxLeft/gp.tileSize][hitboxTop/gp.tileSize]].collision || tiles[map[hitboxRight/gp.tileSize][hitboxTop/gp.tileSize]].collision);
+            case "south": 
+                hitboxBottom += entity.speed;
+                hitboxTop += entity.speed;
+                return (tiles[map[hitboxLeft/gp.tileSize][hitboxBottom/gp.tileSize]].collision || tiles[map[hitboxRight/gp.tileSize][hitboxBottom/gp.tileSize]].collision);
+            case "west":
+                hitboxLeft -= entity.speed;
+                hitboxRight -= entity.speed;
+                return (tiles[map[hitboxLeft/gp.tileSize][hitboxTop/gp.tileSize]].collision || tiles[map[hitboxLeft/gp.tileSize][hitboxBottom/gp.tileSize]].collision);
+            case "east":
+                hitboxRight += entity.speed;
+                hitboxLeft += entity.speed;
+                return (tiles[map[hitboxRight/gp.tileSize][hitboxTop/gp.tileSize]].collision || tiles[map[hitboxRight/gp.tileSize][hitboxBottom/gp.tileSize]].collision);
+            default:
+                return false;
+        }
+    }
 
     public void drawTiles(Graphics2D g2d) {
         for (int i=0; i<mapRows; i++) {

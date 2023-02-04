@@ -27,12 +27,12 @@ public class GamePanel extends JPanel implements Runnable {
     private int FPS = 60;
     private Thread gameThread;
     private KeyHandler kh = new KeyHandler();
-    public TileController tm = new TileController(this);
+    public TileController tc = new TileController(this);
     public Player player = new Player(this, kh);
 
     public GamePanel() {
-        this.worldWidth = tm.mapCols * this.tileSize;
-        this.worldHeight = tm.mapRows * this.tileSize;
+        this.worldWidth = tc.mapCols * this.tileSize;
+        this.worldHeight = tc.mapRows * this.tileSize;
         this.setPreferredSize(new Dimension(width, height));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
@@ -81,7 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2d = (Graphics2D)g;
 
-        tm.drawTiles(g2d);
+        tc.drawTiles(g2d);
 
         player.draw(g2d);
 

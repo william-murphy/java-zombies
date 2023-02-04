@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
 public class Player extends Entity {
 
@@ -19,6 +20,9 @@ public class Player extends Entity {
         this.gp = gp;
         this.kh = kh;
         this.camera = new Camera(this, this.gp);
+
+        hitbox = new Rectangle(16, 32, 28, 28);
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -54,22 +58,31 @@ public class Player extends Entity {
         if (kh.upPressed) {
             moving = true;
             direction = "north";
-            y -= speed;
+            if (!gp.tc.collides(this)) {
+                y -= speed;
+            }
         } else if (kh.downPressed) {
             moving = true;
             direction = "south";
-            y += speed;
+            if (!gp.tc.collides(this)) {
+                y += speed;
+            }
         } else if (kh.leftPressed) {
             moving = true;
             direction = "west";
-            x -= speed;
+            if (!gp.tc.collides(this)) {
+                x -= speed;
+            }
         } else if (kh.rightPressed) {
             moving = true;
             direction = "east";
-            x += speed;
+            if (!gp.tc.collides(this)) {
+                x += speed;
+            }
         } else {
             moving = false;
         }
+
         camera.update(x, y);
 
         animationCounter++;

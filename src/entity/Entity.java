@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 
 public class Entity {
     public int x, y;
@@ -13,4 +14,8 @@ public class Entity {
 
     public int animationCounter = 0;
     public boolean animationStep = false;
+
+    public Rectangle hitbox;
+    public boolean collision = false;
+
 }

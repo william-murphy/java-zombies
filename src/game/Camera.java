@@ -3,20 +3,20 @@ package game;
 import entity.Player;
 
 public class Camera {
+    private GamePanel gp;
+    private final int cameraBoundaryX;
+    private final int cameraBoundaryY;
     public int x, y;
     public final int screenX, screenY;
-    private GamePanel gp;
-    int cameraBoundaryX;
-    int cameraBoundaryY;
 
     public Camera(Player player, GamePanel gp) {
         this.gp = gp;
         this.x = player.x;
         this.y = player.y;
-        this.screenX = (gp.width / 2) - (gp.tileSize / 2);
-        this.screenY = (gp.height / 2) - (gp.tileSize / 2);
-        this.cameraBoundaryX = gp.width / 2 + gp.tileSize / 2;
-        this.cameraBoundaryY = gp.height / 2 + gp.tileSize / 2;
+        this.screenX = (gp.screenWidth / 2) - (gp.tileSize / 2);
+        this.screenY = (gp.screenHeight / 2) - (gp.tileSize / 2);
+        this.cameraBoundaryX = (gp.screenWidth / 2) + (gp.tileSize / 2);
+        this.cameraBoundaryY = (gp.screenHeight / 2) + (gp.tileSize / 2);
     }
 
     public void update(int worldX, int worldY) {

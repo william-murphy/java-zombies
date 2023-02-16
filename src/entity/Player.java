@@ -21,10 +21,10 @@ public class Player extends Entity {
         this.kh = kh;
         this.camera = new Camera(this, this.gp);
 
-        hitbox = new Rectangle(16, 32, 28, 28);
+        hitbox = new Rectangle(gp.tileSize / 4, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2);
 
         setDefaultValues();
-        getPlayerImage();
+        getPlayerImages();
     }
 
     public void setDefaultValues() {
@@ -35,7 +35,7 @@ public class Player extends Entity {
         moving = false;
     }
 
-    public void getPlayerImage() {
+    public void getPlayerImages() {
         try {
             standingNorth = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-n.png"));
             walkingNorth1 = ImageIO.read(getClass().getResourceAsStream("/res/player/walk-n1.png"));

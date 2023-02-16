@@ -1,52 +1,45 @@
 package tile;
 
 import java.awt.Graphics2D;
-import java.io.InputStream;
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import game.GamePanel;
 import entity.Entity;
 
-import java.io.BufferedReader;
-
 public class TileController {
-    GamePanel gp;
+    private GamePanel gp;
     private Tile[] tiles;
     public int[][] map;
-    public int mapRows;
-    public int mapCols;
 
     public TileController(GamePanel gp) {
         this.gp = gp;
-        setTiles();
-        setMap();
+        map = new int[gp.mapRows][gp.mapCols];
+        initializeTiles();
+        initializeMap();
     }
 
-    private void setTiles() {
-        tiles = new Tile[7];
+    private void initializeTiles() {
+        tiles = new Tile[2];
         tiles[0] = new Tile("cobblestone", false);
         tiles[1] = new Tile("wall", true);
     }
 
-    private void setMap() {
+    private void initializeMap() {
+        BufferedReader reader;
         try {
-            InputStream is = getClass().getResourceAsStream("/res/map/map.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/res/map/map.txt")));
+            String line = reader.readLine();
             int row = 0;
-            while (br.ready()) {
-                String[] listOfStrings = br.readLine().split(" ");
-                if (map == null) {
-                    mapCols = listOfStrings.length;
-                    mapRows = mapCols;
-                    map = new int[mapRows][mapCols];
-                } else {
-                    for (int i=0; i<mapCols; i++) {
-                        map[row][i] = Integer.valueOf(listOfStrings[i]);
-                    }
+            while (line != null) {
+                String[] splitLine = line.split(" ");
+                for (int col=0; col < gp.mapCols; col++) {
+                    map[col][row] = Integer.parseInt(splitLine[col]);
                 }
+                line = reader.readLine();
                 row++;
             }
-            br.close();
+            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,19 +55,15 @@ public class TileController {
         switch (entity.direction) {
             case "north":
                 hitboxTop -= entity.speed;
-                hitboxBottom -= entity.speed;
                 return (tiles[map[hitboxLeft/gp.tileSize][hitboxTop/gp.tileSize]].collision || tiles[map[hitboxRight/gp.tileSize][hitboxTop/gp.tileSize]].collision);
             case "south": 
                 hitboxBottom += entity.speed;
-                hitboxTop += entity.speed;
                 return (tiles[map[hitboxLeft/gp.tileSize][hitboxBottom/gp.tileSize]].collision || tiles[map[hitboxRight/gp.tileSize][hitboxBottom/gp.tileSize]].collision);
             case "west":
                 hitboxLeft -= entity.speed;
-                hitboxRight -= entity.speed;
                 return (tiles[map[hitboxLeft/gp.tileSize][hitboxTop/gp.tileSize]].collision || tiles[map[hitboxLeft/gp.tileSize][hitboxBottom/gp.tileSize]].collision);
             case "east":
                 hitboxRight += entity.speed;
-                hitboxLeft += entity.speed;
                 return (tiles[map[hitboxRight/gp.tileSize][hitboxTop/gp.tileSize]].collision || tiles[map[hitboxRight/gp.tileSize][hitboxBottom/gp.tileSize]].collision);
             default:
                 return false;
@@ -82,11 +71,11 @@ public class TileController {
     }
 
     public void drawTiles(Graphics2D g2d) {
-        for (int i=0; i<mapRows; i++) {
-            for (int j=0; j<mapCols; j++) {
+        for (int row=0; row<gp.mapRows; row++) {
+            for (int col=0; col<gp.mapCols; col++) {
                 //only render visible tiles to improve rendering efficiency
-                if (gp.player.camera.shouldRenderTile(i, j)) {
-                    g2d.drawImage(tiles[map[i][j]].image, gp.player.camera.calculateTileX(i), gp.player.camera.calculateTileY(j), gp.tileSize, gp.tileSize, null);
+                if (gp.player.camera.shouldRenderTile(col, row)) {
+                    g2d.drawImage(tiles[map[col][row]].image, gp.player.camera.calculateTileX(col), gp.player.camera.calculateTileY(row), gp.tileSize, gp.tileSize, null);
                 }
             }
         }

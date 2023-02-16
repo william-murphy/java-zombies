@@ -14,15 +14,18 @@ public class GamePanel extends JPanel implements Runnable {
 
     //screen dimensions
     public final int tileSize = 64;
-    public final int maxColumns = 16;
-    public final int maxRows = 12;
-    public final int width = maxColumns * tileSize;
-    public final int height = maxRows * tileSize;
-    public final int cameraSpawnX = (width / 2) - (tileSize / 2);
-    public final int cameraSpawnY  = (height / 2) - (tileSize / 2);
-    public final int playerSpawnX = 15 * tileSize;
-    public final int playerSpawnY = 12 * tileSize;
-    public final int worldWidth, worldHeight;
+
+    public final int screenCols = 16;
+    public final int screenRows = 12;
+    public final int screenWidth = screenCols * tileSize;
+    public final int screenHeight = screenRows * tileSize;
+
+    public final int mapRows = 48;
+    public final int mapCols = 48;
+    public final int worldWidth = mapCols * tileSize;
+    public final int worldHeight = mapRows * tileSize;
+    public final int playerSpawnX = (worldWidth / 2) - (tileSize / 2);
+    public final int playerSpawnY  = (worldHeight / 2) - (tileSize / 2);
 
     private int FPS = 60;
     private Thread gameThread;
@@ -31,9 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, kh);
 
     public GamePanel() {
-        this.worldWidth = tc.mapCols * this.tileSize;
-        this.worldHeight = tc.mapRows * this.tileSize;
-        this.setPreferredSize(new Dimension(width, height));
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(kh);

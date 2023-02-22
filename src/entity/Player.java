@@ -19,11 +19,9 @@ public class Player extends Entity {
     public Player(GamePanel gp, KeyHandler kh) {
         this.gp = gp;
         this.kh = kh;
-        this.camera = new Camera(this, this.gp);
-
-        hitbox = new Rectangle(gp.tileSize / 4, gp.tileSize / 2, gp.tileSize / 2, gp.tileSize / 2);
-
         setDefaultValues();
+        this.camera = new Camera(this, this.gp);
+        this.hitbox = new Rectangle(gp.playerSpawnX + (gp.tileSize / 4), gp.playerSpawnY + (gp.tileSize / 2), gp.tileSize / 2, gp.tileSize / 2);
         getPlayerImages();
     }
 
@@ -55,40 +53,58 @@ public class Player extends Entity {
     }
 
     public void move() {
-        if (kh.upPressed) {
+
+        if (kh.movement) {
             moving = true;
-            direction = "north";
-            if (!gp.tc.collides(this)) {
-                y -= speed;
+
+            if (kh.upPressed) {
+                moving = true;
+                direction = "north";
+                hitbox.translate(0, -speed);
+                if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                    y -= speed;
+                }else {
+                    hitbox.translate(0, speed);
+                }
+            } else if (kh.downPressed) {
+                moving = true;
+                direction = "south";
+                hitbox.translate(0, speed);
+                if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                    y += speed;
+                }else {
+                    hitbox.translate(0, -speed);
+                }
+            } else if (kh.leftPressed) {
+                moving = true;
+                direction = "west";
+                hitbox.translate(-speed, 0);
+                if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                    x -= speed;
+                }else {
+                    hitbox.translate(speed, 0);
+                }
+            } else if (kh.rightPressed) {
+                moving = true;
+                direction = "east";
+                hitbox.translate(speed, 0);
+                if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                    x += speed;
+                }else {
+                    hitbox.translate(-speed, 0);
+                }
             }
-        } else if (kh.downPressed) {
-            moving = true;
-            direction = "south";
-            if (!gp.tc.collides(this)) {
-                y += speed;
+
+            camera.update(x, y);
+
+            animationCounter++;
+            if (animationCounter > 15) {
+                animationStep = !animationStep;
+                animationCounter = 0;
             }
-        } else if (kh.leftPressed) {
-            moving = true;
-            direction = "west";
-            if (!gp.tc.collides(this)) {
-                x -= speed;
-            }
-        } else if (kh.rightPressed) {
-            moving = true;
-            direction = "east";
-            if (!gp.tc.collides(this)) {
-                x += speed;
-            }
-        } else {
+
+        }else {
             moving = false;
-        }
-
-        camera.update(x, y);
-
-        animationCounter++;
-        if (animationCounter > 15) {
-            animationStep = !animationStep;
-            animationCounter = 0;
         }
 
     }
@@ -99,16 +115,32 @@ public class Player extends Entity {
 
         switch (direction) {
             case "north":
-                image = !moving ? standingNorth : animationStep ? walkingNorth1 : walkingNorth2;
+                if (moving) {
+                    image = animationStep ? walkingNorth1  : walkingNorth2;
+                }else {
+                    image = standingNorth;
+                }
                 break;
             case "south":
-                image = !moving ? standingSouth : animationStep ? walkingSouth1 : walkingSouth2;
+                if(moving) {
+                    image = animationStep ? walkingSouth1 : walkingSouth2;
+                }else {
+                    image = standingSouth;
+                }
                 break;
             case "east":
-                image = !moving ? standingEast : animationStep ? walkingEast1 : walkingEast2;
+                if (moving) {
+                    image = animationStep ? walkingEast1 : walkingEast2;
+                }else {
+                    image = standingEast;
+                }
                 break;
             case "west":
-                image = !moving ? standingWest : animationStep ? walkingWest1 : walkingWest2;
+                if (moving) {
+                    image = animationStep ? walkingWest1 : walkingWest2;
+                }else {
+                    image = standingWest;
+                }
                 break;
         }
 

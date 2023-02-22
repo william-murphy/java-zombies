@@ -1,25 +1,34 @@
 package tile;
 
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.IOException;
+import java.awt.Rectangle;
 
 public class Tile {
     
-    public BufferedImage image = null;
-    public boolean collision = false;
+    public int imageIndex;
+    public boolean collision;
+    public Rectangle hitbox;
 
-    public Tile(String imageName, boolean collision) {
-        this.collision = collision;
-        getTileImage(imageName);
+    public Tile(int imageIndex, int col, int row, int tileSize) {
+        this.imageIndex = imageIndex;
+        this.hitbox = new Rectangle(col * tileSize, row * tileSize, tileSize, tileSize);
+        initializeCollision();
     }
 
-    private void getTileImage(String imageName) {
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(String.format("/res/tile/%s.png", imageName)));
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void initializeCollision() {
+        switch (this.imageIndex) {
+            case 0:
+                this.collision = false;
+                break;
+            case 1:
+                this.collision = true;
+                break;
+            default:
+                this.collision = false;
         }
+    }
+
+    public boolean collides(Rectangle other) {
+        return this.collision && this.hitbox.intersects(other);
     }
 
 }

@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
     private KeyHandler kh = new KeyHandler();
     public TileController tc = new TileController(this);
     public Player player = new Player(this, kh);
+    public CollisionChecker collisionChecker = new CollisionChecker(this);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));

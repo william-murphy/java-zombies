@@ -2,8 +2,6 @@ package game;
 
 import entity.Player;
 
-import java.lang.Math;
-
 public class Camera {
     private GamePanel gp;
     private final int cameraBoundaryX;
@@ -11,7 +9,7 @@ public class Camera {
     public int x, y;
     public final int screenX, screenY;
 
-    public Camera(Player player, GamePanel gp) {
+    public Camera(GamePanel gp, Player player) {
         this.gp = gp;
         this.x = player.x;
         this.y = player.y;
@@ -43,11 +41,11 @@ public class Camera {
     }
 
     public int calculateScreenX(int worldX) {
-        return Math.abs(this.x - worldX - this.screenX);
+        return -1 * (this.x - worldX - this.screenX);
     }
 
     public int calculateScreenY(int worldY) {
-        return Math.abs(this.y - worldY - this.screenY);
+        return -1 * (this.y - worldY - this.screenY);
     }
 
     public int calculateTileX(int col) {

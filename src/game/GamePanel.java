@@ -2,13 +2,14 @@ package game;
 
 import javax.swing.JPanel;
 
-import entity.Player;
 import tile.TileController;
+import entity.EntityController;
 
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -29,16 +30,20 @@ public class GamePanel extends JPanel implements Runnable {
 
     private int FPS = 60;
     private Thread gameThread;
-    private KeyHandler kh = new KeyHandler();
-    public TileController tc = new TileController(this);
-    public Player player = new Player(this, kh);
+    public final Random random = new Random();
+
+    public int round = 1;
+    public KeyHandler keyHandler = new KeyHandler();
+    public TileController tileController = new TileController(this);
+    public EntityController entityController = new EntityController(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
+    public Camera camera = new Camera(this, entityController.player);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
-        this.addKeyListener(kh);
+        this.addKeyListener(keyHandler);
         this.setFocusable(true);
     }
 
@@ -74,7 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.move();
+        entityController.updateEntities();
     }
 
     public void paintComponent(Graphics g) {
@@ -83,9 +88,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2d = (Graphics2D)g;
 
-        tc.drawTiles(g2d);
+        tileController.drawTiles(g2d);
 
-        player.draw(g2d);
+        entityController.drawEntities(g2d);
 
         g2d.dispose();
     }

@@ -1,7 +1,5 @@
 package entity;
 
-import game.KeyHandler;
-import game.Camera;
 import game.GamePanel;
 
 import java.awt.Graphics2D;
@@ -12,15 +10,12 @@ import java.awt.Rectangle;
 
 public class Player extends Entity {
 
-    public Camera camera;
     private GamePanel gp;
-    private KeyHandler kh;
+    public int spawnZombieRadius;
 
-    public Player(GamePanel gp, KeyHandler kh) {
+    public Player(GamePanel gp) {
         this.gp = gp;
-        this.kh = kh;
         setDefaultValues();
-        this.camera = new Camera(this, this.gp);
         this.hitbox = new Rectangle(gp.playerSpawnX + (gp.tileSize / 4), gp.playerSpawnY + (gp.tileSize / 2), gp.tileSize / 2, gp.tileSize / 2);
         getPlayerImages();
     }
@@ -31,6 +26,7 @@ public class Player extends Entity {
         speed = 4;
         direction = "south";
         moving = false;
+        spawnZombieRadius = gp.tileSize * 5;
     }
 
     public void getPlayerImages() {
@@ -52,12 +48,12 @@ public class Player extends Entity {
         }
     }
 
-    public void move() {
+    public void update() {
 
-        if (kh.movement) {
+        if (gp.keyHandler.movement) {
             moving = true;
 
-            if (kh.upPressed) {
+            if (gp.keyHandler.upPressed) {
                 moving = true;
                 direction = "north";
                 hitbox.translate(0, -speed);
@@ -66,7 +62,7 @@ public class Player extends Entity {
                 }else {
                     hitbox.translate(0, speed);
                 }
-            } else if (kh.downPressed) {
+            } else if (gp.keyHandler.downPressed) {
                 moving = true;
                 direction = "south";
                 hitbox.translate(0, speed);
@@ -75,7 +71,7 @@ public class Player extends Entity {
                 }else {
                     hitbox.translate(0, -speed);
                 }
-            } else if (kh.leftPressed) {
+            } else if (gp.keyHandler.leftPressed) {
                 moving = true;
                 direction = "west";
                 hitbox.translate(-speed, 0);
@@ -84,7 +80,7 @@ public class Player extends Entity {
                 }else {
                     hitbox.translate(speed, 0);
                 }
-            } else if (kh.rightPressed) {
+            } else if (gp.keyHandler.rightPressed) {
                 moving = true;
                 direction = "east";
                 hitbox.translate(speed, 0);
@@ -95,7 +91,7 @@ public class Player extends Entity {
                 }
             }
 
-            camera.update(x, y);
+            gp.camera.update(x, y);
 
             animationCounter++;
             if (animationCounter > 15) {
@@ -144,8 +140,8 @@ public class Player extends Entity {
                 break;
         }
 
-        screenX = camera.calculateScreenX(this.x);
-        screenY = camera.calculateScreenY(this.y);
+        screenX = gp.camera.calculateScreenX(this.x);
+        screenY = gp.camera.calculateScreenY(this.y);
 
         g2d.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }

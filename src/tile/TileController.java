@@ -56,8 +56,8 @@ public class TileController {
         for (int row=0; row<gp.mapRows; row++) {
             for (int col=0; col<gp.mapCols; col++) {
                 //only render visible tiles to improve rendering efficiency
-                if (gp.player.camera.shouldRenderTile(col, row)) {
-                    g2d.drawImage(tileImages[map[col][row].imageIndex], gp.player.camera.calculateTileX(col), gp.player.camera.calculateTileY(row), gp.tileSize, gp.tileSize, null);
+                if (gp.camera.shouldRenderTile(col, row)) {
+                    g2d.drawImage(tileImages[map[col][row].imageIndex], gp.camera.calculateTileX(col), gp.camera.calculateTileY(row), gp.tileSize, gp.tileSize, null);
                 }
             }
         }

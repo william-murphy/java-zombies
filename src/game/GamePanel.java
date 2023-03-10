@@ -1,10 +1,10 @@
 package game;
 
-import javax.swing.JPanel;
-
+import main.Window;
 import tile.TileController;
 import entity.EntityController;
 
+import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -12,6 +12,8 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable {
+
+    Window window;
 
     //screen dimensions
     public final int tileSize = 64;
@@ -33,23 +35,26 @@ public class GamePanel extends JPanel implements Runnable {
     public final Random random = new Random();
 
     public int round = 1;
-    public KeyHandler keyHandler = new KeyHandler();
+    public KeyHandler keyHandler = new KeyHandler(this);
     public TileController tileController = new TileController(this);
     public EntityController entityController = new EntityController(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public Camera camera = new Camera(this, entityController.player);
 
-    public GamePanel() {
+    public GamePanel(Window window) {
+        this.window = window;
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
-        this.setDoubleBuffered(true);
-        this.addKeyListener(keyHandler);
         this.setFocusable(true);
     }
 
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start(); //calls the run method on gameThread
+    }
+
+    public void stopGameThread() {
+        gameThread = null;
     }
 
     @Override
@@ -79,6 +84,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+        tileController.updateTiles();
         entityController.updateEntities();
     }
 

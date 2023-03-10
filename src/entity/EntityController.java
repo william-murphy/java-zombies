@@ -1,9 +1,9 @@
 package entity;
 
-import game.GamePanel;
-
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+
+import game.GamePanel;
 
 public class EntityController {
     

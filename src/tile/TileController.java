@@ -5,9 +5,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import java.io.IOException;
 
 import game.GamePanel;
+
+import java.io.IOException;
 
 public class TileController {
     private GamePanel gp;
@@ -50,6 +51,10 @@ public class TileController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateTiles() {
+        
     }
 
     public void drawTiles(Graphics2D g2d) {

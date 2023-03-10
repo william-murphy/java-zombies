@@ -1,8 +1,9 @@
 package entity;
 
+import java.awt.Graphics2D;
+
 import game.GamePanel;
 
-import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class Zombie extends Entity {

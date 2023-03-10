@@ -1,60 +1,89 @@
 package game;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.ActionMap;
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
+import java.awt.event.ActionEvent;
 
-public class KeyHandler implements KeyListener {
+public class KeyHandler {
 
-    public boolean movement;
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    GamePanel game;
+    public boolean movement = false;
+    public boolean upPressed = false;
+    public boolean downPressed = false;
+    public boolean leftPressed = false;
+    public boolean rightPressed = false;
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
+    public KeyHandler(GamePanel game) {
+        this.game = game;
+        setKeyBindings();
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
+    private void setKeyBindings() {
+        InputMap inputMap = game.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = game.getActionMap();
 
-        int code = e.getKeyCode();
+        inputMap.put(KeyStroke.getKeyStroke("pressed W"), "-Y");
+        actionMap.put("-Y", new MoveAction("north"));
 
-        if (code == KeyEvent.VK_W) {
-            upPressed = true;
-            movement = true;
-        } else if (code == KeyEvent.VK_S) {
-            downPressed = true;
-            movement = true;
-        } else if (code == KeyEvent.VK_A) {
-            leftPressed = true;
-            movement = true;
-        } else if (code == KeyEvent.VK_D) {
-            rightPressed = true;
-            movement = true;
-        }
+        inputMap.put(KeyStroke.getKeyStroke("released W"), "stop");
+        actionMap.put("stop", new MoveAction("stop"));
 
+        inputMap.put(KeyStroke.getKeyStroke("pressed S"), "+Y");
+        actionMap.put("+Y", new MoveAction("south"));
+
+        inputMap.put(KeyStroke.getKeyStroke("released S"), "stop");
+        actionMap.put("stop", new MoveAction("stop"));
+
+        inputMap.put(KeyStroke.getKeyStroke("pressed A"), "-X");
+        actionMap.put("-X", new MoveAction("west"));
+
+        inputMap.put(KeyStroke.getKeyStroke("released A"), "stop");
+        actionMap.put("stop", new MoveAction("stop"));
+
+        inputMap.put(KeyStroke.getKeyStroke("pressed D"), "+X");
+        actionMap.put("+X", new MoveAction("east"));
+
+        inputMap.put(KeyStroke.getKeyStroke("released D"), "stop");
+        actionMap.put("stop", new MoveAction("stop"));
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-        int code = e.getKeyCode();
+    private class MoveAction extends AbstractAction {
         
-        if (code == KeyEvent.VK_W) {
-            movement = false;
-            upPressed = false;
+        String direction;
+
+        public MoveAction(String direction) {
+            this.direction = direction;
         }
-        if (code == KeyEvent.VK_S) {
-            movement = false;
-            downPressed = false;
-        }
-        if (code == KeyEvent.VK_A) {
-            movement = false;
-            leftPressed = false;
-        }
-        if (code == KeyEvent.VK_D) {
-            movement = false;
-            rightPressed = false;
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switch(direction) {
+                case "north":
+                    movement = true;
+                    upPressed = true;
+                    break;
+                case "south":
+                    movement = true;
+                    downPressed = true;
+                    break;
+                case "west":
+                    movement = true;
+                    leftPressed = true;
+                    break;
+                case "east":
+                    movement = true;
+                    rightPressed = true;
+                    break;
+                default: 
+                    movement = false;
+                    upPressed = false;
+                    downPressed = false;
+                    leftPressed = false;
+                    rightPressed = false;
+            }
         }
     }
-
 }

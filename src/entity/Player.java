@@ -1,10 +1,9 @@
 package entity;
 
-import java.awt.Graphics2D;
-import javax.imageio.ImageIO;
-
 import game.GamePanel;
 
+import java.awt.Graphics2D;
+import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;

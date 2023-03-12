@@ -16,24 +16,23 @@ public class Zombie extends Entity {
         this.x = spawnX;
         this.y = spawnY;
         this.direction = "south";
-        getPlayerImages();
     }
 
-    public void getPlayerImages() {
-        //need to change this to not load new images on every spawn
+    public static void loadZombieImages() {
+        System.out.println("loading zombie images");
         try {
-            standingNorth = ImageIO.read(getClass().getResourceAsStream("/res/zombie/standing-n.png"));
-            walkingNorth1 = ImageIO.read(getClass().getResourceAsStream("/res/zombie/walk-n1.png"));
-            walkingNorth2 = ImageIO.read(getClass().getResourceAsStream("/res/zombie/walk-n2.png"));
-            standingSouth = ImageIO.read(getClass().getResourceAsStream("/res/zombie/standing-s.png"));
-            walkingSouth1 = ImageIO.read(getClass().getResourceAsStream("/res/zombie/walk-s1.png"));
-            walkingSouth2 = ImageIO.read(getClass().getResourceAsStream("/res/zombie/walk-s2.png"));
-            standingEast = ImageIO.read(getClass().getResourceAsStream("/res/zombie/standing-e.png"));
-            walkingEast1 = ImageIO.read(getClass().getResourceAsStream("/res/zombie/walk-e1.png"));
-            walkingEast2 = ImageIO.read(getClass().getResourceAsStream("/res/zombie/walk-e2.png"));
-            standingWest = ImageIO.read(getClass().getResourceAsStream("/res/zombie/standing-w.png"));
-            walkingWest1 = ImageIO.read(getClass().getResourceAsStream("/res/zombie/walk-w1.png"));
-            walkingWest2 = ImageIO.read(getClass().getResourceAsStream("/res/zombie/walk-w2.png"));
+            standingNorth = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/standing-n.png"));
+            walkingNorth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-n1.png"));
+            walkingNorth2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-n2.png"));
+            standingSouth = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/standing-s.png"));
+            walkingSouth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-s1.png"));
+            walkingSouth2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-s2.png"));
+            standingEast = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/standing-e.png"));
+            walkingEast1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-e1.png"));
+            walkingEast2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-e2.png"));
+            standingWest = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/standing-w.png"));
+            walkingWest1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-w1.png"));
+            walkingWest2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-w2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

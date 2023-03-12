@@ -13,11 +13,12 @@ public class Player extends Entity {
     private GamePanel gp;
     public int spawnZombieRadius;
 
+    public static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
+
     public Player(GamePanel gp) {
         this.gp = gp;
         setDefaultValues();
         this.hitbox = new Rectangle(gp.playerSpawnX + (gp.tileSize / 4), gp.playerSpawnY + (gp.tileSize / 2), gp.tileSize / 2, gp.tileSize / 2);
-        getPlayerImages();
     }
 
     public void setDefaultValues() {
@@ -29,20 +30,21 @@ public class Player extends Entity {
         spawnZombieRadius = gp.tileSize * 5;
     }
 
-    public void getPlayerImages() {
+    public static void loadPlayerImages() {
+        System.out.println("loading player images");
         try {
-            standingNorth = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-n.png"));
-            walkingNorth1 = ImageIO.read(getClass().getResourceAsStream("/res/player/walk-n1.png"));
-            walkingNorth2 = ImageIO.read(getClass().getResourceAsStream("/res/player/walk-n2.png"));
-            standingSouth = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-s.png"));
-            walkingSouth1 = ImageIO.read(getClass().getResourceAsStream("/res/player/walk-s1.png"));
-            walkingSouth2 = ImageIO.read(getClass().getResourceAsStream("/res/player/walk-s2.png"));
-            standingEast = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-e.png"));
-            walkingEast1 = ImageIO.read(getClass().getResourceAsStream("/res/player/walk-e1.png"));
-            walkingEast2 = ImageIO.read(getClass().getResourceAsStream("/res/player/walk-e2.png"));
-            standingWest = ImageIO.read(getClass().getResourceAsStream("/res/player/standing-w.png"));
-            walkingWest1 = ImageIO.read(getClass().getResourceAsStream("/res/player/walk-w1.png"));
-            walkingWest2 = ImageIO.read(getClass().getResourceAsStream("/res/player/walk-w2.png"));
+            standingNorth = ImageIO.read(Player.class.getResourceAsStream("/res/player/standing-n.png"));
+            walkingNorth1 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-n1.png"));
+            walkingNorth2 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-n2.png"));
+            standingSouth = ImageIO.read(Player.class.getResourceAsStream("/res/player/standing-s.png"));
+            walkingSouth1 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-s1.png"));
+            walkingSouth2 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-s2.png"));
+            standingEast = ImageIO.read(Player.class.getResourceAsStream("/res/player/standing-e.png"));
+            walkingEast1 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-e1.png"));
+            walkingEast2 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-e2.png"));
+            standingWest = ImageIO.read(Player.class.getResourceAsStream("/res/player/standing-w.png"));
+            walkingWest1 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-w1.png"));
+            walkingWest2 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-w2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -12,28 +12,29 @@ import java.io.IOException;
 
 public class TileController {
     private GamePanel gp;
-    private BufferedImage[] tileImages;
+    private static BufferedImage[] tileImages;
     public Tile[][] map;
 
     public TileController(GamePanel gp) {
         this.gp = gp;
         map = new Tile[gp.mapRows][gp.mapCols];
-        initializeTileImages();
         initializeMap();
     }
 
-    private void initializeTileImages() {
+    public static void loadTileImages() {
+        System.out.println("loading tile images");
         tileImages = new BufferedImage[2];
         try {
-            tileImages[0] = ImageIO.read(getClass().getResourceAsStream("/res/tile/cobblestone.png"));
-            tileImages[1] = ImageIO.read(getClass().getResourceAsStream("/res/tile/wall.png"));
+            tileImages[0] = ImageIO.read(TileController.class.getResourceAsStream("/res/tile/cobblestone.png"));
+            tileImages[1] = ImageIO.read(TileController.class.getResourceAsStream("/res/tile/wall.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         
     }
 
-    private void initializeMap() {
+    public void initializeMap() {
+        System.out.println("loading map");
         BufferedReader reader;
         try {
             reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/res/map/map.txt")));

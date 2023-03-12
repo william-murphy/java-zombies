@@ -23,6 +23,11 @@ public class EntityController {
         entities.add(player);
     }
 
+    public static void loadEntityImages() {
+        Player.loadPlayerImages();
+        Zombie.loadZombieImages();
+    }
+
     public void spawnZombie() {
         final int x = gp.random.nextInt((player.x + player.spawnZombieRadius) - (player.x - player.spawnZombieRadius)) + (player.x - player.spawnZombieRadius);
         final int y = gp.random.nextInt((player.y + player.spawnZombieRadius) - (player.y - player.spawnZombieRadius)) + (player.y - player.spawnZombieRadius);

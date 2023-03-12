@@ -48,15 +48,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
-    public void startGameThread() {
-        gameThread = new Thread(this);
-        gameThread.start(); //calls the run method on gameThread
-    }
-
-    public void stopGameThread() {
-        gameThread = null;
-    }
-
     @Override
     public void run() {
 
@@ -99,6 +90,22 @@ public class GamePanel extends JPanel implements Runnable {
         entityController.drawEntities(g2d);
 
         g2d.dispose();
+    }
+
+    //called from the window class to start / stop the game
+
+    public void startGameThread() {
+        gameThread = new Thread(this);
+        gameThread.start(); //calls the run method on gameThread
+    }
+
+    public void stopGameThread() {
+        gameThread = null;
+    }
+
+    public static void loadImages() {
+        TileController.loadTileImages();
+        EntityController.loadEntityImages();
     }
 
 }

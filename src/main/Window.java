@@ -3,6 +3,7 @@ package main;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
+
 import menu.MenuPanel;
 import game.GamePanel;
 
@@ -36,6 +37,10 @@ public class Window extends JFrame {
     }
 
     public void launchGame() {
+        //load resources for game
+        GamePanel.loadImages();
+
+        //switch to game on CardLayout
         cards.show(container, "game");
         game.startGameThread();
     }

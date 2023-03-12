@@ -14,6 +14,8 @@ public class MenuPanel extends JPanel {
     Window window;
     KeyHandler keyHandler = new KeyHandler();
 
+    JLabel instruction = new JLabel("Press Any Key to Start");
+
     public MenuPanel(Window window) {
         this.window = window;
         this.setPreferredSize(new Dimension(1024, 768));
@@ -22,7 +24,6 @@ public class MenuPanel extends JPanel {
         this.setFocusable(true);
 
         //add the components
-        JLabel instruction = new JLabel("Press Any Key to Start");
         this.add(instruction);
     }
 
@@ -30,7 +31,7 @@ public class MenuPanel extends JPanel {
 
         @Override
         public void keyTyped(KeyEvent e) {
-            window.launchGame();
+           window.launchGame();
         }
 
         @Override

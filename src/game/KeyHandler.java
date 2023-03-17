@@ -10,11 +10,13 @@ import java.awt.event.ActionEvent;
 public class KeyHandler {
 
     GamePanel game;
-    public boolean movement = false;
-    public boolean upPressed = false;
-    public boolean downPressed = false;
-    public boolean leftPressed = false;
-    public boolean rightPressed = false;
+    public static enum Direction { 
+        NORTH, SOUTH, EAST, WEST;
+        public static final int size;
+        static {
+           size = values().length;
+        } 
+    };
 
     public KeyHandler(GamePanel game) {
         this.game = game;
@@ -25,65 +27,58 @@ public class KeyHandler {
         InputMap inputMap = game.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = game.getActionMap();
 
-        inputMap.put(KeyStroke.getKeyStroke("pressed W"), "-Y");
-        actionMap.put("-Y", new MoveAction("north"));
+        inputMap.put(KeyStroke.getKeyStroke("pressed W"), "pw");
+        actionMap.put("pw", new MoveAction(Direction.NORTH));
 
-        inputMap.put(KeyStroke.getKeyStroke("released W"), "stop");
-        actionMap.put("stop", new MoveAction("stop"));
+        inputMap.put(KeyStroke.getKeyStroke("released W"), "rw");
+        actionMap.put("rw", new StopMoveAction(Direction.NORTH));
 
-        inputMap.put(KeyStroke.getKeyStroke("pressed S"), "+Y");
-        actionMap.put("+Y", new MoveAction("south"));
+        inputMap.put(KeyStroke.getKeyStroke("pressed S"), "ps");
+        actionMap.put("ps", new MoveAction(Direction.SOUTH));
 
-        inputMap.put(KeyStroke.getKeyStroke("released S"), "stop");
-        actionMap.put("stop", new MoveAction("stop"));
+        inputMap.put(KeyStroke.getKeyStroke("released S"), "rs");
+        actionMap.put("rs", new StopMoveAction(Direction.SOUTH));
 
-        inputMap.put(KeyStroke.getKeyStroke("pressed A"), "-X");
-        actionMap.put("-X", new MoveAction("west"));
+        inputMap.put(KeyStroke.getKeyStroke("pressed D"), "pd");
+        actionMap.put("pd", new MoveAction(Direction.EAST));
 
-        inputMap.put(KeyStroke.getKeyStroke("released A"), "stop");
-        actionMap.put("stop", new MoveAction("stop"));
+        inputMap.put(KeyStroke.getKeyStroke("released D"), "rd");
+        actionMap.put("rd", new StopMoveAction(Direction.EAST));
 
-        inputMap.put(KeyStroke.getKeyStroke("pressed D"), "+X");
-        actionMap.put("+X", new MoveAction("east"));
+        inputMap.put(KeyStroke.getKeyStroke("pressed A"), "pa");
+        actionMap.put("pa", new MoveAction(Direction.WEST));
 
-        inputMap.put(KeyStroke.getKeyStroke("released D"), "stop");
-        actionMap.put("stop", new MoveAction("stop"));
+        inputMap.put(KeyStroke.getKeyStroke("released A"), "ra");
+        actionMap.put("ra", new StopMoveAction(Direction.WEST));
     }
 
     private class MoveAction extends AbstractAction {
         
-        String direction;
+        Direction ma;
 
-        public MoveAction(String direction) {
-            this.direction = direction;
+        public MoveAction(Direction ma) {
+            this.ma = ma;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            switch(direction) {
-                case "north":
-                    movement = true;
-                    upPressed = true;
-                    break;
-                case "south":
-                    movement = true;
-                    downPressed = true;
-                    break;
-                case "west":
-                    movement = true;
-                    leftPressed = true;
-                    break;
-                case "east":
-                    movement = true;
-                    rightPressed = true;
-                    break;
-                default: 
-                    movement = false;
-                    upPressed = false;
-                    downPressed = false;
-                    leftPressed = false;
-                    rightPressed = false;
-            }
+            game.entityController.player.sendMoveCommand(ma);
         }
     }
+
+    private class StopMoveAction extends AbstractAction {
+
+        Direction ma;
+
+        public StopMoveAction(Direction ma) {
+            this.ma = ma;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            game.entityController.player.sendStopMoveCommand(ma);
+        }
+
+    }
+
 }

@@ -13,17 +13,16 @@ public class CollisionChecker {
     //check collision between a tile and entity
     public boolean checkTileCollision(Entity entity) {
         switch (entity.direction) {
-            case "north":
+            case NORTH:
                 return (this.gp.tileController.map[entity.hitbox.x / gp.tileSize][entity.hitbox.y / gp.tileSize].collides(entity.hitbox) || this.gp.tileController.map[(entity.hitbox.x + entity.hitbox.width) / gp.tileSize][entity.hitbox.y / gp.tileSize].collides(entity.hitbox));
-            case "south":
+            case SOUTH:
                 return (this.gp.tileController.map[entity.hitbox.x / gp.tileSize][(entity.hitbox.y + entity.hitbox.height) / gp.tileSize].collides(entity.hitbox) || this.gp.tileController.map[(entity.hitbox.x + entity.hitbox.width) / gp.tileSize][(entity.hitbox.y + entity.hitbox.height) / gp.tileSize].collides(entity.hitbox));
-            case "west":
-                return (this.gp.tileController.map[entity.hitbox.x / gp.tileSize][entity.hitbox.y / gp.tileSize].collides(entity.hitbox) || this.gp.tileController.map[entity.hitbox.x / gp.tileSize][(entity.hitbox.y + entity.hitbox.height) / gp.tileSize].collides(entity.hitbox));
-            case "east":
+            case EAST:
                 return (this.gp.tileController.map[(entity.hitbox.x + entity.hitbox.width) / gp.tileSize][entity.hitbox.y / gp.tileSize].collides(entity.hitbox) || this.gp.tileController.map[(entity.hitbox.x + entity.hitbox.width) / gp.tileSize][(entity.hitbox.y + entity.hitbox.height) / gp.tileSize].collides(entity.hitbox));
-            default:
-                return false;
+            case WEST:
+                return (this.gp.tileController.map[entity.hitbox.x / gp.tileSize][entity.hitbox.y / gp.tileSize].collides(entity.hitbox) || this.gp.tileController.map[entity.hitbox.x / gp.tileSize][(entity.hitbox.y + entity.hitbox.height) / gp.tileSize].collides(entity.hitbox));
         }
+        return false;
     }
 
 }

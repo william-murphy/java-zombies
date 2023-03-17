@@ -1,6 +1,7 @@
 package entity;
 
 import game.GamePanel;
+import game.KeyHandler.Direction;
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -10,12 +11,20 @@ import java.awt.Graphics2D;
 public class Zombie extends Entity {
 
     private GamePanel gp;
+    public static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
 
     public Zombie(GamePanel gp, int spawnX, int spawnY) {
         this.gp = gp;
         this.x = spawnX;
         this.y = spawnY;
-        this.direction = "south";
+        setDefaultValues();
+    }
+
+    private void setDefaultValues() {
+        direction = Direction.SOUTH;
+        maxHealth = 10;
+        health = maxHealth;
+        moving = true; //temporary
     }
 
     public static void loadZombieImages() {
@@ -40,8 +49,18 @@ public class Zombie extends Entity {
 
     public void update() {
 
-        if (true) {
-            moving = true;
+        if (moving) {
+
+            switch(direction) {
+                case NORTH:
+                    break;
+                case SOUTH:
+                    break;
+                case EAST:
+                    break;
+                case WEST:
+                    break;
+            }
 
             animationCounter++;
             if (animationCounter > 15) {
@@ -49,38 +68,37 @@ public class Zombie extends Entity {
                 animationCounter = 0;
             }
 
-        }else {
-            moving = false;
         }
 
     }
 
     public void draw(Graphics2D g2d) {
+
         BufferedImage image = null;
 
-        switch (direction) {
-            case "north":
+        switch(direction) {
+            case NORTH:
                 if (moving) {
                     image = animationStep ? walkingNorth1  : walkingNorth2;
                 }else {
                     image = standingNorth;
                 }
                 break;
-            case "south":
+            case SOUTH:
                 if(moving) {
                     image = animationStep ? walkingSouth1 : walkingSouth2;
                 }else {
                     image = standingSouth;
                 }
                 break;
-            case "east":
+            case EAST:
                 if (moving) {
                     image = animationStep ? walkingEast1 : walkingEast2;
                 }else {
                     image = standingEast;
                 }
                 break;
-            case "west":
+            case WEST:
                 if (moving) {
                     image = animationStep ? walkingWest1 : walkingWest2;
                 }else {

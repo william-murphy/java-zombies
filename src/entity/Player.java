@@ -1,6 +1,7 @@
 package entity;
 
 import game.GamePanel;
+import game.KeyHandler.Direction;
 
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
@@ -10,10 +11,10 @@ import java.awt.Rectangle;
 
 public class Player extends Entity {
 
-    private GamePanel gp;
+    GamePanel gp;
+    public static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
     public int spawnZombieRadius;
 
-    public static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
 
     public Player(GamePanel gp) {
         this.gp = gp;
@@ -21,13 +22,15 @@ public class Player extends Entity {
         this.hitbox = new Rectangle(gp.playerSpawnX + (gp.tileSize / 4), gp.playerSpawnY + (gp.tileSize / 2), gp.tileSize / 2, gp.tileSize / 2);
     }
 
-    public void setDefaultValues() {
+    private void setDefaultValues() {
         x = gp.playerSpawnX;
         y = gp.playerSpawnY;
         speed = 4;
-        direction = "south";
+        direction = Direction.SOUTH;
         moving = false;
         spawnZombieRadius = gp.tileSize * 5;
+        maxHealth = 20;
+        health = maxHealth;
     }
 
     public static void loadPlayerImages() {
@@ -50,47 +53,54 @@ public class Player extends Entity {
         }
     }
 
+    public void sendMoveCommand(Direction direction) {
+        this.moving = true;
+        this.direction = direction;
+    }
+
+    public void sendStopMoveCommand(Direction direction) {
+        if (this.direction == direction) {
+            this.moving = false;
+        }
+    }
+
     public void update() {
 
-        if (gp.keyHandler.movement) {
-            moving = true;
+        if (moving) {
 
-            if (gp.keyHandler.upPressed) {
-                moving = true;
-                direction = "north";
-                hitbox.translate(0, -speed);
-                if (!this.gp.collisionChecker.checkTileCollision(this)) {
-                    y -= speed;
-                }else {
-                    hitbox.translate(0, speed);
-                }
-            } else if (gp.keyHandler.downPressed) {
-                moving = true;
-                direction = "south";
-                hitbox.translate(0, speed);
-                if (!this.gp.collisionChecker.checkTileCollision(this)) {
-                    y += speed;
-                }else {
+            switch(direction) {
+                case NORTH:
                     hitbox.translate(0, -speed);
-                }
-            } else if (gp.keyHandler.leftPressed) {
-                moving = true;
-                direction = "west";
-                hitbox.translate(-speed, 0);
-                if (!this.gp.collisionChecker.checkTileCollision(this)) {
-                    x -= speed;
-                }else {
+                    if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                        y -= speed;
+                    }else {
+                        hitbox.translate(0, speed);
+                    }
+                    break;
+                case SOUTH:
+                    hitbox.translate(0, speed);
+                    if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                        y += speed;
+                    }else {
+                        hitbox.translate(0, -speed);
+                    }
+                    break;
+                case EAST:
                     hitbox.translate(speed, 0);
-                }
-            } else if (gp.keyHandler.rightPressed) {
-                moving = true;
-                direction = "east";
-                hitbox.translate(speed, 0);
-                if (!this.gp.collisionChecker.checkTileCollision(this)) {
-                    x += speed;
-                }else {
+                    if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                        x += speed;
+                    }else {
+                        hitbox.translate(-speed, 0);
+                    }
+                    break;
+                case WEST:
                     hitbox.translate(-speed, 0);
-                }
+                    if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                        x -= speed;
+                    }else {
+                        hitbox.translate(speed, 0);
+                    }
+                    break;
             }
 
             gp.camera.update(x, y);
@@ -101,10 +111,7 @@ public class Player extends Entity {
                 animationCounter = 0;
             }
 
-        }else {
-            moving = false;
         }
-
     }
 
     public void draw(Graphics2D g2d) {
@@ -112,28 +119,29 @@ public class Player extends Entity {
         BufferedImage image = null;
 
         switch (direction) {
-            case "north":
+            
+            case NORTH:
                 if (moving) {
                     image = animationStep ? walkingNorth1  : walkingNorth2;
                 }else {
                     image = standingNorth;
                 }
                 break;
-            case "south":
+            case SOUTH:
                 if(moving) {
                     image = animationStep ? walkingSouth1 : walkingSouth2;
                 }else {
                     image = standingSouth;
                 }
                 break;
-            case "east":
+            case EAST:
                 if (moving) {
                     image = animationStep ? walkingEast1 : walkingEast2;
                 }else {
                     image = standingEast;
                 }
                 break;
-            case "west":
+            case WEST:
                 if (moving) {
                     image = animationStep ? walkingWest1 : walkingWest2;
                 }else {

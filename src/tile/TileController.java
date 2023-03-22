@@ -11,8 +11,8 @@ import game.GamePanel;
 import java.io.IOException;
 
 public class TileController {
-    private GamePanel gp;
-    private static BufferedImage[] tileImages;
+    GamePanel gp;
+    static BufferedImage[] tileImages;
     public Tile[][] map;
 
     public TileController(GamePanel gp) {
@@ -21,8 +21,7 @@ public class TileController {
         initializeMap();
     }
 
-    public static void loadTileImages() {
-        System.out.println("loading tile images");
+    public static void loadImages() {
         tileImages = new BufferedImage[2];
         try {
             tileImages[0] = ImageIO.read(TileController.class.getResourceAsStream("/res/tile/cobblestone.png"));
@@ -34,7 +33,6 @@ public class TileController {
     }
 
     public void initializeMap() {
-        System.out.println("loading map");
         BufferedReader reader;
         try {
             reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/res/map/map.txt")));

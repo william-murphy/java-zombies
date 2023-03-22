@@ -16,10 +16,10 @@ public class GamePanel extends JPanel implements Runnable {
     Window window;
 
     //screen dimensions
-    public final int tileSize = 64;
+    public static final int tileSize = 64;
 
-    public final int screenCols = 16;
-    public final int screenRows = 12;
+    public static final int screenCols = 16;
+    public static final int screenRows = 12;
     public final int screenWidth = screenCols * tileSize;
     public final int screenHeight = screenRows * tileSize;
 
@@ -39,7 +39,8 @@ public class GamePanel extends JPanel implements Runnable {
     public TileController tileController = new TileController(this);
     public EntityController entityController = new EntityController(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    public Camera camera = new Camera(this, entityController.player);
+    public Camera camera = new Camera(this);
+    public Hud hud = new Hud(this);
 
     public GamePanel(Window window) {
         this.window = window;
@@ -89,6 +90,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         entityController.drawEntities(g2d);
 
+        hud.drawHud(g2d);
+
         g2d.dispose();
     }
 
@@ -104,8 +107,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public static void loadImages() {
-        TileController.loadTileImages();
-        EntityController.loadEntityImages();
+        TileController.loadImages();
+        EntityController.loadImages();
+        Hud.loadImages();
     }
 
 }

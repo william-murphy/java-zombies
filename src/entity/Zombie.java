@@ -11,7 +11,7 @@ import java.awt.Graphics2D;
 public class Zombie extends Entity {
 
     private GamePanel gp;
-    public static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
+    static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
 
     public Zombie(GamePanel gp, int spawnX, int spawnY) {
         this.gp = gp;
@@ -27,8 +27,7 @@ public class Zombie extends Entity {
         moving = true; //temporary
     }
 
-    public static void loadZombieImages() {
-        System.out.println("loading zombie images");
+    public static void loadImages() {
         try {
             standingNorth = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/standing-n.png"));
             walkingNorth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-n1.png"));

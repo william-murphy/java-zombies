@@ -23,9 +23,9 @@ public class EntityController {
         entities.add(player);
     }
 
-    public static void loadEntityImages() {
-        Player.loadPlayerImages();
-        Zombie.loadZombieImages();
+    public static void loadImages() {
+        Player.loadImages();
+        Zombie.loadImages();
     }
 
     public void spawnZombie() {

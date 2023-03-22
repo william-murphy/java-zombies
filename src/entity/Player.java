@@ -12,7 +12,7 @@ import java.awt.Rectangle;
 public class Player extends Entity {
 
     GamePanel gp;
-    public static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
+    static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
     public int spawnZombieRadius;
 
 
@@ -33,8 +33,7 @@ public class Player extends Entity {
         health = maxHealth;
     }
 
-    public static void loadPlayerImages() {
-        System.out.println("loading player images");
+    public static void loadImages() {
         try {
             standingNorth = ImageIO.read(Player.class.getResourceAsStream("/res/player/standing-n.png"));
             walkingNorth1 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-n1.png"));

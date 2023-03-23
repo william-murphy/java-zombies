@@ -3,13 +3,13 @@ package entity;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import game.GamePanel;
+import game.Game;
 
 public class EntityController {
     
-    private GamePanel gp;
+    Game game;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
-    public final Player player;
+    public Player player;
 
     int zombieCount = 0;
     int maxConcurrentZombies = 10;
@@ -17,9 +17,9 @@ public class EntityController {
     final int spawnDelay = 5 * 60; //every 5 seconds (theoretically)
     int counter = 0;
 
-    public EntityController(GamePanel gp) {
-        this.gp = gp;
-        this.player = new Player(gp);
+    public EntityController(Game game) {
+        this.game = game;
+        this.player = new Player(game);
         entities.add(player);
     }
 
@@ -29,9 +29,9 @@ public class EntityController {
     }
 
     public void spawnZombie() {
-        final int x = gp.random.nextInt((player.x + player.spawnZombieRadius) - (player.x - player.spawnZombieRadius)) + (player.x - player.spawnZombieRadius);
-        final int y = gp.random.nextInt((player.y + player.spawnZombieRadius) - (player.y - player.spawnZombieRadius)) + (player.y - player.spawnZombieRadius);
-        entities.add(new Zombie(gp, x, y));
+        final int x = game.random.nextInt((player.x + player.spawnZombieRadius) - (player.x - player.spawnZombieRadius)) + (player.x - player.spawnZombieRadius);
+        final int y = game.random.nextInt((player.y + player.spawnZombieRadius) - (player.y - player.spawnZombieRadius)) + (player.y - player.spawnZombieRadius);
+        entities.add(new Zombie(game, x, y));
     }
 
     public void updateEntities() {

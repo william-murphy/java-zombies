@@ -1,6 +1,7 @@
 package entity;
 
-import game.GamePanel;
+import game.Game;
+import tile.TileController;
 import game.KeyHandler.Direction;
 
 import java.awt.Graphics2D;
@@ -11,24 +12,24 @@ import java.awt.Rectangle;
 
 public class Player extends Entity {
 
-    GamePanel gp;
+    Game game;
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
     public int spawnZombieRadius;
 
 
-    public Player(GamePanel gp) {
-        this.gp = gp;
+    public Player(Game game) {
+        this.game = game;
+        this.hitbox = new Rectangle(TileController.playerSpawnX + (Game.tileSize / 4), TileController.playerSpawnY + (Game.tileSize / 2), Game.tileSize / 2, Game.tileSize / 2);
         setDefaultValues();
-        this.hitbox = new Rectangle(gp.playerSpawnX + (gp.tileSize / 4), gp.playerSpawnY + (gp.tileSize / 2), gp.tileSize / 2, gp.tileSize / 2);
     }
 
     private void setDefaultValues() {
-        x = gp.playerSpawnX;
-        y = gp.playerSpawnY;
+        x = TileController.playerSpawnX;
+        y = TileController.playerSpawnY;
         speed = 4;
         direction = Direction.SOUTH;
         moving = false;
-        spawnZombieRadius = gp.tileSize * 5;
+        spawnZombieRadius = Game.tileSize * 5;
         maxHealth = 20;
         health = maxHealth;
     }
@@ -70,7 +71,7 @@ public class Player extends Entity {
             switch(direction) {
                 case NORTH:
                     hitbox.translate(0, -speed);
-                    if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                    if (!this.game.collisionChecker.checkTileCollision(this)) {
                         y -= speed;
                     }else {
                         hitbox.translate(0, speed);
@@ -78,7 +79,7 @@ public class Player extends Entity {
                     break;
                 case SOUTH:
                     hitbox.translate(0, speed);
-                    if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                    if (!this.game.collisionChecker.checkTileCollision(this)) {
                         y += speed;
                     }else {
                         hitbox.translate(0, -speed);
@@ -86,7 +87,7 @@ public class Player extends Entity {
                     break;
                 case EAST:
                     hitbox.translate(speed, 0);
-                    if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                    if (!this.game.collisionChecker.checkTileCollision(this)) {
                         x += speed;
                     }else {
                         hitbox.translate(-speed, 0);
@@ -94,7 +95,7 @@ public class Player extends Entity {
                     break;
                 case WEST:
                     hitbox.translate(-speed, 0);
-                    if (!this.gp.collisionChecker.checkTileCollision(this)) {
+                    if (!this.game.collisionChecker.checkTileCollision(this)) {
                         x -= speed;
                     }else {
                         hitbox.translate(speed, 0);
@@ -102,7 +103,7 @@ public class Player extends Entity {
                     break;
             }
 
-            gp.camera.update(x, y);
+            game.camera.update(x, y);
 
             animationCounter++;
             if (animationCounter > 15) {
@@ -149,10 +150,10 @@ public class Player extends Entity {
                 break;
         }
 
-        screenX = gp.camera.calculateScreenX(this.x);
-        screenY = gp.camera.calculateScreenY(this.y);
+        screenX = game.camera.calculateScreenX(this.x);
+        screenY = game.camera.calculateScreenY(this.y);
 
-        g2d.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2d.drawImage(image, screenX, screenY, Game.tileSize, Game.tileSize, null);
     }
 
 }

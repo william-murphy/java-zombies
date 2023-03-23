@@ -11,30 +11,21 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Random;
 
-public class GamePanel extends JPanel implements Runnable {
+public class Game extends JPanel implements Runnable {
 
     Window window;
 
     //screen dimensions
     public static final int tileSize = 64;
-
     public static final int screenCols = 16;
     public static final int screenRows = 12;
-    public final int screenWidth = screenCols * tileSize;
-    public final int screenHeight = screenRows * tileSize;
-
-    public final int mapRows = 48;
-    public final int mapCols = 48;
-    public final int worldWidth = mapCols * tileSize;
-    public final int worldHeight = mapRows * tileSize;
-    public final int playerSpawnX = (worldWidth / 2) - (tileSize / 2);
-    public final int playerSpawnY  = (worldHeight / 2) - (tileSize / 2);
+    public static final int screenWidth = screenCols * tileSize;
+    public static final int screenHeight = screenRows * tileSize;
 
     private int FPS = 60;
     private Thread gameThread;
     public final Random random = new Random();
 
-    public int round = 1;
     public KeyHandler keyHandler = new KeyHandler(this);
     public TileController tileController = new TileController(this);
     public EntityController entityController = new EntityController(this);
@@ -42,7 +33,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Camera camera = new Camera(this);
     public Hud hud = new Hud(this);
 
-    public GamePanel(Window window) {
+    public int round = 1;
+
+    public Game(Window window) {
         this.window = window;
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
@@ -76,7 +69,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        tileController.updateTiles();
         entityController.updateEntities();
     }
 
@@ -106,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = null;
     }
 
-    public static void loadImages() {
+    public static void loadResources() {
         TileController.loadImages();
         EntityController.loadImages();
         Hud.loadImages();

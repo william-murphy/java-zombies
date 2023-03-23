@@ -1,5 +1,7 @@
 package tile;
 
+import game.Game;
+
 import java.awt.Rectangle;
 
 public class Tile {
@@ -8,9 +10,9 @@ public class Tile {
     public boolean collision;
     public Rectangle hitbox;
 
-    public Tile(int imageIndex, int col, int row, int tileSize) {
+    public Tile(int imageIndex, int col, int row) {
         this.imageIndex = imageIndex;
-        this.hitbox = new Rectangle(col * tileSize, row * tileSize, tileSize, tileSize);
+        this.hitbox = new Rectangle(col * Game.tileSize, row * Game.tileSize, Game.tileSize, Game.tileSize);
         initializeCollision();
     }
 

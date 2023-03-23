@@ -4,15 +4,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
 
-import menu.MenuPanel;
-import game.GamePanel;
+import menu.Menu;
+import game.Game;
 
 public class Window extends JFrame {
     
     public CardLayout cards = new CardLayout();
     public JPanel container = new JPanel(cards);
-    public MenuPanel menu = new MenuPanel(this);
-    public GamePanel game = new GamePanel(this);
+    public Menu menu = new Menu(this);
+    public Game game = new Game(this);
 
     public Window() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,7 +38,7 @@ public class Window extends JFrame {
 
     public void launchGame() {
         //load resources for game
-        GamePanel.loadImages();
+        Game.loadResources();
 
         //switch to game on CardLayout
         cards.show(container, "game");

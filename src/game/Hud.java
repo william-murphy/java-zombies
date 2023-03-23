@@ -1,7 +1,5 @@
 package game;
 
-import game.GamePanel;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -11,17 +9,17 @@ import java.awt.Font;
 
 public class Hud {
 
-    GamePanel game;
+    Game game;
     static BufferedImage heartFull, heartHalf;
-    static int heartSize = GamePanel.tileSize - 16;
-    static int heartX = GamePanel.tileSize * 3;
-    static int heartY = GamePanel.tileSize * 10;
-    static int roundX = GamePanel.tileSize * 15;
-    static int roundY = GamePanel.tileSize;
-    static Font roundFont = new Font("Arial", Font.BOLD, GamePanel.tileSize);
+    static int heartSize = Game.tileSize - 16;
+    static int heartX = Game.tileSize * 3;
+    static int heartY = Game.tileSize * 10;
+    static int roundX = Game.tileSize * 15;
+    static int roundY = Game.tileSize;
+    static Font roundFont = new Font("Arial", Font.BOLD, Game.tileSize);
     int currentHealth;
     
-    public Hud (GamePanel game) {
+    public Hud (Game game) {
         this.game = game;
     }
 
@@ -29,11 +27,11 @@ public class Hud {
         currentHealth = game.entityController.player.health;
         int i = 0;
         while (i < Math.floorDiv(game.entityController.player.health, 2)) {
-            g2d.drawImage(heartFull, heartX + GamePanel.tileSize * i, heartY, heartSize, heartSize, null);
+            g2d.drawImage(heartFull, heartX + Game.tileSize * i, heartY, heartSize, heartSize, null);
             i += 1;
         }
         if (!(game.entityController.player.health % 2 == 0)) {
-            g2d.drawImage(heartHalf, heartX + GamePanel.tileSize * i, heartY, heartSize, heartSize, null);
+            g2d.drawImage(heartHalf, heartX + Game.tileSize * i, heartY, heartSize, heartSize, null);
         }
     }
 

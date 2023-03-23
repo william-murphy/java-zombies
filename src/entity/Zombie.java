@@ -1,6 +1,6 @@
 package entity;
 
-import game.GamePanel;
+import game.Game;
 import game.KeyHandler.Direction;
 
 import java.io.IOException;
@@ -10,11 +10,11 @@ import java.awt.Graphics2D;
 
 public class Zombie extends Entity {
 
-    private GamePanel gp;
+    Game game;
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
 
-    public Zombie(GamePanel gp, int spawnX, int spawnY) {
-        this.gp = gp;
+    public Zombie(Game game, int spawnX, int spawnY) {
+        this.game = game;
         this.x = spawnX;
         this.y = spawnY;
         setDefaultValues();
@@ -106,10 +106,10 @@ public class Zombie extends Entity {
                 break;
         }
 
-        screenX = gp.camera.calculateScreenX(this.x);
-        screenY = gp.camera.calculateScreenY(this.y);
+        screenX = game.camera.calculateScreenX(this.x);
+        screenY = game.camera.calculateScreenY(this.y);
 
-        g2d.drawImage(image, screenX, screenY, gp.tileSize / 2, gp.tileSize, null);
+        g2d.drawImage(image, screenX, screenY, Game.tileSize / 2, Game.tileSize, null);
     }
 
 }

@@ -1,5 +1,8 @@
 package menu;
 
+import main.Window;
+import game.Game;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.event.KeyEvent;
@@ -7,24 +10,24 @@ import java.awt.event.KeyListener;
 import java.awt.Dimension;
 import java.awt.Color;
 
-import main.Window;
-
-public class MenuPanel extends JPanel {
+public class Menu extends JPanel {
 
     Window window;
     KeyHandler keyHandler = new KeyHandler();
 
     JLabel instruction = new JLabel("Press Any Key to Start");
 
-    public MenuPanel(Window window) {
+    public Menu(Window window) {
         this.window = window;
-        this.setPreferredSize(new Dimension(1024, 768));
+        this.setPreferredSize(new Dimension(Game.screenWidth, Game.screenHeight));
         this.setBackground(Color.LIGHT_GRAY);
-        this.addKeyListener(keyHandler);
         this.setFocusable(true);
 
         //add the components
         this.add(instruction);
+
+        //add the key listener
+        this.addKeyListener(keyHandler);
     }
 
     private class KeyHandler implements KeyListener {

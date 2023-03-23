@@ -1,37 +1,36 @@
 package game;
 
-import entity.Player;
+import tile.TileController;
 
 public class Camera {
-    private GamePanel game;
-    private final int cameraBoundaryX;
-    private final int cameraBoundaryY;
-    public int x, y;
-    public final int screenX, screenY;
+    Game game;
 
-    public Camera(GamePanel game) {
+    public int x, y;
+    public int screenX = (Game.screenWidth / 2) - (Game.tileSize / 2);
+    public int screenY = (Game.screenHeight / 2) - (Game.tileSize / 2);
+
+    private int cameraBoundaryX = (Game.screenWidth / 2) + (Game.tileSize / 2);
+    private int cameraBoundaryY = (Game.screenHeight / 2) + (Game.tileSize / 2);
+
+    public Camera(Game game) {
         this.game = game;
         this.x = game.entityController.player.x;
         this.y = game.entityController.player.y;
-        this.screenX = (game.screenWidth / 2) - (game.tileSize / 2);
-        this.screenY = (game.screenHeight / 2) - (game.tileSize / 2);
-        this.cameraBoundaryX = (game.screenWidth / 2) + (game.tileSize / 2);
-        this.cameraBoundaryY = (game.screenHeight / 2) + (game.tileSize / 2);
     }
 
     public void update(int worldX, int worldY) {
-        if (worldX >= this.cameraBoundaryX && worldX <= game.worldWidth - this.cameraBoundaryX - game.tileSize) {
+        if (worldX >= this.cameraBoundaryX && worldX <= TileController.worldWidth - this.cameraBoundaryX - Game.tileSize) {
             this.x = worldX;
         }
-        if (worldY >= this.cameraBoundaryY && worldY <= game.worldHeight - this.cameraBoundaryY - game.tileSize) {
+        if (worldY >= this.cameraBoundaryY && worldY <= TileController.worldHeight - this.cameraBoundaryY - Game.tileSize) {
             this.y = worldY;
         }
     }
 
     //given an x and y coordinate, check if that is in the bounds of the camera and thus should be rendered
     public boolean shouldRenderTile(int col, int row) {
-        int mapCol = col * game.tileSize;
-        int mapRow = row * game.tileSize;
+        int mapCol = col * Game.tileSize;
+        int mapRow = row * Game.tileSize;
         return(
             mapCol >= this.x - cameraBoundaryX && 
             mapCol <= this.x + cameraBoundaryX && 
@@ -49,11 +48,11 @@ public class Camera {
     }
 
     public int calculateTileX(int col) {
-        return (col * game.tileSize) - this.x + this.screenX;
+        return (col * Game.tileSize) - this.x + this.screenX;
     }
 
     public int calculateTileY(int row) {
-        return (row * game.tileSize) - this.y + this.screenY;
+        return (row * Game.tileSize) - this.y + this.screenY;
     }
 
 }

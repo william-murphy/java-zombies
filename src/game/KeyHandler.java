@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 
 public class KeyHandler {
 
-    GamePanel game;
+    Game game;
     public static enum Direction { 
         NORTH, SOUTH, EAST, WEST;
         public static final int size;
@@ -18,7 +18,7 @@ public class KeyHandler {
         } 
     };
 
-    public KeyHandler(GamePanel game) {
+    public KeyHandler(Game game) {
         this.game = game;
         setKeyBindings();
     }

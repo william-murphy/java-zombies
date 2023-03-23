@@ -12,6 +12,8 @@ import java.io.IOException;
 
 public class TileController {
     Game game;
+
+    //images
     static BufferedImage[] tileImages;
 
     //world dimensions
@@ -24,29 +26,11 @@ public class TileController {
     public static int playerSpawnX;
     public static int playerSpawnY;
 
-    public Tile[][] map;
+    //map
+    public static Tile[][] map;
 
     public TileController(Game game) {
         this.game = game;
-        initializeMap();
-    }
-
-    private void initializeMap() {
-        map = new Tile[mapCols][mapRows];
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(TileController.class.getResourceAsStream("/res/map/map.txt")));
-            String line = reader.readLine();
-            int row = 0;
-            while (line != null) {
-                for (int col = 0; col < mapCols; col += 2) {
-                    map[col][row] = new Tile(Character.getNumericValue(line.charAt(col)), col, row);
-                }
-                line = reader.readLine();
-                row++;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void drawTiles(Graphics2D g2d) {
@@ -76,6 +60,23 @@ public class TileController {
             worldHeight = mapRows * Game.tileSize;
             playerSpawnX = (worldWidth / 2) - (Game.tileSize / 2);
             playerSpawnY = (worldHeight / 2) - (Game.tileSize / 2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void initializeMap() {
+        map = new Tile[mapCols][mapRows];
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(TileController.class.getResourceAsStream("/res/map/map.txt")));
+            String[] splitLine;
+            for (int row = 0; row < mapRows; row++) {
+                splitLine = reader.readLine().split(" ");
+                for (int col = 0; col < mapCols; col++) {
+                    map[col][row] = new Tile(Integer.parseInt(splitLine[col]), col, row);
+                }
+            }
+            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

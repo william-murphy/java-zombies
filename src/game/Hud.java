@@ -17,14 +17,12 @@ public class Hud {
     static int roundX = Game.tileSize * 15;
     static int roundY = Game.tileSize;
     static Font roundFont = new Font("Arial", Font.BOLD, Game.tileSize);
-    int currentHealth;
     
     public Hud (Game game) {
         this.game = game;
     }
 
     private void drawHealthBar(Graphics2D g2d) {
-        currentHealth = game.entityController.player.health;
         int i = 0;
         while (i < Math.floorDiv(game.entityController.player.health, 2)) {
             g2d.drawImage(heartFull, heartX + Game.tileSize * i, heartY, heartSize, heartSize, null);

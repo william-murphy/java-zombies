@@ -22,6 +22,14 @@ public class Game extends JPanel implements Runnable {
     public static final int screenWidth = screenCols * tileSize;
     public static final int screenHeight = screenRows * tileSize;
 
+    static {
+        TileController.setMapDimensions();
+        TileController.initializeMap();
+        TileController.loadImages();
+        EntityController.loadImages();
+        Hud.loadImages();
+    }
+
     private int FPS = 60;
     private Thread gameThread;
     public final Random random = new Random();
@@ -96,12 +104,6 @@ public class Game extends JPanel implements Runnable {
 
     public void stopGameThread() {
         gameThread = null;
-    }
-
-    public static void loadResources() {
-        TileController.loadImages();
-        EntityController.loadImages();
-        Hud.loadImages();
     }
 
 }

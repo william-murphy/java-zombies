@@ -23,11 +23,6 @@ public class EntityController {
         entities.add(player);
     }
 
-    public static void loadImages() {
-        Player.loadImages();
-        Zombie.loadImages();
-    }
-
     public void spawnZombie() {
         final int x = game.random.nextInt((player.x + player.spawnZombieRadius) - (player.x - player.spawnZombieRadius)) + (player.x - player.spawnZombieRadius);
         final int y = game.random.nextInt((player.y + player.spawnZombieRadius) - (player.y - player.spawnZombieRadius)) + (player.y - player.spawnZombieRadius);
@@ -50,6 +45,11 @@ public class EntityController {
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).draw(g2d);
         }
+    }
+
+    public static void loadImages() {
+        Player.loadImages();
+        Zombie.loadImages();
     }
 
 }

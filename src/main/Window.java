@@ -37,10 +37,6 @@ public class Window extends JFrame {
     }
 
     public void launchGame() {
-        //load resources for game
-        Game.loadResources();
-
-        //switch to game on CardLayout
         cards.show(container, "game");
         game.startGameThread();
     }

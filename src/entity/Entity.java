@@ -1,6 +1,9 @@
 package entity;
 
+import game.Game;
 import game.KeyHandler.Direction;
+import tile.Tile;
+import tile.TileController;
 
 import java.awt.Rectangle;
 import java.awt.Graphics2D;
@@ -21,6 +24,10 @@ public class Entity {
 
     public int maxHealth;
     public int health;
+
+    public Tile getTile() {
+        return TileController.map[this.hitbox.x / Game.tileSize][this.hitbox.y / Game.tileSize];
+    }
 
     public void update() {
         //to be implemented in subclass

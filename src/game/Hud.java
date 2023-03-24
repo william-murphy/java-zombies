@@ -11,12 +11,12 @@ public class Hud {
 
     Game game;
     static BufferedImage heartFull, heartHalf;
-    static int heartSize = Game.tileSize - 16;
-    static int heartX = Game.tileSize * 3;
-    static int heartY = Game.tileSize * 10;
-    static int roundX = Game.tileSize * 15;
-    static int roundY = Game.tileSize;
-    static Font roundFont = new Font("Arial", Font.BOLD, Game.tileSize);
+    final static int heartSize = Game.tileSize - 16;
+    final static int heartX = Game.tileSize * 3;
+    final static int heartY = Game.tileSize * 10;
+    final static int roundX = Game.tileSize * 15;
+    final static int roundY = Game.tileSize;
+    final static Font roundFont = new Font("Arial", Font.BOLD, Game.tileSize);
     
     public Hud (Game game) {
         this.game = game;

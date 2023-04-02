@@ -10,10 +10,9 @@ import java.awt.Graphics2D;
 
 public class Zombie extends Entity {
 
-    Game game;
-
-    //images
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
+
+    Game game;
 
     public Zombie(Game game, int spawnX, int spawnY) {
         this.game = game;
@@ -30,28 +29,7 @@ public class Zombie extends Entity {
     }
 
     public void update() {
-
-        if (moving) {
-
-            switch(direction) {
-                case NORTH:
-                    break;
-                case SOUTH:
-                    break;
-                case EAST:
-                    break;
-                case WEST:
-                    break;
-            }
-
-            animationCounter++;
-            if (animationCounter > 15) {
-                animationStep = !animationStep;
-                animationCounter = 0;
-            }
-
-        }
-
+        
     }
 
     public void draw(Graphics2D g2d) {

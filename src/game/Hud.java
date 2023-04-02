@@ -10,6 +10,7 @@ import java.awt.Font;
 public class Hud {
 
     Game game;
+
     static BufferedImage heartFull, heartHalf;
     final static int heartSize = Game.tileSize - 16;
     final static int heartX = Game.tileSize * 3;

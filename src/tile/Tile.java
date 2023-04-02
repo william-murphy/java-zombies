@@ -6,12 +6,15 @@ import java.awt.Rectangle;
 
 public class Tile {
     
-    public int imageIndex;
+    public final int imageIndex;
+    public final Rectangle hitbox;
+    public final int col, row;
     public boolean collision;
-    public Rectangle hitbox;
 
     public Tile(int imageIndex, int col, int row) {
         this.imageIndex = imageIndex;
+        this.col = col;
+        this.row = row;
         this.hitbox = new Rectangle(col * Game.tileSize, row * Game.tileSize, Game.tileSize, Game.tileSize);
         initializeCollision();
     }
@@ -31,6 +34,18 @@ public class Tile {
 
     public boolean collides(Rectangle other) {
         return this.collision && this.hitbox.intersects(other);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Tile)) {
+            return false;
+        }
+        Tile t = (Tile) o;
+        return this.col == t.col && this.row == t.row;
     }
 
 }

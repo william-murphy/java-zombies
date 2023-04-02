@@ -11,6 +11,7 @@ import game.Game;
 import java.io.IOException;
 
 public class TileController {
+    
     Game game;
 
     //images
@@ -31,6 +32,13 @@ public class TileController {
 
     public TileController(Game game) {
         this.game = game;
+    }
+
+    public Tile[] getTileNeighbors(Tile tile) {
+        //returns an array of the neighbors of a tile in the form of [n, e, s, w] --- NOTE: later on it will be [n, ne, e, se, s, sw, w, nw]
+        //Tile[] neighbors = { map[tile.col][tile.row - 1], map[tile.col + 1][tile.row - 1], map[tile.col + 1][tile.row], map[tile.col + 1][tile.row + 1], map[tile.col][tile.row + 1], map[tile.col - 1][tile.row + 1], map[tile.col - 1][tile.row], map[tile.col - 1][tile.row - 1] };
+        Tile[] neighbors = { map[tile.col][tile.row - 1], map[tile.col + 1][tile.row], map[tile.col][tile.row + 1], map[tile.col - 1][tile.row] };
+        return neighbors;
     }
 
     public void drawTiles(Graphics2D g2d) {

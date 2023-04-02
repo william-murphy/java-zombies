@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 public class KeyHandler {
 
     Game game;
+    
     public static enum Direction { 
         NORTH, SOUTH, EAST, WEST;
         public static final int size;

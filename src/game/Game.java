@@ -30,7 +30,10 @@ public class Game extends JPanel implements Runnable {
         Hud.loadImages();
     }
 
-    private int FPS = 60;
+    public static final int FPS = 60;
+    public int tick = 0;
+    private static final int ticksBeforeReset = 10 * FPS; // 10 seconds
+
     private Thread gameThread;
     public final Random random = new Random();
 
@@ -53,7 +56,7 @@ public class Game extends JPanel implements Runnable {
     @Override
     public void run() {
 
-        double drawInterval = 1000000000/FPS;
+        double tickInterval = 1000000000/FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -61,19 +64,25 @@ public class Game extends JPanel implements Runnable {
         while (gameThread != null) { //game loop
 
             currentTime = System.nanoTime();
-
-            delta += (currentTime - lastTime) / drawInterval;
-
+            delta += (currentTime - lastTime) / tickInterval;
             lastTime = currentTime;
 
             if (delta > 1) {
-                update();
-                repaint(); //calls paintComponent
+                tick();
                 delta--;
             }
 
         }
 
+    }
+
+    private void tick() {
+        tick++;
+        update();
+        repaint();
+        if (tick >= ticksBeforeReset) {
+            tick = 0;
+        }
     }
 
     public void update() {

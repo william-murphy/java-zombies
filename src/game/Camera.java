@@ -3,6 +3,7 @@ package game;
 import tile.TileController;
 
 public class Camera {
+    
     Game game;
 
     public int x, y;

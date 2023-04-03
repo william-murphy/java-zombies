@@ -33,18 +33,20 @@ public class Player extends Entity {
         health = maxHealth;
     }
 
-    public void sendMoveCommand(Direction direction) {
+    public void move(Direction direction) {
         this.moving = true;
         this.direction = direction;
     }
 
-    public void sendStopMoveCommand(Direction direction) {
+    public void stopMove(Direction direction) {
         if (this.direction == direction) {
             this.moving = false;
         }
     }
 
     public void update() {
+
+        game.entityController.attemptZombieSpawn();
 
         if (moving) {
 

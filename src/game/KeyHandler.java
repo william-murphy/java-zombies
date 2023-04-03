@@ -63,7 +63,7 @@ public class KeyHandler {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            game.entityController.player.sendMoveCommand(ma);
+            game.entityController.player.move(ma);
         }
     }
 
@@ -77,7 +77,7 @@ public class KeyHandler {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            game.entityController.player.sendStopMoveCommand(ma);
+            game.entityController.player.stopMove(ma);
         }
 
     }

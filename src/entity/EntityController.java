@@ -1,7 +1,8 @@
 package entity;
 
 import java.awt.Graphics2D;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import game.Game;
 
@@ -9,12 +10,11 @@ public class EntityController {
     
     Game game;
     
-    public ArrayList<Entity> entities = new ArrayList<Entity>();
     public Player player;
-
     int zombieCount = 0;
-    int maxConcurrentZombies = 1; //NOTE: change back to 10
+    int maxConcurrentEntities = 10; //NOTE: change back to 10
     int spawnZombieDelay = 5 * Game.FPS; //spawn zombie every 5 seconds
+    public Set<Entity> entities = new HashSet<Entity>(maxConcurrentEntities);
 
     public EntityController(Game game) {
         this.game = game;
@@ -23,7 +23,8 @@ public class EntityController {
     }
 
     public void attemptZombieSpawn() {
-        if (zombieCount < maxConcurrentZombies && game.tick % spawnZombieDelay == 0) {
+        //attempt zombie spawn
+        if (zombieCount < maxConcurrentEntities && game.tick % spawnZombieDelay == 0) {
             final int x = game.random.nextInt((player.x + player.spawnZombieRadius) - (player.x - player.spawnZombieRadius)) + (player.x - player.spawnZombieRadius);
             final int y = game.random.nextInt((player.y + player.spawnZombieRadius) - (player.y - player.spawnZombieRadius)) + (player.y - player.spawnZombieRadius);
             entities.add(new Zombie(game, x, y));
@@ -32,15 +33,14 @@ public class EntityController {
     }
 
     public void updateEntities() {
-        attemptZombieSpawn();
-        for (int i = 0; i < entities.size(); i++) {
-            entities.get(i).update();
+        for (Entity entity : entities) {
+            entity.update();
         }
     }
 
     public void drawEntities(Graphics2D g2d) {
-        for (int i = 0; i < entities.size(); i++) {
-            entities.get(i).draw(g2d);
+        for (Entity entity : entities) {
+            entity.draw(g2d);
         }
     }
 

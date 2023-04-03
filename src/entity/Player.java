@@ -46,8 +46,6 @@ public class Player extends Entity {
 
     public void update() {
 
-        game.entityController.attemptZombieSpawn();
-
         if (moving) {
 
             switch(direction) {

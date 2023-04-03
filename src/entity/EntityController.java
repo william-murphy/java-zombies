@@ -11,10 +11,10 @@ public class EntityController {
     Game game;
     
     public Player player;
-    int zombieCount = 0;
-    int maxConcurrentEntities = 10; //NOTE: change back to 10
-    int spawnZombieDelay = 5 * Game.FPS; //spawn zombie every 5 seconds
-    public Set<Entity> entities = new HashSet<Entity>(maxConcurrentEntities);
+    private int total = 0;
+    private int max = 3; //NOTE: change back to 10
+    private int spawnDelay = 5 * Game.FPS; //spawn zombie every 5 seconds
+    public Set<Entity> entities = new HashSet<Entity>(max);
 
     public EntityController(Game game) {
         this.game = game;
@@ -24,15 +24,16 @@ public class EntityController {
 
     public void attemptZombieSpawn() {
         //attempt zombie spawn
-        if (zombieCount < maxConcurrentEntities && game.tick % spawnZombieDelay == 0) {
+        if (total < max && game.tick % spawnDelay == 0) {
             final int x = game.random.nextInt((player.x + player.spawnZombieRadius) - (player.x - player.spawnZombieRadius)) + (player.x - player.spawnZombieRadius);
             final int y = game.random.nextInt((player.y + player.spawnZombieRadius) - (player.y - player.spawnZombieRadius)) + (player.y - player.spawnZombieRadius);
             entities.add(new Zombie(game, x, y));
-            zombieCount++;
+            total++;
         }
     }
 
     public void updateEntities() {
+        attemptZombieSpawn();
         for (Entity entity : entities) {
             entity.update();
         }

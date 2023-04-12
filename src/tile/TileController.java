@@ -5,10 +5,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.lang.Math;
 
 import game.Game;
-
-import java.io.IOException;
 
 public class TileController {
     
@@ -34,8 +34,13 @@ public class TileController {
         this.game = game;
     }
 
-    public Tile[] getTileNeighbors(Tile tile) {
-        //returns an array of the neighbors of a tile in the form of [n, e, s, w] --- NOTE: later on it will be [n, ne, e, se, s, sw, w, nw]
+    //calculate manhattan distance between two tiles
+    public static int getDistance(Tile one, Tile two) {
+        return (Math.abs(one.col - two.col) + Math.abs(one.row - two.row));
+    }
+
+    //returns an array of the neighbors of a tile in the form of [n, e, s, w] --- NOTE: later on it will be [n, ne, e, se, s, sw, w, nw]
+    public static Tile[] getTileNeighbors(Tile tile) {
         //Tile[] neighbors = { map[tile.col][tile.row - 1], map[tile.col + 1][tile.row - 1], map[tile.col + 1][tile.row], map[tile.col + 1][tile.row + 1], map[tile.col][tile.row + 1], map[tile.col - 1][tile.row + 1], map[tile.col - 1][tile.row], map[tile.col - 1][tile.row - 1] };
         Tile[] neighbors = { map[tile.col][tile.row - 1], map[tile.col + 1][tile.row], map[tile.col][tile.row + 1], map[tile.col - 1][tile.row] };
         return neighbors;

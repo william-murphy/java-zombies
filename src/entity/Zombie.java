@@ -2,6 +2,7 @@ package entity;
 
 import game.Game;
 import game.KeyHandler.Direction;
+import ai.Pathfinder;
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -13,6 +14,7 @@ public class Zombie extends Entity {
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
 
     Game game;
+    Pathfinder path = new Pathfinder(this);
 
     public Zombie(Game game, int spawnX, int spawnY) {
         this.game = game;

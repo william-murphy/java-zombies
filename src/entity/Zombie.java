@@ -3,23 +3,26 @@ package entity;
 import game.Game;
 import game.KeyHandler.Direction;
 import ai.Pathfinder;
+import tile.Tile;
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 public class Zombie extends Entity {
 
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
 
     Game game;
-    Pathfinder path = new Pathfinder(this);
+    Pathfinder pather = new Pathfinder(this);
 
     public Zombie(Game game, int spawnX, int spawnY) {
         this.game = game;
         this.x = spawnX;
         this.y = spawnY;
+        this.hitbox = new Rectangle(spawnX + (Game.tileSize / 4), spawnY + (Game.tileSize / 2), Game.tileSize / 2, Game.tileSize / 2);
         setDefaultValues();
     }
 
@@ -31,7 +34,7 @@ public class Zombie extends Entity {
     }
 
     public void update() {
-        
+        Tile[] path = pather.findPath(game.entityController.player);
     }
 
     public void draw(Graphics2D g2d) {

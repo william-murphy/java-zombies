@@ -10,8 +10,8 @@ public class Camera {
     public int screenX = (Game.screenWidth / 2) - (Game.tileSize / 2);
     public int screenY = (Game.screenHeight / 2) - (Game.tileSize / 2);
 
-    private int cameraBoundaryX = (Game.screenWidth / 2) + (Game.tileSize / 2);
-    private int cameraBoundaryY = (Game.screenHeight / 2) + (Game.tileSize / 2);
+    private static int cameraBoundaryX = (Game.screenWidth / 2) + (Game.tileSize / 2);
+    private static int cameraBoundaryY = (Game.screenHeight / 2) + (Game.tileSize / 2);
 
     public Camera(Game game) {
         this.game = game;
@@ -20,10 +20,10 @@ public class Camera {
     }
 
     public void update(int worldX, int worldY) {
-        if (worldX >= this.cameraBoundaryX && worldX <= TileController.worldWidth - this.cameraBoundaryX - Game.tileSize) {
+        if (worldX >= cameraBoundaryX && worldX <= TileController.worldWidth - cameraBoundaryX - Game.tileSize) {
             this.x = worldX;
         }
-        if (worldY >= this.cameraBoundaryY && worldY <= TileController.worldHeight - this.cameraBoundaryY - Game.tileSize) {
+        if (worldY >= cameraBoundaryY && worldY <= TileController.worldHeight - cameraBoundaryY - Game.tileSize) {
             this.y = worldY;
         }
     }

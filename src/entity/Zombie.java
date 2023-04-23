@@ -35,6 +35,11 @@ public class Zombie extends Entity {
 
     public void update() {
         Tile[] path = pather.findPath(game.entityController.player);
+        System.out.println("START OF PATH");
+        for (Tile t : path) {
+            t.print();
+        }
+        System.out.println("END OF PATH");
     }
 
     public void draw(Graphics2D g2d) {

@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.lang.Math;
+import java.awt.Color;
 
 import game.Game;
 
@@ -65,13 +66,19 @@ public class TileController {
             for (int col=0; col < mapCols; col++) {
                 //only render visible tiles to improve rendering efficiency
                 if (game.camera.shouldRenderTile(col, row)) {
-                    int tileX = game.camera.calculateTileX(col);
-                    int tileY = game.camera.calculateTileY(row);
-                    g2d.drawImage(tileImages[map[col][row].imageIndex], tileX, tileY, Game.tileSize, Game.tileSize, null);
-                    g2d.drawString(String.format("%d, %d", col, row), tileX, tileY);
+                    g2d.drawImage(tileImages[map[col][row].imageIndex], game.camera.calculateTileX(col), game.camera.calculateTileY(row), Game.tileSize, Game.tileSize, null);
                 }
             }
         }
+
+        // draw path for debugging
+        g2d.setColor(new Color(255, 0, 0, 70));
+        for (int i=0; i < game.pathFinder.pathList.size(); i++) {
+            int screenX = (game.pathFinder.pathList.get(i).col * Game.tileSize) - game.entityController.player.x + game.entityController.player.screenX;
+            int screenY = (game.pathFinder.pathList.get(i).row * Game.tileSize) - game.entityController.player.y + game.entityController.player.screenY;
+            g2d.fillRect(screenX, screenY, Game.tileSize, Game.tileSize);
+        }
+
     }
 
     public static void setMapDimensions() {

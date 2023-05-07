@@ -3,6 +3,7 @@ package game;
 import main.Window;
 import tile.TileController;
 import entity.EntityController;
+import ai.Pathfinder;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -43,6 +44,7 @@ public class Game extends JPanel implements Runnable {
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public Camera camera = new Camera(this);
     public Hud hud = new Hud(this);
+    public Pathfinder pathFinder = new Pathfinder();
 
     public int round = 1;
 

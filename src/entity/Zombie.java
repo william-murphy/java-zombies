@@ -2,7 +2,6 @@ package entity;
 
 import game.Game;
 import game.KeyHandler.Direction;
-import ai.Pathfinder;
 import tile.Tile;
 
 import java.io.IOException;
@@ -16,7 +15,6 @@ public class Zombie extends Entity {
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
 
     Game game;
-    Pathfinder pather = new Pathfinder(this);
 
     public Zombie(Game game, int spawnX, int spawnY) {
         this.game = game;
@@ -29,17 +27,64 @@ public class Zombie extends Entity {
     private void setDefaultValues() {
         direction = Direction.SOUTH;
         maxHealth = 10;
+        speed = 3;
         health = maxHealth;
-        moving = true; //temporary
+        onPath = true;
+    }
+
+    public void searchPath(Tile goal) {
+        Tile start = this.getTile();
+        game.pathFinder.setNodes(start.col, start.row, goal.col, goal.row, this);
+
+        if (game.pathFinder.search()) {
+            // next world x and world y
+            int nextX = game.pathFinder.pathList.get(0).col * Game.tileSize;
+            int nextY = game.pathFinder.pathList.get(0).row * Game.tileSize;
+
+            // entity current position
+            int entityLeftX = hitbox.x;
+            int entityRightX = hitbox.x + hitbox.width;
+            int entityTopY = hitbox.y;
+            int entityBottomY = hitbox.y + hitbox.height;
+
+            // determine player direction
+            if (entityTopY > nextY && entityLeftX >= nextX && entityRightX < nextX + Game.tileSize) {
+                move(Direction.NORTH);
+            } else if (entityTopY < nextY && entityLeftX >= nextX && entityRightX < nextX + Game.tileSize) {
+                move(Direction.SOUTH);
+            } else if (entityTopY >= nextY && entityBottomY < nextY + Game.tileSize) {
+                if (entityLeftX > nextX) {
+                    move(Direction.WEST);
+                }
+                if (entityLeftX < nextX) {
+                    move(Direction.EAST);
+                }
+            }
+            // } else if (entityTopY > nextY && entityLeftX > nextX) {
+            //     System.out.println("5");
+            //     move(Direction.WEST);
+            // } else if (entityTopY > nextY && entityLeftX < nextX) {
+            //     System.out.println("6");
+            //     move(Direction.EAST);
+            // } else if (entityTopY < nextY && entityLeftX > nextX) {
+            //     System.out.println("7");
+            //     move(Direction.WEST);
+            // } else if (entityTopY < nextY && entityLeftX < nextX) {
+            //     System.out.println("8");
+            //     move(Direction.EAST);
+            // }
+
+        }
     }
 
     public void update() {
-        Tile[] path = pather.findPath(game.entityController.player);
-        System.out.println("START OF PATH");
-        for (Tile t : path) {
-            t.print();
+
+        if (onPath) {
+            searchPath(game.entityController.player.getTile());
         }
-        System.out.println("END OF PATH");
+
+        updatePosition(true);
+
     }
 
     public void draw(Graphics2D g2d) {

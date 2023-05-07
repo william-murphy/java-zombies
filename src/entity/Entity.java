@@ -2,6 +2,7 @@ package entity;
 
 import game.Game;
 import game.KeyHandler.Direction;
+import game.CollisionChecker;
 import tile.Tile;
 import tile.TileController;
 
@@ -18,6 +19,7 @@ public class Entity {
     public int speed;
     public Direction direction;
     public boolean moving = false;
+    public boolean onPath = false;
 
     public Rectangle hitbox;
     public boolean collision = false;
@@ -27,6 +29,63 @@ public class Entity {
 
     public Tile getTile() {
         return TileController.map[this.hitbox.x / Game.tileSize][this.hitbox.y / Game.tileSize];
+    }
+
+    public void move(Direction direction) {
+        this.moving = true;
+        this.direction = direction;
+    }
+
+    public void stopMove(Direction direction) {
+        if (this.direction == direction) {
+            this.moving = false;
+        }
+    }
+
+    protected void updatePosition(boolean zomb) {
+        if (moving) {
+            switch(direction) {
+                case NORTH:
+                    hitbox.translate(0, -speed);
+                    if (!CollisionChecker.checkTileCollision(this)) {
+                        y -= speed;
+                    }else {
+                        hitbox.translate(0, speed);
+                    }
+                    break;
+                case SOUTH:
+                    hitbox.translate(0, speed);
+                    if (!CollisionChecker.checkTileCollision(this)) {
+                        y += speed;
+                    }else {
+                        hitbox.translate(0, -speed);
+                    }
+                    break;
+                case EAST:
+                    hitbox.translate(speed, 0);
+                    if (!CollisionChecker.checkTileCollision(this)) {
+                        x += speed;
+                    }else {
+                        hitbox.translate(-speed, 0);
+                    }
+                    break;
+                case WEST:
+                    hitbox.translate(-speed, 0);
+                    if (!CollisionChecker.checkTileCollision(this)) {
+                        x -= speed;
+                    }else {
+                        hitbox.translate(speed, 0);
+                    }
+                    break;
+            }
+
+            animationCounter++;
+            if (animationCounter > 15) {
+                animationStep = !animationStep;
+                animationCounter = 0;
+            }
+
+        }
     }
 
     public void update() {

@@ -33,65 +33,12 @@ public class Player extends Entity {
         health = maxHealth;
     }
 
-    public void move(Direction direction) {
-        this.moving = true;
-        this.direction = direction;
-    }
-
-    public void stopMove(Direction direction) {
-        if (this.direction == direction) {
-            this.moving = false;
-        }
-    }
-
     public void update() {
 
-        if (moving) {
+        updatePosition(false);
 
-            switch(direction) {
-                case NORTH:
-                    hitbox.translate(0, -speed);
-                    if (!this.game.collisionChecker.checkTileCollision(this)) {
-                        y -= speed;
-                    }else {
-                        hitbox.translate(0, speed);
-                    }
-                    break;
-                case SOUTH:
-                    hitbox.translate(0, speed);
-                    if (!this.game.collisionChecker.checkTileCollision(this)) {
-                        y += speed;
-                    }else {
-                        hitbox.translate(0, -speed);
-                    }
-                    break;
-                case EAST:
-                    hitbox.translate(speed, 0);
-                    if (!this.game.collisionChecker.checkTileCollision(this)) {
-                        x += speed;
-                    }else {
-                        hitbox.translate(-speed, 0);
-                    }
-                    break;
-                case WEST:
-                    hitbox.translate(-speed, 0);
-                    if (!this.game.collisionChecker.checkTileCollision(this)) {
-                        x -= speed;
-                    }else {
-                        hitbox.translate(speed, 0);
-                    }
-                    break;
-            }
+        game.camera.update(x, y);
 
-            game.camera.update(x, y);
-
-            animationCounter++;
-            if (animationCounter > 15) {
-                animationStep = !animationStep;
-                animationCounter = 0;
-            }
-
-        }
     }
 
     public void draw(Graphics2D g2d) {

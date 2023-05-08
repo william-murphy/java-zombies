@@ -22,41 +22,22 @@ public class Pathfinder {
 
     public void instantiateNodes() {
         node = new Node[TileController.mapCols][TileController.mapRows];
-
-        int row = 0;
-        int col = 0;
-
-        while (col < TileController.mapCols && row < TileController.mapRows) {
-
-            node[col][row] = new Node(col, row);
-
-            col++;
-            if (col == TileController.mapCols) {
-                col = 0;
-                row++;
+        for (int row = 0; row < TileController.mapRows; row++) {
+            for (int col = 0; col < TileController.mapCols; col++) {
+                node[col][row] = new Node(col, row);
             }
-
         }
     }
 
     public void resetNodes() {
         
-        int col = 0;
-        int row = 0;
-
-        while (col < TileController.mapCols && row < TileController.mapRows) {
-
-            // reset open, checked, and solid state
-            node[col][row].open = false;
-            node[col][row].checked = false;
-            node[col][row].solid = false;
-
-            col++;
-            if (col == TileController.mapCols) {
-                col = 0;
-                row++;
+        for (int row = 0; row < TileController.mapRows; row++) {
+            for (int col = 0; col < TileController.mapCols; col++) {
+                // reset open, checked, and solid state
+                node[col][row].open = false;
+                node[col][row].checked = false;
+                node[col][row].solid = false;
             }
-
         }
 
         // reset other data structures
@@ -74,23 +55,13 @@ public class Pathfinder {
         currentNode = startNode;
         goalNode = node[goalCol][goalRow];
 
-        int col = 0;
-        int row = 0;
-
-        while (col < TileController.mapCols && row < TileController.mapRows) {
-
-            // set node solid property if collision is true
-            node[col][row].solid = TileController.map[col][row].collision;
-
-            // set cost
-            getCost(node[col][row]);
-
-            col++;
-            if (col == TileController.mapCols) {
-                col = 0;
-                row++;
+        for (int row = 0; row < TileController.mapRows; row++) {
+            for (int col = 0; col < TileController.mapCols; col++) {
+                // set node solid property if collision is true
+                node[col][row].solid = TileController.map[col][row].collision;
+                // set cost
+                getCost(node[col][row]);
             }
-
         }
 
     }

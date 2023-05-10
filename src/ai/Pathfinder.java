@@ -8,6 +8,7 @@ import java.lang.Math;
 
 public class Pathfinder {
     
+    Entity entity;
     Node[][] node;
     ArrayList<Node> openList = new ArrayList<>();
     public ArrayList<Node> pathList = new ArrayList<>();
@@ -16,7 +17,8 @@ public class Pathfinder {
     boolean goalReached = false;
     int step = 0;
 
-    public Pathfinder() {
+    public Pathfinder(Entity entity) {
+        this.entity = entity;
         instantiateNodes();
     }
 
@@ -48,7 +50,7 @@ public class Pathfinder {
 
     }
 
-    public void setNodes(int startCol, int startRow, int goalCol, int goalRow, Entity entity) {
+    public void setNodes(int startCol, int startRow, int goalCol, int goalRow) {
         resetNodes();
 
         startNode = node[startCol][startRow];

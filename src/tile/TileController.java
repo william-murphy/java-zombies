@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.lang.Math;
-import java.awt.Color;
 
 import game.Game;
 
@@ -70,15 +69,6 @@ public class TileController {
                 }
             }
         }
-
-        // draw path for debugging
-        g2d.setColor(new Color(255, 0, 0, 70));
-        for (int i=0; i < game.pathFinder.pathList.size(); i++) {
-            int screenX = (game.pathFinder.pathList.get(i).col * Game.tileSize) - game.entityController.player.x + game.entityController.player.screenX;
-            int screenY = (game.pathFinder.pathList.get(i).row * Game.tileSize) - game.entityController.player.y + game.entityController.player.screenY;
-            g2d.fillRect(screenX, screenY, Game.tileSize, Game.tileSize);
-        }
-
     }
 
     public static void setMapDimensions() {

@@ -42,7 +42,7 @@ public class Entity {
         }
     }
 
-    protected void updatePosition(boolean zomb) {
+    protected void updatePosition() {
         if (moving) {
             switch(direction) {
                 case NORTH:

@@ -3,24 +3,28 @@ package entity;
 import game.Game;
 import game.KeyHandler.Direction;
 import tile.Tile;
+import ai.Pathfinder;
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Color;
 
 public class Zombie extends Entity {
 
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
 
     Game game;
+    Pathfinder pathFinder;
 
     public Zombie(Game game, int spawnX, int spawnY) {
         this.game = game;
         this.x = spawnX;
         this.y = spawnY;
         this.hitbox = new Rectangle(spawnX + (Game.tileSize / 4), spawnY + (Game.tileSize / 2), Game.tileSize / 2, Game.tileSize / 2);
+        this.pathFinder = new Pathfinder(this);
         setDefaultValues();
     }
 
@@ -34,12 +38,12 @@ public class Zombie extends Entity {
 
     public void searchPath(Tile goal) {
         Tile start = this.getTile();
-        game.pathFinder.setNodes(start.col, start.row, goal.col, goal.row, this);
+        pathFinder.setNodes(start.col, start.row, goal.col, goal.row);
 
-        if (game.pathFinder.search()) {
+        if (pathFinder.search()) {
             // next world x and world y
-            int nextX = game.pathFinder.pathList.get(0).col * Game.tileSize;
-            int nextY = game.pathFinder.pathList.get(0).row * Game.tileSize;
+            int nextX = pathFinder.pathList.get(0).col * Game.tileSize;
+            int nextY = pathFinder.pathList.get(0).row * Game.tileSize;
 
             // entity current position
             int entityLeftX = hitbox.x;
@@ -83,7 +87,7 @@ public class Zombie extends Entity {
             searchPath(game.entityController.player.getTile());
         }
 
-        updatePosition(true);
+        updatePosition();
 
     }
 
@@ -126,6 +130,14 @@ public class Zombie extends Entity {
         screenY = game.camera.calculateScreenY(this.y);
 
         g2d.drawImage(image, screenX, screenY, Game.tileSize / 2, Game.tileSize, null);
+
+        // draw path for debugging
+        g2d.setColor(new Color(255, 0, 0, 70));
+        for (int i=0; i < pathFinder.pathList.size(); i++) {
+            int screenX = (pathFinder.pathList.get(i).col * Game.tileSize) - game.entityController.player.x + game.entityController.player.screenX;
+            int screenY = (pathFinder.pathList.get(i).row * Game.tileSize) - game.entityController.player.y + game.entityController.player.screenY;
+            g2d.fillRect(screenX, screenY, Game.tileSize, Game.tileSize);
+        }
     }
 
     public static void loadImages() {

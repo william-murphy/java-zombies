@@ -35,7 +35,7 @@ public class Player extends Entity {
 
     public void update() {
 
-        updatePosition(false);
+        updatePosition();
 
         game.camera.update(x, y);
 

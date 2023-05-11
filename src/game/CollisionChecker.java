@@ -15,14 +15,13 @@ public class CollisionChecker {
     public static boolean checkTileCollision(Entity entity) {
         switch (entity.direction) {
             case NORTH:
-                // System.out.println("hello");
-                return (TileController.map[entity.hitbox.x / Game.tileSize][entity.hitbox.y / Game.tileSize].collides(entity.hitbox) || TileController.map[(entity.hitbox.x + entity.hitbox.width) / Game.tileSize][entity.hitbox.y / Game.tileSize].collides(entity.hitbox));
+                return (TileController.map[entity.hitbox.x / Game.tileSize][entity.hitbox.y / Game.tileSize].collides(entity) || TileController.map[(entity.hitbox.x + entity.hitbox.width) / Game.tileSize][entity.hitbox.y / Game.tileSize].collides(entity));
             case SOUTH:
-                return (TileController.map[entity.hitbox.x / Game.tileSize][(entity.hitbox.y + entity.hitbox.height) / Game.tileSize].collides(entity.hitbox) || TileController.map[(entity.hitbox.x + entity.hitbox.width) / Game.tileSize][(entity.hitbox.y + entity.hitbox.height) / Game.tileSize].collides(entity.hitbox));
+                return (TileController.map[entity.hitbox.x / Game.tileSize][(entity.hitbox.y + entity.hitbox.height) / Game.tileSize].collides(entity) || TileController.map[(entity.hitbox.x + entity.hitbox.width) / Game.tileSize][(entity.hitbox.y + entity.hitbox.height) / Game.tileSize].collides(entity));
             case EAST:
-                return (TileController.map[(entity.hitbox.x + entity.hitbox.width) / Game.tileSize][entity.hitbox.y / Game.tileSize].collides(entity.hitbox) || TileController.map[(entity.hitbox.x + entity.hitbox.width) / Game.tileSize][(entity.hitbox.y + entity.hitbox.height) / Game.tileSize].collides(entity.hitbox));
+                return (TileController.map[(entity.hitbox.x + entity.hitbox.width) / Game.tileSize][entity.hitbox.y / Game.tileSize].collides(entity) || TileController.map[(entity.hitbox.x + entity.hitbox.width) / Game.tileSize][(entity.hitbox.y + entity.hitbox.height) / Game.tileSize].collides(entity));
             case WEST:
-                return (TileController.map[entity.hitbox.x / Game.tileSize][entity.hitbox.y / Game.tileSize].collides(entity.hitbox) || TileController.map[entity.hitbox.x / Game.tileSize][(entity.hitbox.y + entity.hitbox.height) / Game.tileSize].collides(entity.hitbox));
+                return (TileController.map[entity.hitbox.x / Game.tileSize][entity.hitbox.y / Game.tileSize].collides(entity) || TileController.map[entity.hitbox.x / Game.tileSize][(entity.hitbox.y + entity.hitbox.height) / Game.tileSize].collides(entity));
         }
         return false;
     }

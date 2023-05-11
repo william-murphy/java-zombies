@@ -1,10 +1,13 @@
 package tile;
 
 import game.Game;
+import game.KeyHandler.Direction;
+import game.Collidable;
+import entity.Entity;
 
 import java.awt.Rectangle;
 
-public class Tile {
+public class Tile implements Collidable {
     
     public final int imageIndex;
     public final Rectangle hitbox;
@@ -36,8 +39,39 @@ public class Tile {
         }
     }
 
-    public boolean collides(Rectangle other) {
-        return this.collision && this.hitbox.intersects(other);
+    public boolean contains(Entity entity) {
+        return this.hitbox.contains(entity.hitbox);
+    }
+
+    public boolean fitsHorizontally(Entity entity) {
+        return (this.hitbox.x < entity.hitbox.x && entity.hitbox.x + entity.hitbox.width < this.hitbox.x + this.hitbox.width);
+    }
+
+    public boolean fitsVertically(Entity entity) {
+        return (this.hitbox.y < entity.hitbox.y && entity.hitbox.y + entity.hitbox.height < this.hitbox.y + this.hitbox.height);
+    }
+
+    @Override
+    public Rectangle getHitbox() {
+        return this.hitbox;
+    }
+
+    @Override
+    public boolean collides(Collidable other) {
+        return this.collision && this.hitbox.intersects(other.getHitbox());
+    }
+
+    public Direction getDirection(Tile other) {
+        if (other.row == this.row - 1) {
+            return Direction.NORTH;
+        } else if (other.row == this.row + 1) {
+            return Direction.SOUTH;
+        } else if (other.col == this.col - 1) {
+            return Direction.WEST;
+        } else if (other.col == this.col + 1) {
+            return Direction.EAST;
+        }
+        return null;
     }
 
     @Override

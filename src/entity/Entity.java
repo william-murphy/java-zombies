@@ -1,6 +1,7 @@
 package entity;
 
 import game.Game;
+import game.Collidable;
 import game.KeyHandler.Direction;
 import game.CollisionChecker;
 import tile.Tile;
@@ -9,7 +10,7 @@ import tile.TileController;
 import java.awt.Rectangle;
 import java.awt.Graphics2D;
 
-public class Entity {
+public class Entity implements Collidable {
     public int x, y;
     public int screenX, screenY;
 
@@ -86,6 +87,16 @@ public class Entity {
             }
 
         }
+    }
+
+    @Override
+    public Rectangle getHitbox() {
+        return this.hitbox;
+    }
+
+    @Override
+    public boolean collides(Collidable other) {
+        return this.collision && this.hitbox.intersects(other.getHitbox());
     }
 
     public void update() {

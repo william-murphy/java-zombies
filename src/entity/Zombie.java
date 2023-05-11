@@ -2,7 +2,7 @@ package entity;
 
 import game.Game;
 import game.KeyHandler.Direction;
-import tile.Tile;
+import tile.*;
 import ai.Pathfinder;
 
 import java.io.IOException;
@@ -38,46 +38,15 @@ public class Zombie extends Entity {
 
     public void searchPath(Tile goal) {
         Tile start = this.getTile();
+        if (start == goal) {
+            return;
+        }
         pathFinder.setNodes(start.col, start.row, goal.col, goal.row);
 
         if (pathFinder.search()) {
-            // next world x and world y
-            int nextX = pathFinder.pathList.get(0).col * Game.tileSize;
-            int nextY = pathFinder.pathList.get(0).row * Game.tileSize;
-
-            // entity current position
-            int entityLeftX = hitbox.x;
-            int entityRightX = hitbox.x + hitbox.width;
-            int entityTopY = hitbox.y;
-            int entityBottomY = hitbox.y + hitbox.height;
-
-            // determine player direction
-            if (entityTopY > nextY && entityLeftX >= nextX && entityRightX < nextX + Game.tileSize) {
-                move(Direction.NORTH);
-            } else if (entityTopY < nextY && entityLeftX >= nextX && entityRightX < nextX + Game.tileSize) {
-                move(Direction.SOUTH);
-            } else if (entityTopY >= nextY && entityBottomY < nextY + Game.tileSize) {
-                if (entityLeftX > nextX) {
-                    move(Direction.WEST);
-                }
-                if (entityLeftX < nextX) {
-                    move(Direction.EAST);
-                }
-            }
-            // } else if (entityTopY > nextY && entityLeftX > nextX) {
-            //     System.out.println("5");
-            //     move(Direction.WEST);
-            // } else if (entityTopY > nextY && entityLeftX < nextX) {
-            //     System.out.println("6");
-            //     move(Direction.EAST);
-            // } else if (entityTopY < nextY && entityLeftX > nextX) {
-            //     System.out.println("7");
-            //     move(Direction.WEST);
-            // } else if (entityTopY < nextY && entityLeftX < nextX) {
-            //     System.out.println("8");
-            //     move(Direction.EAST);
-            // }
-
+            Tile next = TileController.getTile(pathFinder.pathList.get(0).col, pathFinder.pathList.get(0).row);
+            Direction nextDirection = start.getDirection(next);
+            move(nextDirection);
         }
     }
 

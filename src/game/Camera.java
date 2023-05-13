@@ -2,8 +2,6 @@ package game;
 
 import tile.TileController;
 
-import java.lang.Math;
-
 public class Camera {
     
     Game game;

@@ -100,12 +100,19 @@ public class Zombie extends Entity {
 
         g2d.drawImage(image, screenX, screenY, Game.tileSize / 2, Game.tileSize, null);
 
-        // draw path for debugging
-        g2d.setColor(new Color(255, 0, 0, 70));
-        for (int i=0; i < pathFinder.pathList.size(); i++) {
-            int screenX = (pathFinder.pathList.get(i).col * Game.tileSize) - game.entityController.player.x + game.entityController.player.screenX;
-            int screenY = (pathFinder.pathList.get(i).row * Game.tileSize) - game.entityController.player.y + game.entityController.player.screenY;
-            g2d.fillRect(screenX, screenY, Game.tileSize, Game.tileSize);
+        //DEBUG
+
+        if (true) {
+            // draw path
+            g2d.setColor(new Color(255, 0, 0, 70));
+            for (int i=0; i < pathFinder.pathList.size(); i++) {
+                int screenX = (pathFinder.pathList.get(i).col * Game.tileSize) - game.entityController.player.x + game.entityController.player.screenX;
+                int screenY = (pathFinder.pathList.get(i).row * Game.tileSize) - game.entityController.player.y + game.entityController.player.screenY;
+                g2d.fillRect(screenX, screenY, Game.tileSize, Game.tileSize);
+            }
+            // draw zombie hitbox
+            g2d.setColor(Color.YELLOW);
+            g2d.drawRect(game.camera.calculateScreenX(hitbox.x), game.camera.calculateScreenY(hitbox.y), hitbox.width, hitbox.height);
         }
     }
 

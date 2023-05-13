@@ -84,7 +84,7 @@ public class Player extends Entity {
 
         //DEBUG
 
-        if (true) {
+        if (game.debug) {
             // draw zombie hitbox
             g2d.setColor(Color.YELLOW);
             g2d.drawRect(game.camera.calculateScreenX(hitbox.x), game.camera.calculateScreenY(hitbox.y), hitbox.width, hitbox.height);

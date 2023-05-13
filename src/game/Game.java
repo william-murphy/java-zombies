@@ -30,6 +30,8 @@ public class Game extends JPanel implements Runnable {
         Hud.loadImages();
     }
 
+    public boolean debug = false;
+
     public static final int FPS = 60;
     public int tick = 0;
     private static final int ticksBeforeReset = 10 * FPS; // 10 seconds

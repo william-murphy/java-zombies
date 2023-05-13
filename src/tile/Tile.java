@@ -1,8 +1,8 @@
 package tile;
 
 import game.Game;
-import game.KeyHandler.Direction;
-import game.Collidable;
+import common.Direction;
+import common.Collidable;
 import entity.Entity;
 
 import java.awt.Rectangle;

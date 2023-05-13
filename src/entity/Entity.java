@@ -1,8 +1,8 @@
 package entity;
 
 import game.Game;
-import game.Collidable;
-import game.KeyHandler.Direction;
+import common.Direction;
+import common.Collidable;
 import game.CollisionChecker;
 import tile.Tile;
 import tile.TileController;

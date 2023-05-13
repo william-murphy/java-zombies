@@ -1,7 +1,7 @@
 package entity;
 
 import game.Game;
-import game.KeyHandler.Direction;
+import common.Direction;
 
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;

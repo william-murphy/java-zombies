@@ -1,7 +1,7 @@
 package entity;
 
 import game.Game;
-import game.KeyHandler.Direction;
+import common.Direction;
 import tile.*;
 import ai.Pathfinder;
 
@@ -45,6 +45,7 @@ public class Zombie extends Entity {
 
         if (pathFinder.search()) {
             Tile next = TileController.getTile(pathFinder.pathList.get(0).col, pathFinder.pathList.get(0).row);
+            
             Direction nextDirection = start.getDirection(next);
             move(nextDirection);
         }

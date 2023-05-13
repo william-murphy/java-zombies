@@ -1,5 +1,7 @@
 package game;
 
+import common.Direction;
+
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.ActionMap;
@@ -10,14 +12,6 @@ import java.awt.event.ActionEvent;
 public class KeyHandler {
 
     Game game;
-    
-    public static enum Direction { 
-        NORTH, SOUTH, EAST, WEST;
-        public static final int size;
-        static {
-           size = values().length;
-        } 
-    };
 
     public KeyHandler(Game game) {
         this.game = game;

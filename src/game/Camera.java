@@ -41,11 +41,11 @@ public class Camera {
     }
 
     public int calculateScreenX(int worldX) {
-        return -1 * (this.x - worldX - this.screenX);
+        return -(this.x - worldX - this.screenX);
     }
 
     public int calculateScreenY(int worldY) {
-        return -1 * (this.y - worldY - this.screenY);
+        return -(this.y - worldY - this.screenY);
     }
 
     public int calculateTileX(int col) {

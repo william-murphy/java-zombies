@@ -23,7 +23,7 @@ public class Zombie extends Entity {
         this.game = game;
         this.x = spawnX;
         this.y = spawnY;
-        this.hitbox = new Rectangle(spawnX + (Game.tileSize / 4), spawnY + (Game.tileSize / 2), Game.tileSize / 2, Game.tileSize / 2);
+        this.hitbox = new Rectangle(this.x + (Game.tileSize / 4), this.y + (Game.tileSize / 2), Game.tileSize / 2, Game.tileSize / 2);
         this.pathFinder = new Pathfinder(this);
         setDefaultValues();
     }

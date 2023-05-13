@@ -5,10 +5,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import game.Game;
+import tile.TileController;
 
 public class EntityController {
     
     Game game;
+
+    //player spawn
+    public static final int playerSpawnX = (TileController.worldWidth / 2) - (Game.tileSize / 2);;
+    public static final int playerSpawnY = (TileController.worldHeight / 2) - (Game.tileSize / 2);
     
     public Player player;
     private int total = 1;
@@ -18,7 +23,7 @@ public class EntityController {
 
     public EntityController(Game game) {
         this.game = game;
-        this.player = new Player(game);
+        this.player = new Player(game, playerSpawnX, playerSpawnY);
         entities.add(player);
     }
 

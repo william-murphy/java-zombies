@@ -23,10 +23,6 @@ public class TileController {
     public static int worldWidth;
     public static int worldHeight;
 
-    //player spawn
-    public static int playerSpawnX;
-    public static int playerSpawnY;
-
     //map
     public static Tile[][] map;
 
@@ -85,8 +81,6 @@ public class TileController {
             mapRows = count;
             worldWidth = mapCols * Game.tileSize;
             worldHeight = mapRows * Game.tileSize;
-            playerSpawnX = (worldWidth / 2) - (Game.tileSize / 2);
-            playerSpawnY = (worldHeight / 2) - (Game.tileSize / 2);
         } catch (Exception e) {
             e.printStackTrace();
         }

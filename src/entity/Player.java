@@ -1,7 +1,6 @@
 package entity;
 
 import game.Game;
-import tile.TileController;
 import game.KeyHandler.Direction;
 
 import java.awt.Graphics2D;
@@ -16,15 +15,15 @@ public class Player extends Entity {
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
     public int spawnZombieRadius;
 
-    public Player(Game game) {
+    public Player(Game game, int spawnX, int spawnY) {
         this.game = game;
-        this.hitbox = new Rectangle(TileController.playerSpawnX + (Game.tileSize / 4), TileController.playerSpawnY + (Game.tileSize / 2), Game.tileSize / 2, Game.tileSize / 2);
+        this.x = spawnX;
+        this.y = spawnY;
+        this.hitbox = new Rectangle(this.x + (Game.tileSize / 4), this.y + (Game.tileSize / 2), Game.tileSize / 2, Game.tileSize / 2);
         setDefaultValues();
     }
 
     private void setDefaultValues() {
-        x = TileController.playerSpawnX;
-        y = TileController.playerSpawnY;
         speed = 4;
         direction = Direction.SOUTH;
         moving = false;

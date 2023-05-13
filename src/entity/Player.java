@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
+import java.awt.Color;
 
 public class Player extends Entity {
 
@@ -80,6 +81,14 @@ public class Player extends Entity {
         screenY = game.camera.calculateScreenY(this.y);
 
         g2d.drawImage(image, screenX, screenY, Game.tileSize, Game.tileSize, null);
+
+        //DEBUG
+
+        if (true) {
+            // draw zombie hitbox
+            g2d.setColor(Color.YELLOW);
+            g2d.drawRect(game.camera.calculateScreenX(hitbox.x), game.camera.calculateScreenY(hitbox.y), hitbox.width, hitbox.height);
+        }
     }
 
     public static void loadImages() {

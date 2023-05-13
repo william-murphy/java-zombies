@@ -32,6 +32,10 @@ public class Entity implements Collidable {
         return TileController.map[this.hitbox.x / Game.tileSize][this.hitbox.y / Game.tileSize];
     }
 
+    protected boolean canMove(Direction direction) {
+        return true;
+    }
+
     public void move(Direction direction) {
         this.moving = true;
         this.direction = direction;

@@ -47,7 +47,10 @@ public class Zombie extends Entity {
             Tile next = TileController.getTile(pathFinder.pathList.get(0).col, pathFinder.pathList.get(0).row);
             
             Direction nextDirection = start.getDirection(next);
-            move(nextDirection);
+            if (canMove(nextDirection)) {
+                move(nextDirection);
+            }
+
         }
     }
 

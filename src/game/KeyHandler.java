@@ -45,6 +45,9 @@ public class KeyHandler {
 
         inputMap.put(KeyStroke.getKeyStroke("released A"), "ra");
         actionMap.put("ra", new StopMoveAction(Direction.WEST));
+
+        inputMap.put(KeyStroke.getKeyStroke("pressed BACK_QUOTE"), "bq");
+        actionMap.put("bq", new EnableDebugAction());
     }
 
     private class MoveAction extends AbstractAction {
@@ -72,6 +75,15 @@ public class KeyHandler {
         @Override
         public void actionPerformed(ActionEvent e) {
             game.entityController.player.stopMove(ma);
+        }
+
+    }
+
+    private class EnableDebugAction extends AbstractAction {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            game.debug = !game.debug;
         }
 
     }

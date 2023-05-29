@@ -23,7 +23,7 @@ public class Entity implements Collidable {
     public boolean onPath = false;
 
     public Rectangle hitbox;
-    public boolean collision = false;
+    public boolean collision = true;
 
     public int maxHealth;
     public int health;
@@ -89,14 +89,14 @@ public class Entity implements Collidable {
         }
     }
 
-    @Override
-    public Rectangle getHitbox() {
-        return this.hitbox;
+    @Override 
+    public boolean getCollision() {
+        return this.collision;
     }
 
     @Override
-    public boolean collides(Collidable other) {
-        return this.collision && this.hitbox.intersects(other.getHitbox());
+    public Rectangle getHitbox() {
+        return this.hitbox;
     }
 
     public void update() {

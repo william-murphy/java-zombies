@@ -52,13 +52,13 @@ public class Tile implements Collidable {
     }
 
     @Override
-    public Rectangle getHitbox() {
-        return this.hitbox;
+    public boolean getCollision() {
+        return this.collision;
     }
 
     @Override
-    public boolean collides(Collidable other) {
-        return this.collision && this.hitbox.intersects(other.getHitbox());
+    public Rectangle getHitbox() {
+        return this.hitbox;
     }
 
     public Direction getDirection(Tile other) {

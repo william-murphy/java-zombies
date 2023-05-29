@@ -42,7 +42,6 @@ public class Game extends JPanel implements Runnable {
     public KeyHandler keyHandler = new KeyHandler(this);
     public TileController tileController = new TileController(this);
     public EntityController entityController = new EntityController(this);
-    public CollisionChecker collisionChecker = new CollisionChecker(this);
     public Camera camera = new Camera(this);
     public Hud hud = new Hud(this);
 

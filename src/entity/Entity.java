@@ -44,39 +44,23 @@ public class Entity implements Collidable {
     }
 
     protected void updatePosition() {
-        if (moving) {
+        if (moving && !CollisionChecker.checkTileCollision(this)) {
             switch(direction) {
                 case NORTH:
                     hitbox.translate(0, -speed);
-                    if (!CollisionChecker.checkTileCollision(this)) {
-                        y -= speed;
-                    }else {
-                        hitbox.translate(0, speed);
-                    }
+                    y -= speed;
                     break;
                 case SOUTH:
                     hitbox.translate(0, speed);
-                    if (!CollisionChecker.checkTileCollision(this)) {
-                        y += speed;
-                    }else {
-                        hitbox.translate(0, -speed);
-                    }
+                    y += speed;
                     break;
                 case EAST:
                     hitbox.translate(speed, 0);
-                    if (!CollisionChecker.checkTileCollision(this)) {
-                        x += speed;
-                    }else {
-                        hitbox.translate(-speed, 0);
-                    }
+                    x += speed;
                     break;
                 case WEST:
                     hitbox.translate(-speed, 0);
-                    if (!CollisionChecker.checkTileCollision(this)) {
-                        x -= speed;
-                    }else {
-                        hitbox.translate(speed, 0);
-                    }
+                    x -= speed;
                     break;
             }
 

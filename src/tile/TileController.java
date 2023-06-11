@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.lang.Math;
+import java.awt.Color;
 
 import game.Game;
 
@@ -61,7 +62,15 @@ public class TileController {
             for (int col=0; col < mapCols; col++) {
                 //only render visible tiles to improve rendering efficiency
                 if (game.camera.shouldRenderTile(col, row)) {
-                    g2d.drawImage(tileImages[map[col][row].imageIndex], game.camera.calculateTileX(col), game.camera.calculateTileY(row), Game.tileSize, Game.tileSize, null);
+                    int tileX = game.camera.calculateTileX(col);
+                    int tileY = game.camera.calculateTileY(row);
+                    g2d.drawImage(tileImages[map[col][row].imageIndex], tileX, tileY, Game.tileSize, Game.tileSize, null);
+                    
+                    //DEBUG
+                    if (game.debug) {
+                        g2d.setColor(Color.WHITE);
+                        g2d.drawString(String.format("%d, %d", col, row), tileX, tileY);
+                    }
                 }
             }
         }

@@ -22,8 +22,8 @@ public class Tile implements Collidable {
         initializeCollision();
     }
 
-    public void print() {
-        System.out.println(String.format("Image: %d, Column: %d, Row: %d", this.imageIndex, this.col, this.row));
+    public String toString() {
+        return String.format("Image: %d, Column: %d, Row: %d", this.imageIndex, this.col, this.row);
     }
 
     private void initializeCollision() {

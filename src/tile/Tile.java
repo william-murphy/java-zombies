@@ -1,16 +1,13 @@
 package tile;
 
 import game.Game;
-import common.Direction;
-import common.Collidable;
+import common.*;
 import entity.Entity;
 
-import java.awt.Rectangle;
-
-public class Tile implements Collidable {
+public class Tile implements Collidable, Drawable {
     
     public final int imageIndex;
-    public final Rectangle hitbox;
+    public final Hitbox hitbox;
     public final int col, row;
     public boolean collision;
 
@@ -18,25 +15,12 @@ public class Tile implements Collidable {
         this.imageIndex = imageIndex;
         this.col = col;
         this.row = row;
-        this.hitbox = new Rectangle(col * Game.tileSize, row * Game.tileSize, Game.tileSize, Game.tileSize);
+        this.hitbox = new Hitbox(col * Game.tileSize, row * Game.tileSize, Game.tileSize, Game.tileSize);
         initializeCollision();
     }
 
     public String toString() {
-        return String.format("Image: %d, Column: %d, Row: %d", this.imageIndex, this.col, this.row);
-    }
-
-    private void initializeCollision() {
-        switch (this.imageIndex) {
-            case 0:
-                this.collision = false;
-                break;
-            case 1:
-                this.collision = true;
-                break;
-            default:
-                this.collision = false;
-        }
+        return String.format("Column: %d, Row: %d%s", this.col, this.row, this.collision ? ", has collision" : "");
     }
 
     public boolean contains(Entity entity) {
@@ -57,8 +41,25 @@ public class Tile implements Collidable {
     }
 
     @Override
-    public Rectangle getHitbox() {
+    public Hitbox getHitbox() {
         return this.hitbox;
+    }
+
+    @Override
+    public int getWorldX() {
+        return col * Game.tileSize;
+    }
+
+    public int getWorldY() {
+        return row * Game.tileSize;
+    }
+
+    public int getHorizontalOffset() {
+        return 0;
+    }
+
+    public int getVerticalOffset() {
+        return 0;
     }
 
     public Direction getDirection(Tile other) {
@@ -84,6 +85,19 @@ public class Tile implements Collidable {
         }
         Tile t = (Tile) o;
         return this.col == t.col && this.row == t.row;
+    }
+
+    private void initializeCollision() {
+        switch (this.imageIndex) {
+            case 0:
+                this.collision = false;
+                break;
+            case 1:
+                this.collision = true;
+                break;
+            default:
+                this.collision = false;
+        }
     }
 
 }

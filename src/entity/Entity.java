@@ -1,17 +1,14 @@
 package entity;
 
 import game.Game;
-import common.Direction;
-import common.Collidable;
+import common.*;
 import game.CollisionChecker;
 import tile.Tile;
 import tile.TileController;
 
-import java.awt.Rectangle;
 import java.awt.Graphics2D;
 
 public class Entity implements Collidable {
-    public int x, y;
     public int screenX, screenY;
 
     public int animationCounter = 0;
@@ -22,11 +19,27 @@ public class Entity implements Collidable {
     public boolean moving = false;
     public boolean onPath = false;
 
-    public Rectangle hitbox;
+    public Hitbox hitbox;
     public boolean collision = true;
 
     public int maxHealth;
     public int health;
+
+    public int getNorthBound() {
+        return this.hitbox.y;
+    }
+
+    public int getSouthBound() {
+        return this.hitbox.y + this.hitbox.height;
+    }
+
+    public int getEastBound() {
+        return this.hitbox.x + this.hitbox.width;
+    }
+
+    public int getWestBound() {
+        return this.hitbox.x;
+    }
 
     public Tile getTile() {
         return TileController.map[this.hitbox.x / Game.tileSize][this.hitbox.y / Game.tileSize];
@@ -48,19 +61,15 @@ public class Entity implements Collidable {
             switch(direction) {
                 case NORTH:
                     hitbox.translate(0, -speed);
-                    y -= speed;
                     break;
                 case SOUTH:
                     hitbox.translate(0, speed);
-                    y += speed;
                     break;
                 case EAST:
                     hitbox.translate(speed, 0);
-                    x += speed;
                     break;
                 case WEST:
                     hitbox.translate(-speed, 0);
-                    x -= speed;
                     break;
             }
 
@@ -79,7 +88,7 @@ public class Entity implements Collidable {
     }
 
     @Override
-    public Rectangle getHitbox() {
+    public Hitbox getHitbox() {
         return this.hitbox;
     }
 

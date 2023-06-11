@@ -61,9 +61,9 @@ public class TileController {
         for (int row=0; row < mapRows; row++) {
             for (int col=0; col < mapCols; col++) {
                 //only render visible tiles to improve rendering efficiency
-                if (game.camera.shouldRenderTile(col, row)) {
-                    int tileX = game.camera.calculateTileX(col);
-                    int tileY = game.camera.calculateTileY(row);
+                if (game.camera.shouldRenderTile(map[col][row])) {
+                    int tileX = game.camera.calculateScreenX(map[col][row]);
+                    int tileY = game.camera.calculateScreenY(map[col][row]);
                     g2d.drawImage(tileImages[map[col][row].imageIndex], tileX, tileY, Game.tileSize, Game.tileSize, null);
                     
                     //DEBUG

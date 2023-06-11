@@ -30,8 +30,8 @@ public class EntityController {
     public void attemptZombieSpawn() {
         //attempt zombie spawn
         if (total < max && game.tick % spawnDelay == 0) {
-            final int x = game.random.nextInt((player.x + player.spawnZombieRadius) - (player.x - player.spawnZombieRadius)) + (player.x - player.spawnZombieRadius);
-            final int y = game.random.nextInt((player.y + player.spawnZombieRadius) - (player.y - player.spawnZombieRadius)) + (player.y - player.spawnZombieRadius);
+            final int x = game.random.nextInt((player.getWorldX() + player.spawnZombieRadius) - (player.getWorldX() - player.spawnZombieRadius)) + (player.getWorldX() - player.spawnZombieRadius);
+            final int y = game.random.nextInt((player.getWorldY() + player.spawnZombieRadius) - (player.getWorldY() - player.spawnZombieRadius)) + (player.getWorldY() - player.spawnZombieRadius);
             entities.add(new Zombie(game, x, y));
             total++;
         }

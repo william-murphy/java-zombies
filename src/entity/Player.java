@@ -1,16 +1,15 @@
 package entity;
 
 import game.Game;
-import common.Direction;
+import common.*;
 
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
-import java.awt.Rectangle;
 import java.awt.Color;
 
-public class Player extends Entity {
+public class Player extends Entity implements Drawable {
 
     Game game;
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
@@ -18,9 +17,8 @@ public class Player extends Entity {
 
     public Player(Game game, int spawnX, int spawnY) {
         this.game = game;
-        this.x = spawnX;
-        this.y = spawnY;
-        this.hitbox = new Rectangle(this.x + (Game.tileSize / 4), this.y + (Game.tileSize / 2), Game.tileSize / 2, Game.tileSize / 2);
+        // this.hitbox = new Rectangle(this.x + (Game.tileSize / 4), this.y + (Game.tileSize / 2), Game.tileSize / 2, Game.tileSize / 2);
+        this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
         setDefaultValues();
     }
 
@@ -37,7 +35,7 @@ public class Player extends Entity {
 
         updatePosition();
 
-        game.camera.update(x, y);
+        game.camera.update(this.getWorldX(), this.getWorldY());
 
     }
 
@@ -77,18 +75,38 @@ public class Player extends Entity {
                 break;
         }
 
-        screenX = game.camera.calculateScreenX(this.x);
-        screenY = game.camera.calculateScreenY(this.y);
+        screenX = game.camera.calculateScreenX(this);
+        screenY = game.camera.calculateScreenY(this);
 
         g2d.drawImage(image, screenX, screenY, Game.tileSize, Game.tileSize, null);
 
         //DEBUG
 
         if (game.debug) {
-            // draw zombie hitbox
+            // draw player hitbox
             g2d.setColor(Color.YELLOW);
-            g2d.drawRect(game.camera.calculateScreenX(hitbox.x), game.camera.calculateScreenY(hitbox.y), hitbox.width, hitbox.height);
+            g2d.drawRect(game.camera.calculateScreenX(this.hitbox), game.camera.calculateScreenY(this.hitbox), hitbox.width, hitbox.height);
         }
+    }
+
+    @Override
+    public int getWorldX() {
+        return this.hitbox.x;
+    }
+
+    @Override
+    public int getWorldY() {
+        return this.hitbox.y;
+    }
+
+    @Override
+    public int getHorizontalOffset() {
+        return Game.tileSize / 4;
+    }
+
+    @Override
+    public int getVerticalOffset() {
+        return Game.tileSize / 2;
     }
 
     public static void loadImages() {

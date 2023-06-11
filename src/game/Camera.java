@@ -1,6 +1,8 @@
 package game;
 
 import tile.TileController;
+import tile.Tile;
+import common.Drawable;
 
 public class Camera {
     
@@ -15,8 +17,8 @@ public class Camera {
 
     public Camera(Game game) {
         this.game = game;
-        this.x = game.entityController.player.x;
-        this.y = game.entityController.player.y;
+        this.x = game.entityController.player.getWorldX();
+        this.y = game.entityController.player.getWorldY();
     }
 
     public void update(int worldX, int worldY) {
@@ -29,31 +31,23 @@ public class Camera {
     }
 
     //given an x and y coordinate, check if that is in the bounds of the camera and thus should be rendered
-    public boolean shouldRenderTile(int col, int row) {
-        int mapCol = col * Game.tileSize;
-        int mapRow = row * Game.tileSize;
+    public boolean shouldRenderTile(Tile tile) {
+        int worldX = tile.getWorldX();
+        int worldY = tile.getWorldY();
         return(
-            mapCol >= this.x - cameraBoundaryX && 
-            mapCol <= this.x + cameraBoundaryX && 
-            mapRow >= this.y - cameraBoundaryY &&
-            mapRow <= this.y + cameraBoundaryY
+            worldX >= this.x - cameraBoundaryX && 
+            worldX <= this.x + cameraBoundaryX && 
+            worldY >= this.y - cameraBoundaryY &&
+            worldY <= this.y + cameraBoundaryY
         );
     }
 
-    public int calculateScreenX(int worldX) {
-        return -(this.x - worldX - this.screenX);
+    public int calculateScreenX(Drawable thing) {
+        return (thing.getWorldX() - thing.getHorizontalOffset()) + this.screenX - this.x;
     }
 
-    public int calculateScreenY(int worldY) {
-        return -(this.y - worldY - this.screenY);
-    }
-
-    public int calculateTileX(int col) {
-        return (col * Game.tileSize) - this.x + this.screenX;
-    }
-
-    public int calculateTileY(int row) {
-        return (row * Game.tileSize) - this.y + this.screenY;
+    public int calculateScreenY(Drawable thing) {
+        return (thing.getWorldY() - thing.getVerticalOffset()) + this.screenY - this.y;
     }
 
 }

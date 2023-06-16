@@ -17,7 +17,7 @@ public class CollisionChecker {
                     TileController.map[entity.getMaxX(entity.speed) / Game.tileSize][entity.getMaxY(0) / Game.tileSize]  
                 };
                 if ((tiles[0].collision && tiles[0].hitbox.getMinX() < entity.hitbox.getMaxX() + entity.speed) || (tiles[1].collision && tiles[1].hitbox.getMinX() < entity.hitbox.getMaxX() + entity.speed )) {
-                    return (int)(tiles[0].hitbox.getMinX() - entity.hitbox.getMaxX() - 1);
+                    return tiles[0].getMinX(0) - entity.getMaxX(0) - 1;
                 } else {
                     return entity.speed;
                 }
@@ -27,7 +27,7 @@ public class CollisionChecker {
                     TileController.map[entity.getMinX(entity.speed) / Game.tileSize][entity.getMaxY(0) / Game.tileSize]  
                 };
                 if ((tiles[0].collision && tiles[0].hitbox.getMaxX() > entity.hitbox.getMinX() - entity.speed) || (tiles[1].collision && tiles[1].hitbox.getMaxX() > entity.hitbox.getMinX() - entity.speed )) {
-                    return (int)(entity.hitbox.getMinX() - tiles[0].hitbox.getMaxX());
+                    return entity.getMinX(0) - tiles[0].getMaxX(0);
                 } else {
                     return entity.speed;
                 }
@@ -45,7 +45,7 @@ public class CollisionChecker {
                     TileController.map[entity.getMinX(0) / Game.tileSize][entity.getMinY(entity.speed) / Game.tileSize]  
                 };
                 if ((tiles[0].collision && tiles[0].hitbox.getMaxY() > (entity.hitbox.getMinY() - entity.speed)) || (tiles[1].collision && tiles[1].hitbox.getMaxY() > (entity.hitbox.getMinY() - entity.speed))) {
-                    return (int)(entity.hitbox.getMinY() - tiles[0].hitbox.getMaxY());
+                    return entity.getMinY(0) - tiles[0].getMaxY(0);
                 } else {
                     return entity.speed;
                 }
@@ -55,7 +55,7 @@ public class CollisionChecker {
                     TileController.map[entity.getMinX(0) / Game.tileSize][entity.getMaxY(entity.speed) / Game.tileSize]  
                 };
                 if ((tiles[0].collision && tiles[0].hitbox.getMinY() < (entity.hitbox.getMaxY() + entity.speed)) || (tiles[1].collision && tiles[1].hitbox.getMinY() < (entity.hitbox.getMaxY() + entity.speed))) {
-                    return (int)(tiles[0].hitbox.getMinY() - entity.hitbox.getMaxY() - 1);
+                    return tiles[0].getMinY(0) - entity.getMaxY(0) - 1;
                 } else {
                     return entity.speed;
                 }

@@ -87,10 +87,10 @@ public class Tile implements Collidable, Drawable {
             return Direction.NORTH;
         } else if (other.row == this.row + 1) {
             return Direction.SOUTH;
-        } else if (other.col == this.col - 1) {
-            return Direction.WEST;
         } else if (other.col == this.col + 1) {
             return Direction.EAST;
+        } else if (other.col == this.col - 1) {
+            return Direction.WEST;
         }
         return null;
     }

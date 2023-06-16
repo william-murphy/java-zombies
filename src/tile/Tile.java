@@ -20,7 +20,7 @@ public class Tile implements Collidable, Drawable {
     }
 
     public String toString() {
-        return String.format("Column: %d, Row: %d%s", this.col, this.row, this.collision ? ", has collision" : "");
+        return String.format("%d, %d%s", this.col, this.row, this.collision ? ", C" : "");
     }
 
     public boolean contains(Entity entity) {
@@ -43,6 +43,26 @@ public class Tile implements Collidable, Drawable {
     @Override
     public Hitbox getHitbox() {
         return this.hitbox;
+    }
+
+    @Override
+    public int getNorthBound(int padding) {
+        return (int)((this.hitbox.getMinY() - padding) / Game.tileSize);
+    }
+
+    @Override
+    public int getSouthBound(int padding) {
+        return (int)((this.hitbox.getMaxY() + padding) / Game.tileSize);
+    }
+
+    @Override
+    public int getEastBound(int padding) {
+        return (int)((this.hitbox.getMaxX() + padding) / Game.tileSize);
+    }
+
+    @Override
+    public int getWestBound(int padding) {
+        return (int)((this.hitbox.getMinX() - padding) / Game.tileSize);
     }
 
     @Override

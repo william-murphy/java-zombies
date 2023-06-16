@@ -36,7 +36,7 @@ public class TileController {
         return (Math.abs(one.col - two.col) + Math.abs(one.row - two.row));
     }
 
-    public static Tile getTile(int col, int row) {
+    private static Tile getTile(int col, int row) {
         Tile result;
         try {
             result = map[col][row];
@@ -69,7 +69,7 @@ public class TileController {
                     //DEBUG
                     if (game.debug) {
                         g2d.setColor(Color.WHITE);
-                        g2d.drawString(String.format("%d, %d", col, row), tileX, tileY);
+                        g2d.drawString(map[col][row].toString(), tileX, tileY + Game.tileSize / 4);
                     }
                 }
             }

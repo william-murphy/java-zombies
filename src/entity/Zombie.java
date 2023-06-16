@@ -43,7 +43,7 @@ public class Zombie extends Entity implements Drawable {
         pathFinder.setNodes(start.col, start.row, goal.col, goal.row);
 
         if (pathFinder.search()) {
-            Tile next = TileController.getTile(pathFinder.pathList.get(0).col, pathFinder.pathList.get(0).row);
+            Tile next = TileController.map[pathFinder.pathList.get(0).col][pathFinder.pathList.get(0).row];
             move(start.getDirection(next));
         }
     }

@@ -25,24 +25,11 @@ public class Entity implements Collidable {
     public int maxHealth;
     public int health;
 
-    public int getNorthBound() {
-        return this.hitbox.y;
-    }
-
-    public int getSouthBound() {
-        return this.hitbox.y + this.hitbox.height;
-    }
-
-    public int getEastBound() {
-        return this.hitbox.x + this.hitbox.width;
-    }
-
-    public int getWestBound() {
-        return this.hitbox.x;
-    }
+    // IDEA: For entity collision, what if entity list was priority queue by coordinate somehow, then when checking collision you only have to check the two closest in the x prio q and the y prio q
+    // IDEA: make a folder in entity and tile called controller and create a class Controller.java in each with any other classes they may need in there
 
     public Tile getTile() {
-        return TileController.map[this.hitbox.x / Game.tileSize][this.hitbox.y / Game.tileSize];
+        return TileController.map[(int)Math.round(this.hitbox.getCenterX() / Game.tileSize)][(int)Math.round(this.hitbox.getCenterY() / Game.tileSize)];
     }
 
     public void move(Direction direction) {
@@ -57,19 +44,19 @@ public class Entity implements Collidable {
     }
 
     protected void updatePosition() {
-        if (moving && !CollisionChecker.checkTileCollision(this)) {
+        if (moving) {
             switch(direction) {
                 case NORTH:
-                    hitbox.translate(0, -speed);
+                    hitbox.translate(0, -CollisionChecker.getNextYDistance(this));
                     break;
                 case SOUTH:
-                    hitbox.translate(0, speed);
+                    hitbox.translate(0, CollisionChecker.getNextYDistance(this));
                     break;
                 case EAST:
-                    hitbox.translate(speed, 0);
+                    hitbox.translate(CollisionChecker.getNextXDistance(this), 0);
                     break;
                 case WEST:
-                    hitbox.translate(-speed, 0);
+                    hitbox.translate(-CollisionChecker.getNextXDistance(this), 0);
                     break;
             }
 
@@ -90,6 +77,26 @@ public class Entity implements Collidable {
     @Override
     public Hitbox getHitbox() {
         return this.hitbox;
+    }
+
+    @Override
+    public int getNorthBound(int padding) {
+        return (int)((this.hitbox.getMinY() - padding) / Game.tileSize);
+    }
+
+    @Override
+    public int getSouthBound(int padding) {
+        return (int)((this.hitbox.getMaxY() + padding) / Game.tileSize);
+    }
+
+    @Override
+    public int getEastBound(int padding) {
+        return (int)((this.hitbox.getMaxX() + padding) / Game.tileSize);
+    }
+
+    @Override
+    public int getWestBound(int padding) {
+        return (int)((this.hitbox.getMinX() - padding) / Game.tileSize);
     }
 
     public void update() {

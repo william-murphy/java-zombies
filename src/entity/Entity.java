@@ -70,33 +70,28 @@ public class Entity implements Collidable {
     }
 
     @Override 
-    public boolean getCollision() {
+    public boolean hasCollision() {
         return this.collision;
     }
 
     @Override
-    public Hitbox getHitbox() {
-        return this.hitbox;
+    public int getMaxX(int padding) {
+        return this.hitbox.x + this.hitbox.width + padding;
     }
 
     @Override
-    public int getNorthBound(int padding) {
-        return (int)((this.hitbox.getMinY() - padding) / Game.tileSize);
+    public int getMinX(int padding) {
+        return this.hitbox.x - padding;
     }
 
     @Override
-    public int getSouthBound(int padding) {
-        return (int)((this.hitbox.getMaxY() + padding) / Game.tileSize);
+    public int getMaxY(int padding) {
+        return this.hitbox.y + this.hitbox.height + padding;
     }
 
     @Override
-    public int getEastBound(int padding) {
-        return (int)((this.hitbox.getMaxX() + padding) / Game.tileSize);
-    }
-
-    @Override
-    public int getWestBound(int padding) {
-        return (int)((this.hitbox.getMinX() - padding) / Game.tileSize);
+    public int getMinY(int padding) {
+        return this.hitbox.y - padding;
     }
 
     public void update() {

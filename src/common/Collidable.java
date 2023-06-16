@@ -2,17 +2,15 @@ package common;
 
 public interface Collidable {
 
-    public abstract boolean getCollision();
+    public abstract boolean hasCollision();
 
-    public abstract Hitbox getHitbox();
+    public abstract int getMaxX(int padding);
 
-    public abstract int getNorthBound(int padding);
+    public abstract int getMinX(int padding);
 
-    public abstract int getSouthBound(int padding);
+    public abstract int getMaxY(int padding);
 
-    public abstract int getEastBound(int padding);
-
-    public abstract int getWestBound(int padding);
+    public abstract int getMinY(int padding);
 
     // TODO: make an interface called Movable for things that are movable ... currently only Entity
 

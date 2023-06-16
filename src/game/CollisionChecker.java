@@ -13,8 +13,8 @@ public class CollisionChecker {
         switch (entity.direction) {
             case EAST:
                 tiles = new Tile[]{ 
-                    TileController.map[entity.getEastBound(entity.speed)][entity.getNorthBound(0)],
-                    TileController.map[entity.getEastBound(entity.speed)][entity.getSouthBound(0)]  
+                    TileController.map[entity.getMaxX(entity.speed) / Game.tileSize][entity.getMinY(0) / Game.tileSize],
+                    TileController.map[entity.getMaxX(entity.speed) / Game.tileSize][entity.getMaxY(0) / Game.tileSize]  
                 };
                 if ((tiles[0].collision && tiles[0].hitbox.getMinX() < entity.hitbox.getMaxX() + entity.speed) || (tiles[1].collision && tiles[1].hitbox.getMinX() < entity.hitbox.getMaxX() + entity.speed )) {
                     return (int)(tiles[0].hitbox.getMinX() - entity.hitbox.getMaxX() - 1);
@@ -23,8 +23,8 @@ public class CollisionChecker {
                 }
             case WEST:
                 tiles = new Tile[]{ 
-                    TileController.map[entity.getWestBound(entity.speed)][entity.getNorthBound(0)],
-                    TileController.map[entity.getWestBound(entity.speed)][entity.getSouthBound(0)]  
+                    TileController.map[entity.getMinX(entity.speed) / Game.tileSize][entity.getMinY(0) / Game.tileSize],
+                    TileController.map[entity.getMinX(entity.speed) / Game.tileSize][entity.getMaxY(0) / Game.tileSize]  
                 };
                 if ((tiles[0].collision && tiles[0].hitbox.getMaxX() > entity.hitbox.getMinX() - entity.speed) || (tiles[1].collision && tiles[1].hitbox.getMaxX() > entity.hitbox.getMinX() - entity.speed )) {
                     return (int)(entity.hitbox.getMinX() - tiles[0].hitbox.getMaxX());
@@ -41,8 +41,8 @@ public class CollisionChecker {
         switch (entity.direction) {
             case NORTH:
                 tiles = new Tile[]{ 
-                    TileController.map[entity.getEastBound(0)][entity.getNorthBound(entity.speed)],
-                    TileController.map[entity.getWestBound(0)][entity.getNorthBound(entity.speed)]  
+                    TileController.map[entity.getMaxX(0) / Game.tileSize][entity.getMinY(entity.speed) / Game.tileSize],
+                    TileController.map[entity.getMinX(0) / Game.tileSize][entity.getMinY(entity.speed) / Game.tileSize]  
                 };
                 if ((tiles[0].collision && tiles[0].hitbox.getMaxY() > (entity.hitbox.getMinY() - entity.speed)) || (tiles[1].collision && tiles[1].hitbox.getMaxY() > (entity.hitbox.getMinY() - entity.speed))) {
                     return (int)(entity.hitbox.getMinY() - tiles[0].hitbox.getMaxY());
@@ -51,8 +51,8 @@ public class CollisionChecker {
                 }
             case SOUTH:
                 tiles = new Tile[]{ 
-                    TileController.map[entity.getEastBound(0)][entity.getSouthBound(entity.speed)],
-                    TileController.map[entity.getWestBound(0)][entity.getSouthBound(entity.speed)]  
+                    TileController.map[entity.getMaxX(0) / Game.tileSize][entity.getMaxY(entity.speed) / Game.tileSize],
+                    TileController.map[entity.getMinX(0) / Game.tileSize][entity.getMaxY(entity.speed) / Game.tileSize]  
                 };
                 if ((tiles[0].collision && tiles[0].hitbox.getMinY() < (entity.hitbox.getMaxY() + entity.speed)) || (tiles[1].collision && tiles[1].hitbox.getMinY() < (entity.hitbox.getMaxY() + entity.speed))) {
                     return (int)(tiles[0].hitbox.getMinY() - entity.hitbox.getMaxY() - 1);

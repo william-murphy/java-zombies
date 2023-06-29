@@ -1,7 +1,6 @@
 package entity;
 
 import game.Game;
-import game.CollisionChecker;
 import common.*;
 import tile.Tile;
 import tile.TileController;
@@ -43,7 +42,7 @@ public class Zombie extends Entity implements Drawable {
         pathFinder.setNodes(start.col, start.row, goal.col, goal.row);
 
         if (pathFinder.search()) {
-            CollisionChecker.moveZombie(this, TileController.map[pathFinder.pathList.get(0).col][pathFinder.pathList.get(0).row]);
+            
         }
     }
 

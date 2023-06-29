@@ -36,25 +36,14 @@ public class TileController {
         return (Math.abs(one.col - two.col) + Math.abs(one.row - two.row));
     }
 
-    private static Tile getTile(int col, int row) {
+    public static Tile getTile(int x, int y) {
         Tile result;
         try {
-            result = map[col][row];
+            result = map[x / Game.tileSize][y / Game.tileSize];
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
         return result;
-    }
-
-    //returns an array of the neighbors of a tile in the form of [n, e, s, w] --- NOTE: later on it will be [n, ne, e, se, s, sw, w, nw]
-    public static Tile[] getTileNeighbors(Tile tile) {
-        //Tile[] neighbors = { map[tile.col][tile.row - 1], map[tile.col + 1][tile.row - 1], map[tile.col + 1][tile.row], map[tile.col + 1][tile.row + 1], map[tile.col][tile.row + 1], map[tile.col - 1][tile.row + 1], map[tile.col - 1][tile.row], map[tile.col - 1][tile.row - 1] };
-        return new Tile[] { 
-            getTile(tile.col, tile.row - 1), 
-            getTile(tile.col + 1, tile.row), 
-            getTile(tile.col, tile.row + 1), 
-            getTile(tile.col - 1, tile.row) 
-        };
     }
 
     public void drawTiles(Graphics2D g2d) {

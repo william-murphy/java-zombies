@@ -2,7 +2,6 @@ package entity;
 
 import game.Game;
 import common.*;
-import game.CollisionChecker;
 import tile.Tile;
 import tile.TileController;
 
@@ -47,16 +46,36 @@ public class Entity implements Collidable {
         if (moving) {
             switch(direction) {
                 case NORTH:
-                    hitbox.translate(0, -CollisionChecker.getNextYDistance(this));
+                    hitbox.translate(0, -speed);
+                    if (collides(TileController.getTile(hitbox.x, hitbox.y))) {
+                        hitbox.setLocation(hitbox.x, (int)TileController.getTile(hitbox.x, hitbox.y).getHitbox().getMaxY());
+                    } else if (collides(TileController.getTile(hitbox.x + hitbox.width, hitbox.y))) {
+                        hitbox.setLocation(hitbox.x, (int)TileController.getTile(hitbox.x + hitbox.width, hitbox.y).getHitbox().getMaxY());
+                    }
                     break;
                 case SOUTH:
-                    hitbox.translate(0, CollisionChecker.getNextYDistance(this));
+                    hitbox.translate(0, speed);
+                    if (collides(TileController.getTile(hitbox.x, hitbox.y + hitbox.height))) {
+                        hitbox.setLocation(hitbox.x, TileController.getTile(hitbox.x, hitbox.y + hitbox.height).getWorldY() - hitbox.height);
+                    } else if (collides(TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height))) {
+                        hitbox.setLocation(hitbox.x, TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getWorldY() - hitbox.height);
+                    }
                     break;
                 case EAST:
-                    hitbox.translate(CollisionChecker.getNextXDistance(this), 0);
+                    hitbox.translate(speed, 0);
+                    if (collides(TileController.getTile(hitbox.x + hitbox.width, hitbox.y))) {
+                        hitbox.setLocation(TileController.getTile(hitbox.x + hitbox.width, hitbox.y).getWorldX() - hitbox.width, hitbox.y);
+                    } else if (collides(TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height))) {
+                        hitbox.setLocation(TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getWorldX() - hitbox.width, hitbox.y);
+                    }
                     break;
                 case WEST:
-                    hitbox.translate(-CollisionChecker.getNextXDistance(this), 0);
+                    hitbox.translate(-speed, 0);
+                    if (collides(TileController.getTile(hitbox.x, hitbox.y))) {
+                        hitbox.setLocation((int)TileController.getTile(hitbox.x, hitbox.y).getHitbox().getMaxX(), hitbox.y);
+                    } else if (collides(TileController.getTile(hitbox.x, hitbox.y + hitbox.height))) {
+                        hitbox.setLocation((int)TileController.getTile(hitbox.x, hitbox.y + hitbox.height).getHitbox().getMaxX(), hitbox.y);
+                    }
                     break;
             }
 
@@ -75,35 +94,8 @@ public class Entity implements Collidable {
     }
 
     @Override
-    public Direction getDirection(Collidable other) {
-        double angle = CollisionChecker.angleBetweenPoints(this.getHitbox().getCenterX(), this.getHitbox().getCenterY(), other.getHitbox().getCenterX(), other.getHitbox().getCenterY());
-        System.out.println(angle);
-        return CollisionChecker.dirFromAngle(angle);
-    }
-
-    @Override
     public Hitbox getHitbox() {
         return hitbox;
-    }
-
-    @Override
-    public int getMaxX(int padding) {
-        return this.hitbox.x + this.hitbox.width + padding;
-    }
-
-    @Override
-    public int getMinX(int padding) {
-        return this.hitbox.x - padding;
-    }
-
-    @Override
-    public int getMaxY(int padding) {
-        return this.hitbox.y + this.hitbox.height + padding;
-    }
-
-    @Override
-    public int getMinY(int padding) {
-        return this.hitbox.y - padding;
     }
 
     public void update() {

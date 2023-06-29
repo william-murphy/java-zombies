@@ -1,6 +1,5 @@
 package entity;
 
-import game.Game;
 import common.*;
 import tile.Tile;
 import tile.TileController;
@@ -28,7 +27,7 @@ public class Entity implements Collidable {
     // IDEA: make a folder in entity and tile called controller and create a class Controller.java in each with any other classes they may need in there
 
     public Tile getTile() {
-        return TileController.map[(int)Math.round(this.hitbox.getCenterX() / Game.tileSize)][(int)Math.round(this.hitbox.getCenterY() / Game.tileSize)];
+        return TileController.getTile((int)hitbox.getCenterX(), (int)hitbox.getCenterY());
     }
 
     public void move(Direction direction) {

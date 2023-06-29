@@ -1,5 +1,8 @@
 package ai.pathfinder;
 
+import tile.Tile;
+import tile.TileController;
+
 public class Node {
     Node parent;
     public int col;
@@ -12,8 +15,12 @@ public class Node {
     boolean checked;
 
     public Node(int col, int row) {
-        this.row = row;
         this.col = col;
+        this.row = row;
+    }
+
+    public Tile toTile() {
+        return TileController.map[col][row];
     }
 
 }

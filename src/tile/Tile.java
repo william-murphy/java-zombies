@@ -1,5 +1,6 @@
 package tile;
 
+import game.CollisionChecker;
 import game.Game;
 import common.*;
 import entity.Entity;
@@ -39,6 +40,17 @@ public class Tile implements Collidable, Drawable {
     public boolean hasCollision() {
         return this.collision;
     }
+
+    @Override
+    public Hitbox getHitbox() {
+        return hitbox;
+    }
+
+    @Override
+    public Direction getDirection(Collidable other) {
+        double angle = CollisionChecker.angleBetweenPoints(this.getHitbox().getCenterX(), this.getHitbox().getCenterY(), other.getHitbox().getCenterX(), other.getHitbox().getCenterY());
+        return CollisionChecker.dirFromAngle(angle);
+    }
     
     @Override
     public int getMaxX(int padding) {
@@ -65,29 +77,19 @@ public class Tile implements Collidable, Drawable {
         return col * Game.tileSize;
     }
 
+    @Override
     public int getWorldY() {
         return row * Game.tileSize;
     }
 
+    @Override
     public int getHorizontalOffset() {
         return 0;
     }
 
+    @Override
     public int getVerticalOffset() {
         return 0;
-    }
-
-    public Direction getDirection(Tile other) {
-        if (other.row == this.row - 1) {
-            return Direction.NORTH;
-        } else if (other.row == this.row + 1) {
-            return Direction.SOUTH;
-        } else if (other.col == this.col + 1) {
-            return Direction.EAST;
-        } else if (other.col == this.col - 1) {
-            return Direction.WEST;
-        }
-        return null;
     }
 
     @Override

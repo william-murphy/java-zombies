@@ -1,4 +1,4 @@
-package ai;
+package ai.pathfinder;
 
 import tile.TileController;
 import entity.Entity;

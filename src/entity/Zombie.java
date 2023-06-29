@@ -1,10 +1,11 @@
 package entity;
 
 import game.Game;
+import game.CollisionChecker;
 import common.*;
 import tile.Tile;
 import tile.TileController;
-import ai.*;
+import ai.pathfinder.*;
 
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -21,7 +22,6 @@ public class Zombie extends Entity implements Drawable {
 
     public Zombie(Game game, int spawnX, int spawnY) {
         this.game = game;
-        // this.hitbox = new Rectangle(this.x, this.y + (Game.tileSize / 2), Game.tileSize / 2, Game.tileSize / 2);
         this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
         this.pathFinder = new Pathfinder(this);
         setDefaultValues();
@@ -43,8 +43,7 @@ public class Zombie extends Entity implements Drawable {
         pathFinder.setNodes(start.col, start.row, goal.col, goal.row);
 
         if (pathFinder.search()) {
-            Tile next = TileController.map[pathFinder.pathList.get(0).col][pathFinder.pathList.get(0).row];
-            move(start.getDirection(next));
+            CollisionChecker.moveZombie(this, TileController.map[pathFinder.pathList.get(0).col][pathFinder.pathList.get(0).row]);
         }
     }
 

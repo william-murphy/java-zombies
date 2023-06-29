@@ -17,7 +17,6 @@ public class Player extends Entity implements Drawable {
 
     public Player(Game game, int spawnX, int spawnY) {
         this.game = game;
-        // this.hitbox = new Rectangle(this.x + (Game.tileSize / 4), this.y + (Game.tileSize / 2), Game.tileSize / 2, Game.tileSize / 2);
         this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
         setDefaultValues();
     }
@@ -26,7 +25,7 @@ public class Player extends Entity implements Drawable {
         speed = 4;
         direction = Direction.SOUTH;
         moving = false;
-        spawnZombieRadius = Game.tileSize * 5;
+        spawnZombieRadius = 5; //spawn radius around the player in tiles
         maxHealth = 20;
         health = maxHealth;
     }

@@ -75,6 +75,18 @@ public class Entity implements Collidable {
     }
 
     @Override
+    public Direction getDirection(Collidable other) {
+        double angle = CollisionChecker.angleBetweenPoints(this.getHitbox().getCenterX(), this.getHitbox().getCenterY(), other.getHitbox().getCenterX(), other.getHitbox().getCenterY());
+        System.out.println(angle);
+        return CollisionChecker.dirFromAngle(angle);
+    }
+
+    @Override
+    public Hitbox getHitbox() {
+        return hitbox;
+    }
+
+    @Override
     public int getMaxX(int padding) {
         return this.hitbox.x + this.hitbox.width + padding;
     }

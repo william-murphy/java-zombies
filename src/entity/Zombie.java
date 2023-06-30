@@ -82,7 +82,7 @@ public class Zombie extends Entity implements Drawable {
         updatePosition();
 
     }
-
+    // TODO: figure out why excpetion randomly happens in draw function when in debug mode
     public void draw(Graphics2D g2d) {
 
         BufferedImage image = null;

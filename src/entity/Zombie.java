@@ -42,26 +42,34 @@ public class Zombie extends Entity implements Drawable {
         pathFinder.setNodes(start.col, start.row, goal.col, goal.row);
 
         if (pathFinder.search()) {
-            Tile next = pathFinder.pathList.get(0).toTile();
-            Direction direction = this.getDirection(next);
-            if (canFit(next, direction)) {
-                move(direction);
-            }
+            Tile nextTile = pathFinder.pathList.get(0).toTile();
+            makeNextMove(nextTile);
         }
     }
 
-    private boolean canFit(Tile tile, Direction direction) {
-        switch (direction) {
+    private void makeNextMove(Tile tile) {
+        Direction nextDirection = this.getDirection(tile);
+        switch (nextDirection) {
             case NORTH:
-                return this.fitsHorizontally(tile);
+                if (this.fitsHorizontally(tile)) {
+                    move(nextDirection);
+                }
+            break;
             case SOUTH:
-                return this.fitsHorizontally(tile);
+                if (this.fitsHorizontally(tile)) {
+                    move(nextDirection);
+                }
+            break;
             case EAST:
-                return this.fitsVertically(tile);
+                if (this.fitsVertically(tile)) {
+                    move(nextDirection);
+                }
+            break;
             case WEST:
-                return this.fitsVertically(tile);
-            default:
-                return false;
+                if (this.fitsVertically(tile)) {
+                    move(nextDirection);
+                }
+            break;
         }
     }
 

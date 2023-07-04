@@ -18,7 +18,7 @@ public class EntityController {
     
     public Player player;
     private int total = 1;
-    private int max = 2; //NOTE: change back to 10
+    private int max = 3; //NOTE: change back to 10
     private int spawnDelay = 5 * Game.FPS; //spawn zombie every 5 seconds
     public Set<Entity> entities = new HashSet<Entity>(max);
 

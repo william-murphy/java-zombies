@@ -88,6 +88,7 @@ public class Zombie extends Entity implements Drawable {
         }
 
         updatePosition();
+        // TODO - split position update and collision check into two different functions
 
     }
     // TODO: figure out why excpetion randomly happens in draw function when in debug mode

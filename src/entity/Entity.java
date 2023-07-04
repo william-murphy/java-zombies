@@ -15,7 +15,6 @@ public class Entity implements Collidable {
     public int speed;
     public Direction direction;
     public boolean moving = false;
-    public boolean onPath = false;
 
     public Hitbox hitbox;
     public boolean collision = true;

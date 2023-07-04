@@ -1,14 +1,17 @@
 package ai.pathfinder;
 
+import tile.Tile;
 import tile.TileController;
 import entity.Entity;
+import entity.Zombie;
 
 import java.util.ArrayList;
 import java.lang.Math;
 
 public class Pathfinder {
     
-    Entity entity;
+    Zombie zombie;
+    Entity target;
     Node[][] node;
     ArrayList<Node> openList = new ArrayList<>();
     public ArrayList<Node> pathList = new ArrayList<>();
@@ -17,9 +20,24 @@ public class Pathfinder {
     boolean goalReached = false;
     int step = 0;
 
-    public Pathfinder(Entity entity) {
-        this.entity = entity;
+    public Pathfinder(Zombie zombie, Entity target) {
+        this.zombie = zombie;
+        this.target = target; // TODO - change this to look for a target on first tick after instantiation
         instantiateNodes();
+    }
+
+    public void update() {
+        Tile start = zombie.getTile();
+        Tile goal = target.getTile();
+        if (start.equals(goal)) {
+            return;
+        }
+        this.setNodes(start.col, start.row, goal.col, goal.row);
+
+        if (this.search()) {
+            Tile nextTile = this.pathList.get(0).toTile();
+            zombie.makeNextMove(nextTile);
+        }
     }
 
     public void instantiateNodes() {

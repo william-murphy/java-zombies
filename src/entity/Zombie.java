@@ -22,7 +22,7 @@ public class Zombie extends Entity implements Drawable {
     public Zombie(Game game, int spawnX, int spawnY) {
         this.game = game;
         this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
-        this.pathFinder = new Pathfinder(this);
+        this.pathFinder = new Pathfinder(this, game.entityController.player);
         setDefaultValues();
     }
 
@@ -31,23 +31,9 @@ public class Zombie extends Entity implements Drawable {
         maxHealth = 10;
         speed = 3;
         health = maxHealth;
-        onPath = true;
     }
 
-    public void searchPath(Tile goal) {
-        Tile start = this.getTile();
-        if (start == goal) {
-            return;
-        }
-        pathFinder.setNodes(start.col, start.row, goal.col, goal.row);
-
-        if (pathFinder.search()) {
-            Tile nextTile = pathFinder.pathList.get(0).toTile();
-            makeNextMove(nextTile);
-        }
-    }
-
-    private void makeNextMove(Tile tile) {
+    public void makeNextMove(Tile tile) {
         Direction nextDirection = this.getDirection(tile);
         switch (nextDirection) {
             case NORTH:
@@ -83,9 +69,7 @@ public class Zombie extends Entity implements Drawable {
 
     public void update() {
 
-        if (onPath) {
-            searchPath(game.entityController.player.getTile());
-        }
+        pathFinder.update();
 
         updatePosition();
         // TODO - split position update and collision check into two different functions

@@ -12,7 +12,7 @@ public class Pathfinder {
     
     Zombie zombie;
     Entity target;
-    Node[][] node;
+    static Node[][] nodeMap;
     ArrayList<Node> openList = new ArrayList<>();
     public ArrayList<Node> pathList = new ArrayList<>();
 
@@ -40,11 +40,11 @@ public class Pathfinder {
         }
     }
 
-    public void instantiateNodes() {
-        node = new Node[TileController.mapCols][TileController.mapRows];
+    public static void instantiateNodes() {
+        nodeMap = new Node[TileController.mapCols][TileController.mapRows];
         for (int row = 0; row < TileController.mapRows; row++) {
             for (int col = 0; col < TileController.mapCols; col++) {
-                node[col][row] = new Node(col, row);
+                nodeMap[col][row] = new Node(col, row);
             }
         }
     }
@@ -54,9 +54,9 @@ public class Pathfinder {
         for (int row = 0; row < TileController.mapRows; row++) {
             for (int col = 0; col < TileController.mapCols; col++) {
                 // reset open, checked, and solid state
-                node[col][row].open = false;
-                node[col][row].checked = false;
-                node[col][row].solid = false;
+                nodeMap[col][row].open = false;
+                nodeMap[col][row].checked = false;
+                nodeMap[col][row].solid = false;
             }
         }
 
@@ -71,16 +71,16 @@ public class Pathfinder {
     public void setNodes(int startCol, int startRow, int goalCol, int goalRow) {
         resetNodes();
 
-        startNode = node[startCol][startRow];
+        startNode = nodeMap[startCol][startRow];
         currentNode = startNode;
-        goalNode = node[goalCol][goalRow];
+        goalNode = nodeMap[goalCol][goalRow];
 
         for (int row = 0; row < TileController.mapRows; row++) {
             for (int col = 0; col < TileController.mapCols; col++) {
                 // set node solid property if collision is true
-                node[col][row].solid = TileController.map[col][row].collision;
+                nodeMap[col][row].solid = TileController.map[col][row].collision;
                 // set cost
-                getCost(node[col][row]);
+                getCost(nodeMap[col][row]);
             }
         }
 
@@ -105,19 +105,19 @@ public class Pathfinder {
 
             // open the up node
             if (row - 1 >= 0) {
-                openNode(node[col][row-1]);
+                openNode(nodeMap[col][row-1]);
             }
             // open the left node
             if (col - 1 >= 0) {
-                openNode(node[col-1][row]);
+                openNode(nodeMap[col-1][row]);
             }
             // open the down node
             if (row + 1 < TileController.mapRows) {
-                openNode(node[col][row+1]);
+                openNode(nodeMap[col][row+1]);
             }
             //open the right node
             if (col + 1 < TileController.mapCols) {
-                openNode(node[col+1][row]);
+                openNode(nodeMap[col+1][row]);
             }
 
             // find the best node

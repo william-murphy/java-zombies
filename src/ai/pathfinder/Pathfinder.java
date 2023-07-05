@@ -19,6 +19,10 @@ public class Pathfinder {
     boolean goalReached = false;
     int step = 0;
 
+    Tile currentGoal;
+    int pathIndex = 0;
+    boolean onPath = false;
+
     public Pathfinder(Entity entity, Entity target) {
         this.entity = entity;
         this.target = target; // TODO - change this to look for a target on first tick after instantiation
@@ -26,19 +30,23 @@ public class Pathfinder {
     }
 
     public void update() {
-        // if (target == null) {
-
-        // }
-        Tile start = entity.getTile();
+        Tile current = entity.getTile();
         Tile goal = target.getTile();
-        if (start.equals(goal)) {
+        if (current.equals(goal)) {
             return;
         }
-        this.setNodes(start.col, start.row, goal.col, goal.row);
-
-        if (this.search()) {
-            Tile nextTile = this.pathList.get(0).toTile();
-            makeNextMove(nextTile);
+        if (!goal.equals(currentGoal)) {
+            pathIndex = 0;
+            currentGoal = goal;
+            this.setNodes(current.col, current.row, goal.col, goal.row);
+            onPath = search();
+        }
+        if (onPath) {
+            Tile next = this.pathList.get(pathIndex).toTile();
+            if (current.equals(next)) {
+                pathIndex++;
+            }
+            makeNextMove(next);
         }
     }
 

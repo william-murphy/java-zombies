@@ -1,17 +1,16 @@
 package ai.pathfinder;
 
+import common.*;
 import tile.Tile;
 import tile.TileController;
 import entity.Entity;
-import entity.Zombie;
 
 import java.util.ArrayList;
 import java.lang.Math;
 
 public class Pathfinder {
     
-    Zombie zombie;
-    Entity target;
+    Entity entity, target;
     static Node[][] nodeMap;
     ArrayList<Node> openList = new ArrayList<>();
     public ArrayList<Node> pathList = new ArrayList<>();
@@ -20,14 +19,17 @@ public class Pathfinder {
     boolean goalReached = false;
     int step = 0;
 
-    public Pathfinder(Zombie zombie, Entity target) {
-        this.zombie = zombie;
+    public Pathfinder(Entity entity, Entity target) {
+        this.entity = entity;
         this.target = target; // TODO - change this to look for a target on first tick after instantiation
         instantiateNodes();
     }
 
     public void update() {
-        Tile start = zombie.getTile();
+        // if (target == null) {
+
+        // }
+        Tile start = entity.getTile();
         Tile goal = target.getTile();
         if (start.equals(goal)) {
             return;
@@ -36,7 +38,33 @@ public class Pathfinder {
 
         if (this.search()) {
             Tile nextTile = this.pathList.get(0).toTile();
-            zombie.makeNextMove(nextTile);
+            makeNextMove(nextTile);
+        }
+    }
+
+    public void makeNextMove(Tile tile) {
+        Direction nextDirection = entity.getDirection(tile);
+        switch (nextDirection) {
+            case NORTH:
+                if (entity.fitsHorizontally(tile)) {
+                    entity.move(nextDirection);
+                }
+            break;
+            case SOUTH:
+                if (entity.fitsHorizontally(tile)) {
+                    entity.move(nextDirection);
+                }
+            break;
+            case EAST:
+                if (entity.fitsVertically(tile)) {
+                    entity.move(nextDirection);
+                }
+            break;
+            case WEST:
+                if (entity.fitsVertically(tile)) {
+                    entity.move(nextDirection);
+                }
+            break;
         }
     }
 

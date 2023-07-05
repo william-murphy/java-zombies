@@ -2,7 +2,6 @@ package entity;
 
 import game.Game;
 import common.*;
-import tile.Tile;
 import tile.TileController;
 import ai.pathfinder.*;
 
@@ -31,40 +30,6 @@ public class Zombie extends Entity implements Drawable {
         maxHealth = 10;
         speed = 3;
         health = maxHealth;
-    }
-
-    public void makeNextMove(Tile tile) {
-        Direction nextDirection = this.getDirection(tile);
-        switch (nextDirection) {
-            case NORTH:
-                if (this.fitsHorizontally(tile)) {
-                    move(nextDirection);
-                }
-            break;
-            case SOUTH:
-                if (this.fitsHorizontally(tile)) {
-                    move(nextDirection);
-                }
-            break;
-            case EAST:
-                if (this.fitsVertically(tile)) {
-                    move(nextDirection);
-                }
-            break;
-            case WEST:
-                if (this.fitsVertically(tile)) {
-                    move(nextDirection);
-                }
-            break;
-        }
-    }
-
-    private boolean fitsHorizontally(Tile tile) {
-        return (hitbox.x >= tile.hitbox.x && (hitbox.x + hitbox.width) <= (tile.hitbox.x + tile.hitbox.width));
-    }
-
-    private boolean fitsVertically(Tile tile) {
-        return (hitbox.y >= tile.hitbox.y && (hitbox.y + hitbox.height) <= (tile.hitbox.y + tile.hitbox.height));
     }
 
     public void update() {

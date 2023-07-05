@@ -50,7 +50,7 @@ public class Pathfinder {
         }
     }
 
-    public void makeNextMove(Tile tile) {
+    private void makeNextMove(Tile tile) {
         Direction nextDirection = entity.getDirection(tile);
         switch (nextDirection) {
             case NORTH:
@@ -76,7 +76,7 @@ public class Pathfinder {
         }
     }
 
-    public static void instantiateNodes() {
+    private static void instantiateNodes() {
         nodeMap = new Node[TileController.mapCols][TileController.mapRows];
         for (int row = 0; row < TileController.mapRows; row++) {
             for (int col = 0; col < TileController.mapCols; col++) {
@@ -85,7 +85,7 @@ public class Pathfinder {
         }
     }
 
-    public void resetNodes() {
+    private void resetNodes() {
         
         for (int row = 0; row < TileController.mapRows; row++) {
             for (int col = 0; col < TileController.mapCols; col++) {
@@ -104,7 +104,7 @@ public class Pathfinder {
 
     }
 
-    public void setNodes(int startCol, int startRow, int goalCol, int goalRow) {
+    private void setNodes(int startCol, int startRow, int goalCol, int goalRow) {
         resetNodes();
 
         startNode = nodeMap[startCol][startRow];
@@ -122,13 +122,13 @@ public class Pathfinder {
 
     }
 
-    public void getCost(Node node) {
+    private void getCost(Node node) {
         node.gCost = Math.abs(node.col - startNode.col) + Math.abs(node.row - startNode.row);
         node.hCost = Math.abs(node.col - goalNode.col) + Math.abs(node.row - goalNode.row);
         node.fCost = node.gCost + node.hCost;
     }
 
-    public boolean search() {
+    private boolean search() {
 
         while (goalReached == false && step < 500) {
 
@@ -194,7 +194,7 @@ public class Pathfinder {
 
     }
 
-    public void openNode(Node node) {
+    private void openNode(Node node) {
         if (!node.open && !node.checked && !node.solid) {
             node.open = true;
             node.parent = currentNode;
@@ -202,7 +202,7 @@ public class Pathfinder {
         }
     }
 
-    public void trackThePath() {
+    private void trackThePath() {
         Node current = goalNode;
         while (current != startNode) {
             pathList.add(0, current);

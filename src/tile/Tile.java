@@ -3,6 +3,9 @@ package tile;
 import game.Game;
 import common.*;
 
+import java.awt.Graphics2D;
+import java.awt.Color;
+
 public class Tile implements Collidable, Drawable {
     
     public final int imageIndex;
@@ -23,6 +26,18 @@ public class Tile implements Collidable, Drawable {
     }
 
     @Override
+    public void draw(Graphics2D g2d) {
+        int screenX = Game.getInstance().camera.calculateScreenX(col * Game.tileSize, 0);
+        int screenY = Game.getInstance().camera.calculateScreenY(row * Game.tileSize, 0);
+        g2d.drawImage(TileController.tileImages[imageIndex], screenX, screenY, Game.tileSize, Game.tileSize, null);
+        //DEBUG
+        if (Game.getInstance().debug) {
+            g2d.setColor(Color.WHITE);
+            g2d.drawString(toString(), screenX, screenY + Game.tileSize / 4);
+        }
+    }
+
+    @Override
     public boolean hasCollision() {
         return this.collision;
     }
@@ -30,26 +45,6 @@ public class Tile implements Collidable, Drawable {
     @Override
     public Hitbox getHitbox() {
         return hitbox;
-    }
-
-    @Override
-    public int getWorldX() {
-        return col * Game.tileSize;
-    }
-
-    @Override
-    public int getWorldY() {
-        return row * Game.tileSize;
-    }
-
-    @Override
-    public int getHorizontalOffset() {
-        return 0;
-    }
-
-    @Override
-    public int getVerticalOffset() {
-        return 0;
     }
 
     @Override

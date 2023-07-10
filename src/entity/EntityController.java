@@ -9,8 +9,6 @@ import tile.TileController;
 import tile.Tile;
 
 public class EntityController {
-    
-    Game game;
 
     //player spawn
     public static final int playerSpawnX = (TileController.worldWidth / 2) - (Game.tileSize / 2);;
@@ -22,20 +20,19 @@ public class EntityController {
     private int spawnDelay = 5 * Game.FPS; //spawn zombie every 5 seconds
     public Set<Entity> entities = new HashSet<Entity>(max);
 
-    public EntityController(Game game) {
-        this.game = game;
-        this.player = new Player(game, playerSpawnX, playerSpawnY);
+    public EntityController() {
+        this.player = new Player(playerSpawnX, playerSpawnY);
         entities.add(player);
     }
 
     public void attemptZombieSpawn() {
         //attempt zombie spawn
-        if (total < max && game.tick % spawnDelay == 0) {
+        if (total < max && Game.getInstance().tick % spawnDelay == 0) {
             Tile playerTile = player.getTile();
-            int spawnCol = playerTile.col + (game.random.nextInt(2 * player.spawnZombieRadius + 1) - player.spawnZombieRadius);
-            int spawnRow = playerTile.row + (game.random.nextInt(2 * player.spawnZombieRadius + 1) - player.spawnZombieRadius);
+            int spawnCol = playerTile.col + (Game.getInstance().random.nextInt(2 * player.spawnZombieRadius + 1) - player.spawnZombieRadius);
+            int spawnRow = playerTile.row + (Game.getInstance().random.nextInt(2 * player.spawnZombieRadius + 1) - player.spawnZombieRadius);
             if (!TileController.map[spawnCol][spawnRow].collision) {
-                entities.add(new Zombie(game, spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16));
+                entities.add(new Zombie(spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16));
                 total++;
             }
         }

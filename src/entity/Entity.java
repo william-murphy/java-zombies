@@ -54,17 +54,17 @@ public class Entity implements Collidable {
                 case SOUTH:
                     hitbox.translate(0, speed);
                     if (collides(TileController.getTile(hitbox.x, hitbox.y + hitbox.height))) {
-                        hitbox.setLocation(hitbox.x, TileController.getTile(hitbox.x, hitbox.y + hitbox.height).getWorldY() - hitbox.height);
+                        hitbox.setLocation(hitbox.x, TileController.getTile(hitbox.x, hitbox.y + hitbox.height).getHitbox().y - hitbox.height);
                     } else if (collides(TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height))) {
-                        hitbox.setLocation(hitbox.x, TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getWorldY() - hitbox.height);
+                        hitbox.setLocation(hitbox.x, TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getHitbox().y - hitbox.height);
                     }
                     break;
                 case EAST:
                     hitbox.translate(speed, 0);
                     if (collides(TileController.getTile(hitbox.x + hitbox.width, hitbox.y))) {
-                        hitbox.setLocation(TileController.getTile(hitbox.x + hitbox.width, hitbox.y).getWorldX() - hitbox.width, hitbox.y);
+                        hitbox.setLocation(TileController.getTile(hitbox.x + hitbox.width, hitbox.y).getHitbox().x - hitbox.width, hitbox.y);
                     } else if (collides(TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height))) {
-                        hitbox.setLocation(TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getWorldX() - hitbox.width, hitbox.y);
+                        hitbox.setLocation(TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getHitbox().x - hitbox.width, hitbox.y);
                     }
                     break;
                 case WEST:

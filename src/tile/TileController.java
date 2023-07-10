@@ -7,13 +7,10 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.lang.Math;
-import java.awt.Color;
 
 import game.Game;
 
 public class TileController {
-    
-    Game game;
 
     //images
     static BufferedImage[] tileImages;
@@ -27,8 +24,8 @@ public class TileController {
     //map
     public static Tile[][] map;
 
-    public TileController(Game game) {
-        this.game = game;
+    public TileController() {
+
     }
 
     //calculate manhattan distance between two tiles
@@ -50,16 +47,8 @@ public class TileController {
         for (int row=0; row < mapRows; row++) {
             for (int col=0; col < mapCols; col++) {
                 //only render visible tiles to improve rendering efficiency
-                if (game.camera.shouldRenderTile(map[col][row])) {
-                    int tileX = game.camera.calculateScreenX(map[col][row]);
-                    int tileY = game.camera.calculateScreenY(map[col][row]);
-                    g2d.drawImage(tileImages[map[col][row].imageIndex], tileX, tileY, Game.tileSize, Game.tileSize, null);
-                    
-                    //DEBUG
-                    if (game.debug) {
-                        g2d.setColor(Color.WHITE);
-                        g2d.drawString(map[col][row].toString(), tileX, tileY + Game.tileSize / 4);
-                    }
+                if (Game.getInstance().camera.shouldRenderTile(map[col][row])) {
+                    map[col][row].draw(g2d);
                 }
             }
         }

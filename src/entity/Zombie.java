@@ -15,13 +15,12 @@ public class Zombie extends Entity implements Drawable {
 
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
 
-    Game game;
+    // zombie specific fields
     Pathfinder pathFinder;
 
-    public Zombie(Game game, int spawnX, int spawnY) {
-        this.game = game;
+    public Zombie(int spawnX, int spawnY) {
         this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
-        this.pathFinder = new Pathfinder(this, game.entityController.player);
+        this.pathFinder = new Pathfinder(this, Game.getInstance().entityController.player);
         setDefaultValues();
     }
 
@@ -76,58 +75,34 @@ public class Zombie extends Entity implements Drawable {
                 break;
         }
 
-        screenX = game.camera.calculateScreenX(this);
-        screenY = game.camera.calculateScreenY(this);
-
-        g2d.drawImage(image, screenX, screenY, Game.tileSize / 2, Game.tileSize, null);
+        g2d.drawImage(image, Game.getInstance().camera.calculateScreenX(hitbox.x, 0), Game.getInstance().camera.calculateScreenY(hitbox.y, Game.tileSize / 2), Game.tileSize / 2, Game.tileSize, null);
 
         //DEBUG
-        if (game.debug) {
+        if (Game.getInstance().debug) {
             // draw path
             g2d.setColor(new Color(255, 0, 0, 70));
             for (Node node : pathFinder.pathList) {
-                g2d.fillRect(game.camera.calculateScreenX(TileController.map[node.col][node.row]), game.camera.calculateScreenY(TileController.map[node.col][node.row]), Game.tileSize, Game.tileSize);
+                g2d.fillRect(Game.getInstance().camera.calculateScreenX(TileController.map[node.col][node.row].hitbox.x, 0), Game.getInstance().camera.calculateScreenY(TileController.map[node.col][node.row].hitbox.y, 0), Game.tileSize, Game.tileSize);
             }
             // draw zombie hitbox
-            g2d.setColor(Color.YELLOW);
-            g2d.drawRect(game.camera.calculateScreenX(hitbox), game.camera.calculateScreenY(hitbox), hitbox.width, hitbox.height);
+            hitbox.draw(g2d);
         }
-    }
-
-    @Override
-    public int getWorldX() {
-        return this.hitbox.x;
-    }
-
-    @Override
-    public int getWorldY() {
-        return this.hitbox.y;
-    }
-
-    @Override
-    public int getHorizontalOffset() {
-        return 0;
-    }
-
-    @Override
-    public int getVerticalOffset() {
-        return Game.tileSize / 2;
     }
 
     public static void loadImages() {
         try {
-            standingNorth = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/standing-n.png"));
-            walkingNorth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-n1.png"));
-            walkingNorth2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-n2.png"));
-            standingSouth = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/standing-s.png"));
-            walkingSouth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-s1.png"));
-            walkingSouth2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-s2.png"));
-            standingEast = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/standing-e.png"));
-            walkingEast1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-e1.png"));
-            walkingEast2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-e2.png"));
-            standingWest = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/standing-w.png"));
-            walkingWest1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-w1.png"));
-            walkingWest2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/zombie/walk-w2.png"));
+            standingNorth = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/standing-n.png"));
+            walkingNorth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-n1.png"));
+            walkingNorth2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-n2.png"));
+            standingSouth = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/standing-s.png"));
+            walkingSouth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-s1.png"));
+            walkingSouth2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-s2.png"));
+            standingEast = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/standing-e.png"));
+            walkingEast1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-e1.png"));
+            walkingEast2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-e2.png"));
+            standingWest = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/standing-w.png"));
+            walkingWest1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-w1.png"));
+            walkingWest2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-w2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -9,8 +9,6 @@ import java.awt.Font;
 
 public class Hud {
 
-    Game game;
-
     static BufferedImage heartFull, heartHalf;
     final static int heartSize = Game.tileSize - 16;
     final static int heartX = Game.tileSize * 3;
@@ -19,24 +17,24 @@ public class Hud {
     final static int roundY = Game.tileSize;
     final static Font roundFont = new Font("Arial", Font.BOLD, Game.tileSize);
     
-    public Hud (Game game) {
-        this.game = game;
+    public Hud () {
+
     }
 
     private void drawHealthBar(Graphics2D g2d) {
         int i = 0;
-        while (i < Math.floorDiv(game.entityController.player.health, 2)) {
+        while (i < Math.floorDiv(Game.getInstance().entityController.player.health, 2)) {
             g2d.drawImage(heartFull, heartX + Game.tileSize * i, heartY, heartSize, heartSize, null);
             i += 1;
         }
-        if (!(game.entityController.player.health % 2 == 0)) {
+        if (!(Game.getInstance().entityController.player.health % 2 == 0)) {
             g2d.drawImage(heartHalf, heartX + Game.tileSize * i, heartY, heartSize, heartSize, null);
         }
     }
 
     private void drawCurrentRound(Graphics2D g2d) {
         g2d.setFont(roundFont);
-        g2d.drawString(String.valueOf(game.round), roundX, roundY);
+        g2d.drawString(String.valueOf(Game.getInstance().round), roundX, roundY);
     }
 
     public void drawHud(Graphics2D g2d) {

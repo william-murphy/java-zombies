@@ -11,81 +11,88 @@ import java.awt.event.ActionEvent;
 
 public class KeyHandler {
 
-    Game game;
-
-    public KeyHandler(Game game) {
-        this.game = game;
+    public KeyHandler() {
         setKeyBindings();
     }
 
     private void setKeyBindings() {
-        InputMap inputMap = game.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        ActionMap actionMap = game.getActionMap();
+        InputMap inputMap = Game.getInstance().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = Game.getInstance().getActionMap();
 
         inputMap.put(KeyStroke.getKeyStroke("pressed W"), "pw");
-        actionMap.put("pw", new MoveAction(Direction.NORTH));
+        actionMap.put("pw", new Move(Direction.NORTH));
 
         inputMap.put(KeyStroke.getKeyStroke("released W"), "rw");
-        actionMap.put("rw", new StopMoveAction(Direction.NORTH));
+        actionMap.put("rw", new StopMove(Direction.NORTH));
 
         inputMap.put(KeyStroke.getKeyStroke("pressed S"), "ps");
-        actionMap.put("ps", new MoveAction(Direction.SOUTH));
+        actionMap.put("ps", new Move(Direction.SOUTH));
 
         inputMap.put(KeyStroke.getKeyStroke("released S"), "rs");
-        actionMap.put("rs", new StopMoveAction(Direction.SOUTH));
+        actionMap.put("rs", new StopMove(Direction.SOUTH));
 
         inputMap.put(KeyStroke.getKeyStroke("pressed D"), "pd");
-        actionMap.put("pd", new MoveAction(Direction.EAST));
+        actionMap.put("pd", new Move(Direction.EAST));
 
         inputMap.put(KeyStroke.getKeyStroke("released D"), "rd");
-        actionMap.put("rd", new StopMoveAction(Direction.EAST));
+        actionMap.put("rd", new StopMove(Direction.EAST));
 
         inputMap.put(KeyStroke.getKeyStroke("pressed A"), "pa");
-        actionMap.put("pa", new MoveAction(Direction.WEST));
+        actionMap.put("pa", new Move(Direction.WEST));
 
         inputMap.put(KeyStroke.getKeyStroke("released A"), "ra");
-        actionMap.put("ra", new StopMoveAction(Direction.WEST));
+        actionMap.put("ra", new StopMove(Direction.WEST));
 
         inputMap.put(KeyStroke.getKeyStroke("pressed BACK_QUOTE"), "bq");
-        actionMap.put("bq", new EnableDebugAction());
+        actionMap.put("bq", new EnableDebug());
+
+        inputMap.put(KeyStroke.getKeyStroke("pressed L"), "pl");
+        actionMap.put("pl", new UseItem());
+
+        inputMap.put(KeyStroke.getKeyStroke("released L"), "rl");
+        actionMap.put("rl", new StopUseItem());
     }
 
-    private class MoveAction extends AbstractAction {
-        
+    private class Move extends AbstractAction {
         Direction ma;
-
-        public MoveAction(Direction ma) {
+        public Move(Direction ma) {
             this.ma = ma;
         }
-
         @Override
         public void actionPerformed(ActionEvent e) {
-            game.entityController.player.move(ma);
+            Game.getInstance().entityController.player.move(ma);
         }
     }
 
-    private class StopMoveAction extends AbstractAction {
-
+    private class StopMove extends AbstractAction {
         Direction ma;
-
-        public StopMoveAction(Direction ma) {
+        public StopMove(Direction ma) {
             this.ma = ma;
         }
-
         @Override
         public void actionPerformed(ActionEvent e) {
-            game.entityController.player.stopMove(ma);
+            Game.getInstance().entityController.player.stopMove(ma);
         }
-
     }
 
-    private class EnableDebugAction extends AbstractAction {
-
+    private class EnableDebug extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            game.debug = !game.debug;
+            Game.getInstance().debug = !Game.getInstance().debug;
         }
-
     }
 
+    private class UseItem extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Game.getInstance().entityController.player.useItem();
+        }
+    }
+
+    private class StopUseItem extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Game.getInstance().entityController.player.stopUseItem();
+        }
+    }
 }

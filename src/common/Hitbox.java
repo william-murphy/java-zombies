@@ -1,6 +1,10 @@
 package common;
 
+import game.Game;
+
 import java.awt.Rectangle;
+import java.awt.Graphics2D;
+import java.awt.Color;
 
 public class Hitbox extends Rectangle implements Drawable {
     
@@ -8,24 +12,9 @@ public class Hitbox extends Rectangle implements Drawable {
         super(x, y, width, height);
     }
 
-    @Override
-    public int getWorldX() {
-        return this.x;
-    }
-
-    @Override
-    public int getWorldY() {
-        return this.y;
-    }
-
-    @Override
-    public int getHorizontalOffset() {
-        return 0;
-    }
-
-    @Override
-    public int getVerticalOffset() {
-        return 0;
+    public void draw(Graphics2D g2d) {
+        g2d.setColor(Color.YELLOW);
+        g2d.drawRect(Game.getInstance().camera.calculateScreenX(x, 0), Game.getInstance().camera.calculateScreenY(y, 0), width, height);
     }
 
 }

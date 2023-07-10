@@ -9,10 +9,11 @@ import game.Game;
 
 public class Window extends JFrame {
     
-    public CardLayout cards = new CardLayout();
-    public JPanel container = new JPanel(cards);
-    public Menu menu = new Menu(this);
-    public Game game = new Game(this);
+    public static Menu menu = new Menu();
+    public static Game game = new Game();
+
+    static CardLayout cards = new CardLayout();
+    static JPanel container = new JPanel(cards);
 
     public Window() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,12 +32,13 @@ public class Window extends JFrame {
         this.setVisible(true);
     }
 
-    public void launchMenu() {
+    public static void launchMenu() {
         game.stopGameThread();
         cards.show(container, "menu");
     }
 
-    public void launchGame() {
+    public static void launchGame() {
+        game.initialize();
         cards.show(container, "game");
         game.startGameThread();
     }

@@ -13,8 +13,6 @@ import java.util.Random;
 
 public class Game extends JPanel implements Runnable {
 
-    Window window;
-
     //screen dimensions
     public static final int tileSize = 64;
     public static final int screenCols = 16;
@@ -39,19 +37,30 @@ public class Game extends JPanel implements Runnable {
     private Thread gameThread;
     public final Random random = new Random();
 
-    public KeyHandler keyHandler = new KeyHandler(this);
-    public TileController tileController = new TileController(this);
-    public EntityController entityController = new EntityController(this);
-    public Camera camera = new Camera(this);
-    public Hud hud = new Hud(this);
+    public KeyHandler keyHandler;
+    public TileController tileController;
+    public EntityController entityController;
+    public Camera camera;
+    public Hud hud;
 
     public int round = 1;
 
-    public Game(Window window) {
-        this.window = window;
+    public Game() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
+    }
+
+    public static Game getInstance() {
+        return Window.game;
+    }
+
+    public void initialize() {
+        keyHandler = new KeyHandler();
+        tileController = new TileController();
+        entityController = new EntityController();
+        camera = new Camera();
+        hud = new Hud();
     }
 
     @Override

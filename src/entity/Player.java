@@ -2,23 +2,27 @@ package entity;
 
 import game.Game;
 import common.*;
+import item.*;
 
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
-import java.awt.Color;
 
 public class Player extends Entity implements Drawable {
 
-    Game game;
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
-    public int spawnZombieRadius;
 
-    public Player(Game game, int spawnX, int spawnY) {
-        this.game = game;
+    // player specific fields
+    public int spawnZombieRadius;
+    public Item[] items = new Item[8];
+    public int currentItem = 0;
+
+    public Player(int spawnX, int spawnY) {
         this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
         setDefaultValues();
+        // temp
+        items[currentItem] = Weapon.pn21;
     }
 
     private void setDefaultValues() {
@@ -30,14 +34,35 @@ public class Player extends Entity implements Drawable {
         health = maxHealth;
     }
 
+    public void pickupItem() {
+
+    }
+
+    public void dropItem() {
+
+    }
+
+    public void useItem() {
+        if (items[currentItem] != null) {
+            items[currentItem].use();
+        }
+    }
+
+    public void stopUseItem() {
+        if (items[currentItem] != null) {
+            items[currentItem].stopUse();
+        }
+    }
+
     public void update() {
 
         updatePosition();
 
-        game.camera.update(this.getWorldX(), this.getWorldY());
+        Game.getInstance().camera.update(hitbox.x, hitbox.y);
 
     }
 
+    @Override
     public void draw(Graphics2D g2d) {
 
         BufferedImage image = null;
@@ -74,54 +99,35 @@ public class Player extends Entity implements Drawable {
                 break;
         }
 
-        screenX = game.camera.calculateScreenX(this);
-        screenY = game.camera.calculateScreenY(this);
-
-        g2d.drawImage(image, screenX, screenY, Game.tileSize, Game.tileSize, null);
+        // player
+        g2d.drawImage(image, Game.getInstance().camera.calculateScreenX(hitbox.x, Game.tileSize / 4), Game.getInstance().camera.calculateScreenY(hitbox.y, Game.tileSize / 2), Game.tileSize, Game.tileSize, null);
+        // item
+        if (items[currentItem] != null) {
+            // somehow draw the image of the item player is holding
+        }
 
         //DEBUG
 
-        if (game.debug) {
+        if (Game.getInstance().debug) {
             // draw player hitbox
-            g2d.setColor(Color.YELLOW);
-            g2d.drawRect(game.camera.calculateScreenX(this.hitbox), game.camera.calculateScreenY(this.hitbox), hitbox.width, hitbox.height);
+            this.hitbox.draw(g2d);
         }
-    }
-
-    @Override
-    public int getWorldX() {
-        return this.hitbox.x;
-    }
-
-    @Override
-    public int getWorldY() {
-        return this.hitbox.y;
-    }
-
-    @Override
-    public int getHorizontalOffset() {
-        return Game.tileSize / 4;
-    }
-
-    @Override
-    public int getVerticalOffset() {
-        return Game.tileSize / 2;
     }
 
     public static void loadImages() {
         try {
-            standingNorth = ImageIO.read(Player.class.getResourceAsStream("/res/player/standing-n.png"));
-            walkingNorth1 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-n1.png"));
-            walkingNorth2 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-n2.png"));
-            standingSouth = ImageIO.read(Player.class.getResourceAsStream("/res/player/standing-s.png"));
-            walkingSouth1 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-s1.png"));
-            walkingSouth2 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-s2.png"));
-            standingEast = ImageIO.read(Player.class.getResourceAsStream("/res/player/standing-e.png"));
-            walkingEast1 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-e1.png"));
-            walkingEast2 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-e2.png"));
-            standingWest = ImageIO.read(Player.class.getResourceAsStream("/res/player/standing-w.png"));
-            walkingWest1 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-w1.png"));
-            walkingWest2 = ImageIO.read(Player.class.getResourceAsStream("/res/player/walk-w2.png"));
+            standingNorth = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-n.png"));
+            walkingNorth1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-n1.png"));
+            walkingNorth2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-n2.png"));
+            standingSouth = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-s.png"));
+            walkingSouth1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-s1.png"));
+            walkingSouth2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-s2.png"));
+            standingEast = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-e.png"));
+            walkingEast1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-e1.png"));
+            walkingEast2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-e2.png"));
+            standingWest = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-w.png"));
+            walkingWest1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w1.png"));
+            walkingWest2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,4 +1,4 @@
-package entity;
+package entity.creature;
 
 import game.Game;
 import common.*;
@@ -12,7 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.Point;
 
-public class Zombie extends Entity implements Drawable {
+public class Zombie extends Creature {
 
     // zombie specific fields
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;

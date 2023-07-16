@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import game.Game;
+import entity.creature.*;
 import tile.TileController;
 import tile.Tile;
 

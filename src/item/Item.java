@@ -1,7 +1,7 @@
 package item;
 
 import entity.EntityItem;
-import entity.Entity;
+import entity.creature.Creature;
 import item.weapon.Weapon;
 
 import java.awt.Graphics2D;
@@ -19,7 +19,7 @@ public abstract class Item  {
 
     public abstract void drawInInventory(Graphics2D g2d);
 
-    public abstract void drawInHand(Graphics2D g2d, Entity entity);
+    public abstract void drawInHand(Graphics2D g2d, Creature creature);
 
     public static void loadImages() {
         Weapon.loadImages();

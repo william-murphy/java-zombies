@@ -3,7 +3,7 @@ package item.weapon;
 import game.Game;
 import common.*;
 import entity.EntityItem;
-import entity.Entity;
+import entity.creature.Creature;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -43,9 +43,9 @@ public class PN21 extends Weapon {
     }
 
     @Override
-    public void drawInHand(Graphics2D g2d, Entity entity) {
-        Point hand = entity.getHand();
-        g2d.drawImage(entity.direction == Direction.WEST ? facingWest : facingEast, Game.getInstance().camera.calculateScreenX(hand.x, 0), Game.getInstance().camera.calculateScreenY(hand.y, 0), width, height, null);
+    public void drawInHand(Graphics2D g2d, Creature creature) {
+        Point hand = creature.getHand();
+        g2d.drawImage(creature.direction == Direction.WEST ? facingWest : facingEast, Game.getInstance().camera.calculateScreenX(hand.x, 0), Game.getInstance().camera.calculateScreenY(hand.y, 0), width, height, null);
     }
 
     public static void loadImages() {

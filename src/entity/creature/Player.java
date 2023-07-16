@@ -1,4 +1,4 @@
-package entity;
+package entity.creature;
 
 import game.Game;
 import common.*;
@@ -11,11 +11,11 @@ import java.io.IOException;
 import java.awt.image.BufferedImage;
 import java.awt.Point;
 
-public class Player extends Entity implements Drawable {
-
+public class Player extends Creature {
+    
     // player specific fields
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
-    int spawnZombieRadius;
+    public int spawnZombieRadius;
     Item[] items = new Item[3];
     int curItem = 0;
 

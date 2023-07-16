@@ -4,7 +4,6 @@ import common.*;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.Point;
 
 public class EntityItem extends Entity {
     
@@ -13,12 +12,6 @@ public class EntityItem extends Entity {
     public EntityItem(BufferedImage image, int spawnX, int spawnY, int width, int height) {
         this.image = image;
         this.hitbox = new Hitbox(spawnX, spawnY, width, height);
-    }
-
-    // TODO - make Mob abstract class so that this class doesnt have to implement getHand
-    @Override
-    public Point getHand() {
-        return new Point(0, 0); // temp
     }
 
     @Override

@@ -3,6 +3,7 @@ package game;
 import main.Window;
 import tile.TileController;
 import entity.EntityController;
+import item.Item;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -26,6 +27,7 @@ public class Game extends JPanel implements Runnable {
         TileController.loadImages();
         EntityController.loadImages();
         Hud.loadImages();
+        Item.loadImages();
     }
 
     public boolean debug = false;

@@ -10,12 +10,12 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Point;
 
 public class Zombie extends Entity implements Drawable {
 
-    static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
-
     // zombie specific fields
+    static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
     Pathfinder pathFinder;
 
     public Zombie(int spawnX, int spawnY) {
@@ -31,6 +31,14 @@ public class Zombie extends Entity implements Drawable {
         health = maxHealth;
     }
 
+    @Override
+    public Point getHand() { // TODO - change this to store a Point rather than creating a new one all the time ... maybe
+        int x = this.direction == Direction.EAST ? (hitbox.x + 5) : (hitbox.x + hitbox.width - 5);
+        int y = hitbox.y + (hitbox.height / 2);
+        return new Point(x, y);
+    }
+
+    @Override
     public void update() {
 
         pathFinder.update();
@@ -39,7 +47,9 @@ public class Zombie extends Entity implements Drawable {
         // TODO - split position update and collision check into two different functions
 
     }
+
     // TODO: figure out why excpetion randomly happens in draw function when in debug mode
+    @Override
     public void draw(Graphics2D g2d) {
 
         BufferedImage image = null;

@@ -5,9 +5,11 @@ import tile.Tile;
 import tile.TileController;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 
-public class Entity implements Collidable {
-    public int screenX, screenY;
+// TODO - make a new abstract class called Mob so that Item and Mob are separate
+
+public abstract class Entity implements Collidable {
 
     public int animationCounter = 0;
     public boolean animationStep = false;
@@ -104,12 +106,10 @@ public class Entity implements Collidable {
         return hitbox;
     }
 
-    public void update() {
-        //to be implemented in subclass
-    }
+    public abstract Point getHand();
 
-    public void draw(Graphics2D g2d) {
-        //to be implemented in subclass
-    }
+    public abstract void update();
+
+    public abstract void draw(Graphics2D g2d);
 
 }

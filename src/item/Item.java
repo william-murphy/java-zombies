@@ -1,20 +1,28 @@
 package item;
 
-import common.*;
+import entity.EntityItem;
+import item.weapon.Weapon;
 
-import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
+import java.awt.Point;
 
-public class Item {
-    
-    public Hitbox hitbox;
-    public BufferedImage image;
+public abstract class Item  {
 
-    public void use() {
-        // to be implemented in subclasses
-    }
+    static int width;
+    static int height;
 
-    public void stopUse() {
-        // to be implemented in subclasses
+    public abstract void use();
+
+    public abstract void stopUse();
+
+    public abstract EntityItem createEntityItem(int x, int y);
+
+    public abstract void drawInInventory(Graphics2D g2d);
+
+    public abstract void drawInHand(Graphics2D g2d, Point hand);
+
+    public static void loadImages() {
+        Weapon.loadImages();
     }
 
 }

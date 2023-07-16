@@ -2,27 +2,27 @@ package entity;
 
 import game.Game;
 import common.*;
-import item.*;
+import item.Item;
+import item.weapon.PN21; // temp
 
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
+import java.awt.Point;
 
 public class Player extends Entity implements Drawable {
 
-    static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
-
     // player specific fields
-    public int spawnZombieRadius;
-    public Item[] items = new Item[8];
-    public int currentItem = 0;
+    static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
+    int spawnZombieRadius;
+    Item[] items = new Item[3];
+    int curItem = 0;
 
     public Player(int spawnX, int spawnY) {
         this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
+        this.items[curItem] = new PN21();
         setDefaultValues();
-        // temp
-        items[currentItem] = Weapon.pn21;
     }
 
     private void setDefaultValues() {
@@ -43,14 +43,14 @@ public class Player extends Entity implements Drawable {
     }
 
     public void useItem() {
-        if (items[currentItem] != null) {
-            items[currentItem].use();
+        if (items[curItem] != null) {
+            items[curItem].use();
         }
     }
 
     public void stopUseItem() {
-        if (items[currentItem] != null) {
-            items[currentItem].stopUse();
+        if (items[curItem] != null) {
+            items[curItem].stopUse();
         }
     }
 
@@ -60,6 +60,13 @@ public class Player extends Entity implements Drawable {
 
         Game.getInstance().camera.update(hitbox.x, hitbox.y);
 
+    }
+
+    @Override
+    public Point getHand() {
+        int x = this.direction == Direction.EAST ? (hitbox.x + hitbox.width - 10) : (hitbox.x + 5);
+        int y = hitbox.y + (hitbox.height / 2) - 5;
+        return new Point(x, y);
     }
 
     @Override
@@ -102,8 +109,8 @@ public class Player extends Entity implements Drawable {
         // player
         g2d.drawImage(image, Game.getInstance().camera.calculateScreenX(hitbox.x, Game.tileSize / 4), Game.getInstance().camera.calculateScreenY(hitbox.y, Game.tileSize / 2), Game.tileSize, Game.tileSize, null);
         // item
-        if (items[currentItem] != null) {
-            // somehow draw the image of the item player is holding
+        if (items[curItem] != null) {
+            items[curItem].drawInHand(g2d, getHand());
         }
 
         //DEBUG

@@ -1,7 +1,9 @@
 package item.weapon;
 
-import entity.EntityItem;
 import game.Game;
+import common.*;
+import entity.EntityItem;
+import entity.Entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -11,7 +13,7 @@ import javax.imageio.ImageIO;
 
 public class PN21 extends Weapon {
     
-    static BufferedImage image;
+    static BufferedImage facingWest, facingEast;
 
     final static int width = 11;
     final static int height = 9;
@@ -32,7 +34,7 @@ public class PN21 extends Weapon {
 
     @Override
     public EntityItem createEntityItem(int x, int y) {
-        return new EntityItem(image, x, y, width, height);
+        return new EntityItem(facingWest, x, y, width, height);
     }
 
     @Override
@@ -41,13 +43,15 @@ public class PN21 extends Weapon {
     }
 
     @Override
-    public void drawInHand(Graphics2D g2d, Point hand) {
-        g2d.drawImage(image, Game.getInstance().camera.calculateScreenX(hand.x, 0), Game.getInstance().camera.calculateScreenY(hand.y, 0), width, height, null);
+    public void drawInHand(Graphics2D g2d, Entity entity) {
+        Point hand = entity.getHand();
+        g2d.drawImage(entity.direction == Direction.WEST ? facingWest : facingEast, Game.getInstance().camera.calculateScreenX(hand.x, 0), Game.getInstance().camera.calculateScreenY(hand.y, 0), width, height, null);
     }
 
     public static void loadImages() {
         try {
-            image = ImageIO.read(PN21.class.getResourceAsStream("/res/item/weapon/pn21.png"));
+            facingWest = ImageIO.read(PN21.class.getResourceAsStream("/res/item/weapon/pn21/west.png"));
+            facingEast = ImageIO.read(PN21.class.getResourceAsStream("/res/item/weapon/pn21/east.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

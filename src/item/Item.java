@@ -1,10 +1,10 @@
 package item;
 
 import entity.EntityItem;
+import entity.Entity;
 import item.weapon.Weapon;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 
 public abstract class Item  {
 
@@ -19,7 +19,7 @@ public abstract class Item  {
 
     public abstract void drawInInventory(Graphics2D g2d);
 
-    public abstract void drawInHand(Graphics2D g2d, Point hand);
+    public abstract void drawInHand(Graphics2D g2d, Entity entity);
 
     public static void loadImages() {
         Weapon.loadImages();

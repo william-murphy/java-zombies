@@ -110,7 +110,7 @@ public class Player extends Entity implements Drawable {
         g2d.drawImage(image, Game.getInstance().camera.calculateScreenX(hitbox.x, Game.tileSize / 4), Game.getInstance().camera.calculateScreenY(hitbox.y, Game.tileSize / 2), Game.tileSize, Game.tileSize, null);
         // item
         if (items[curItem] != null) {
-            items[curItem].drawInHand(g2d, getHand());
+            items[curItem].drawInHand(g2d, this);
         }
 
         //DEBUG

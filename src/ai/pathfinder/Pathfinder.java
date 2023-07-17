@@ -4,13 +4,15 @@ import common.*;
 import tile.Tile;
 import tile.TileController;
 import entity.Entity;
+import entity.creature.Creature;
 
 import java.util.ArrayList;
 import java.lang.Math;
 
 public class Pathfinder {
     
-    Entity entity, target;
+    Entity target;
+    Creature creature;
     static Node[][] nodeMap;
     ArrayList<Node> openList = new ArrayList<>();
     public ArrayList<Node> pathList = new ArrayList<>();
@@ -23,14 +25,14 @@ public class Pathfinder {
     int pathIndex = 0;
     boolean onPath = false;
 
-    public Pathfinder(Entity entity, Entity target) {
-        this.entity = entity;
+    public Pathfinder(Creature creature, Entity target) {
+        this.creature = creature;
         this.target = target; // TODO - change this to look for a target on first tick after instantiation
         instantiateNodes();
     }
 
     public void update() {
-        Tile current = entity.getTile();
+        Tile current = creature.getTile();
         Tile goal = target.getTile();
         if (current.equals(goal)) {
             return;
@@ -51,26 +53,26 @@ public class Pathfinder {
     }
 
     private void makeNextMove(Tile tile) {
-        Direction nextDirection = entity.getDirection(tile);
+        Direction nextDirection = creature.getDirection(tile);
         switch (nextDirection) {
             case NORTH:
-                if (entity.fitsHorizontally(tile)) {
-                    entity.move(nextDirection);
+                if (creature.fitsHorizontally(tile)) {
+                    creature.move(nextDirection);
                 }
             break;
             case SOUTH:
-                if (entity.fitsHorizontally(tile)) {
-                    entity.move(nextDirection);
+                if (creature.fitsHorizontally(tile)) {
+                    creature.move(nextDirection);
                 }
             break;
             case EAST:
-                if (entity.fitsVertically(tile)) {
-                    entity.move(nextDirection);
+                if (creature.fitsVertically(tile)) {
+                    creature.move(nextDirection);
                 }
             break;
             case WEST:
-                if (entity.fitsVertically(tile)) {
-                    entity.move(nextDirection);
+                if (creature.fitsVertically(tile)) {
+                    creature.move(nextDirection);
                 }
             break;
         }

@@ -2,7 +2,6 @@ package entity;
 
 import common.*;
 import tile.Tile;
-import tile.TileController;
 
 import java.awt.Graphics2D;
 
@@ -15,7 +14,7 @@ public abstract class Entity implements Collidable {
     // IDEA: make a folder in entity and tile called controller and create a class Controller.java in each with any other classes they may need in there
 
     public Tile getTile() {
-        return TileController.getTile((int)hitbox.getCenterX(), (int)hitbox.getCenterY());
+        return Tile.getTile((int)hitbox.getCenterX(), (int)hitbox.getCenterY());
     }
 
     public boolean fitsHorizontally(Tile tile) {

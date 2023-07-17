@@ -1,7 +1,6 @@
 package ai.pathfinder;
 
 import tile.Tile;
-import tile.TileController;
 
 public class Node {
     Node parent;
@@ -20,7 +19,7 @@ public class Node {
     }
 
     public Tile toTile() {
-        return TileController.map[col][row];
+        return Tile.map[col][row];
     }
 
 }

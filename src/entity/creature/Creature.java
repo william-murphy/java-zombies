@@ -1,7 +1,7 @@
 package entity.creature;
 
 import entity.Entity;
-import tile.TileController;
+import tile.Tile;
 import common.Direction;
 
 import java.awt.Point;
@@ -34,34 +34,34 @@ public abstract class Creature extends Entity {
             switch(direction) {
                 case NORTH:
                     hitbox.translate(0, -speed);
-                    if (collides(TileController.getTile(hitbox.x, hitbox.y))) {
-                        hitbox.setLocation(hitbox.x, (int)TileController.getTile(hitbox.x, hitbox.y).getHitbox().getMaxY());
-                    } else if (collides(TileController.getTile(hitbox.x + hitbox.width, hitbox.y))) {
-                        hitbox.setLocation(hitbox.x, (int)TileController.getTile(hitbox.x + hitbox.width, hitbox.y).getHitbox().getMaxY());
+                    if (collides(Tile.getTile(hitbox.x, hitbox.y))) {
+                        hitbox.setLocation(hitbox.x, (int)Tile.getTile(hitbox.x, hitbox.y).getHitbox().getMaxY());
+                    } else if (collides(Tile.getTile(hitbox.x + hitbox.width, hitbox.y))) {
+                        hitbox.setLocation(hitbox.x, (int)Tile.getTile(hitbox.x + hitbox.width, hitbox.y).getHitbox().getMaxY());
                     }
                     break;
                 case SOUTH:
                     hitbox.translate(0, speed);
-                    if (collides(TileController.getTile(hitbox.x, hitbox.y + hitbox.height))) {
-                        hitbox.setLocation(hitbox.x, TileController.getTile(hitbox.x, hitbox.y + hitbox.height).getHitbox().y - hitbox.height);
-                    } else if (collides(TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height))) {
-                        hitbox.setLocation(hitbox.x, TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getHitbox().y - hitbox.height);
+                    if (collides(Tile.getTile(hitbox.x, hitbox.y + hitbox.height))) {
+                        hitbox.setLocation(hitbox.x, Tile.getTile(hitbox.x, hitbox.y + hitbox.height).getHitbox().y - hitbox.height);
+                    } else if (collides(Tile.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height))) {
+                        hitbox.setLocation(hitbox.x, Tile.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getHitbox().y - hitbox.height);
                     }
                     break;
                 case EAST:
                     hitbox.translate(speed, 0);
-                    if (collides(TileController.getTile(hitbox.x + hitbox.width, hitbox.y))) {
-                        hitbox.setLocation(TileController.getTile(hitbox.x + hitbox.width, hitbox.y).getHitbox().x - hitbox.width, hitbox.y);
-                    } else if (collides(TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height))) {
-                        hitbox.setLocation(TileController.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getHitbox().x - hitbox.width, hitbox.y);
+                    if (collides(Tile.getTile(hitbox.x + hitbox.width, hitbox.y))) {
+                        hitbox.setLocation(Tile.getTile(hitbox.x + hitbox.width, hitbox.y).getHitbox().x - hitbox.width, hitbox.y);
+                    } else if (collides(Tile.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height))) {
+                        hitbox.setLocation(Tile.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getHitbox().x - hitbox.width, hitbox.y);
                     }
                     break;
                 case WEST:
                     hitbox.translate(-speed, 0);
-                    if (collides(TileController.getTile(hitbox.x, hitbox.y))) {
-                        hitbox.setLocation((int)TileController.getTile(hitbox.x, hitbox.y).getHitbox().getMaxX(), hitbox.y);
-                    } else if (collides(TileController.getTile(hitbox.x, hitbox.y + hitbox.height))) {
-                        hitbox.setLocation((int)TileController.getTile(hitbox.x, hitbox.y + hitbox.height).getHitbox().getMaxX(), hitbox.y);
+                    if (collides(Tile.getTile(hitbox.x, hitbox.y))) {
+                        hitbox.setLocation((int)Tile.getTile(hitbox.x, hitbox.y).getHitbox().getMaxX(), hitbox.y);
+                    } else if (collides(Tile.getTile(hitbox.x, hitbox.y + hitbox.height))) {
+                        hitbox.setLocation((int)Tile.getTile(hitbox.x, hitbox.y + hitbox.height).getHitbox().getMaxX(), hitbox.y);
                     }
                     break;
             }

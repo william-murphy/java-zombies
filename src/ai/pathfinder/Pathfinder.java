@@ -2,7 +2,6 @@ package ai.pathfinder;
 
 import common.*;
 import tile.Tile;
-import tile.TileController;
 import entity.Entity;
 import entity.creature.Creature;
 
@@ -79,9 +78,9 @@ public class Pathfinder {
     }
 
     private static void instantiateNodes() {
-        nodeMap = new Node[TileController.mapCols][TileController.mapRows];
-        for (int row = 0; row < TileController.mapRows; row++) {
-            for (int col = 0; col < TileController.mapCols; col++) {
+        nodeMap = new Node[Tile.mapCols][Tile.mapRows];
+        for (int row = 0; row < Tile.mapRows; row++) {
+            for (int col = 0; col < Tile.mapCols; col++) {
                 nodeMap[col][row] = new Node(col, row);
             }
         }
@@ -89,8 +88,8 @@ public class Pathfinder {
 
     private void resetNodes() {
         
-        for (int row = 0; row < TileController.mapRows; row++) {
-            for (int col = 0; col < TileController.mapCols; col++) {
+        for (int row = 0; row < Tile.mapRows; row++) {
+            for (int col = 0; col < Tile.mapCols; col++) {
                 // reset open, checked, and solid state
                 nodeMap[col][row].open = false;
                 nodeMap[col][row].checked = false;
@@ -113,10 +112,10 @@ public class Pathfinder {
         currentNode = startNode;
         goalNode = nodeMap[goalCol][goalRow];
 
-        for (int row = 0; row < TileController.mapRows; row++) {
-            for (int col = 0; col < TileController.mapCols; col++) {
+        for (int row = 0; row < Tile.mapRows; row++) {
+            for (int col = 0; col < Tile.mapCols; col++) {
                 // set node solid property if collision is true
-                nodeMap[col][row].solid = TileController.map[col][row].collision;
+                nodeMap[col][row].solid = Tile.map[col][row].collision;
                 // set cost
                 getCost(nodeMap[col][row]);
             }
@@ -150,11 +149,11 @@ public class Pathfinder {
                 openNode(nodeMap[col-1][row]);
             }
             // open the down node
-            if (row + 1 < TileController.mapRows) {
+            if (row + 1 < Tile.mapRows) {
                 openNode(nodeMap[col][row+1]);
             }
             //open the right node
-            if (col + 1 < TileController.mapCols) {
+            if (col + 1 < Tile.mapCols) {
                 openNode(nodeMap[col+1][row]);
             }
 

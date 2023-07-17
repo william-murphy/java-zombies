@@ -1,6 +1,5 @@
 package game;
 
-import tile.TileController;
 import tile.Tile;
 
 public class Camera {
@@ -18,10 +17,10 @@ public class Camera {
     }
 
     public void update(int worldX, int worldY) {
-        if (worldX >= cameraBoundaryX && worldX <= TileController.worldWidth - cameraBoundaryX - Game.tileSize) {
+        if (worldX >= cameraBoundaryX && worldX <= Tile.worldWidth - cameraBoundaryX - Game.tileSize) {
             this.x = worldX;
         }
-        if (worldY >= cameraBoundaryY && worldY <= TileController.worldHeight - cameraBoundaryY - Game.tileSize) {
+        if (worldY >= cameraBoundaryY && worldY <= Tile.worldHeight - cameraBoundaryY - Game.tileSize) {
             this.y = worldY;
         }
     }

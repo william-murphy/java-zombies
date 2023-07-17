@@ -6,14 +6,13 @@ import java.util.Set;
 
 import game.Game;
 import entity.creature.*;
-import tile.TileController;
 import tile.Tile;
 
 public class EntityController {
 
     //player spawn
-    public static final int playerSpawnX = (TileController.worldWidth / 2) - (Game.tileSize / 2);;
-    public static final int playerSpawnY = (TileController.worldHeight / 2) - (Game.tileSize / 2);
+    public static final int playerSpawnX = (Tile.worldWidth / 2) - (Game.tileSize / 2);;
+    public static final int playerSpawnY = (Tile.worldHeight / 2) - (Game.tileSize / 2);
     
     public Player player;
     private int total = 1;
@@ -32,7 +31,7 @@ public class EntityController {
             Tile playerTile = player.getTile();
             int spawnCol = playerTile.col + (Game.getInstance().random.nextInt(2 * player.spawnZombieRadius + 1) - player.spawnZombieRadius);
             int spawnRow = playerTile.row + (Game.getInstance().random.nextInt(2 * player.spawnZombieRadius + 1) - player.spawnZombieRadius);
-            if (!TileController.map[spawnCol][spawnRow].collision) {
+            if (!Tile.map[spawnCol][spawnRow].collision) {
                 entities.add(new Zombie(spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16));
                 total++;
             }

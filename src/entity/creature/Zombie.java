@@ -2,7 +2,7 @@ package entity.creature;
 
 import game.Game;
 import common.*;
-import tile.TileController;
+import tile.Tile;
 import ai.pathfinder.*;
 
 import java.io.IOException;
@@ -92,7 +92,7 @@ public class Zombie extends Creature {
             // draw path
             g2d.setColor(new Color(255, 0, 0, 70));
             for (Node node : pathFinder.pathList) {
-                g2d.fillRect(Game.getInstance().camera.calculateScreenX(TileController.map[node.col][node.row].hitbox.x, 0), Game.getInstance().camera.calculateScreenY(TileController.map[node.col][node.row].hitbox.y, 0), Game.tileSize, Game.tileSize);
+                g2d.fillRect(Game.getInstance().camera.calculateScreenX(Tile.map[node.col][node.row].hitbox.x, 0), Game.getInstance().camera.calculateScreenY(Tile.map[node.col][node.row].hitbox.y, 0), Game.tileSize, Game.tileSize);
             }
             // draw zombie hitbox
             hitbox.draw(g2d);

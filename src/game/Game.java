@@ -1,7 +1,7 @@
 package game;
 
 import main.Window;
-import tile.TileController;
+import tile.Tile;
 import entity.EntityController;
 import item.Item;
 
@@ -22,9 +22,9 @@ public class Game extends JPanel implements Runnable {
     public static final int screenHeight = screenRows * tileSize;
 
     static {
-        TileController.setMapDimensions();
-        TileController.initializeMap();
-        TileController.loadImages();
+        Tile.setMapDimensions();
+        Tile.initializeMap();
+        Tile.loadImages();
         EntityController.loadImages();
         Hud.loadImages();
         Item.loadImages();
@@ -40,7 +40,6 @@ public class Game extends JPanel implements Runnable {
     public final Random random = new Random();
 
     public KeyHandler keyHandler;
-    public TileController tileController;
     public EntityController entityController;
     public Camera camera;
     public Hud hud;
@@ -59,7 +58,6 @@ public class Game extends JPanel implements Runnable {
 
     public void initialize() {
         keyHandler = new KeyHandler();
-        tileController = new TileController();
         entityController = new EntityController();
         camera = new Camera();
         hud = new Hud();
@@ -107,7 +105,7 @@ public class Game extends JPanel implements Runnable {
 
         Graphics2D g2d = (Graphics2D)g;
 
-        tileController.drawTiles(g2d);
+        Tile.drawTiles(g2d);
 
         entityController.drawEntities(g2d);
 

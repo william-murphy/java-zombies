@@ -3,7 +3,8 @@ package entity.creature;
 import game.Game;
 import common.*;
 import item.Item;
-import item.weapon.PN21; // temp
+import tile.Tile;
+import entity.EntityItem;
 
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
@@ -13,15 +14,20 @@ import java.awt.Point;
 
 public class Player extends Creature {
     
+    public static final int playerSpawnX = (Tile.worldWidth / 2) - (Game.tileSize / 2);
+    public static final int playerSpawnY = (Tile.worldHeight / 2) - (Game.tileSize / 2);
+    public static final int spawnZombieRadius = 5;
+    public static final int spawnDelay = 5 * Game.FPS;
+
     // player specific fields
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
-    public int spawnZombieRadius;
-    Item[] items = new Item[3];
+    int inventorySize = 8;
+    int currentInventorySize = 0;
+    Item[] items = new Item[inventorySize];
     int curItem = 0;
 
     public Player(int spawnX, int spawnY) {
         this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
-        this.items[curItem] = new PN21();
         setDefaultValues();
     }
 
@@ -29,17 +35,20 @@ public class Player extends Creature {
         speed = 4;
         direction = Direction.SOUTH;
         moving = false;
-        spawnZombieRadius = 5; //spawn radius around the player in tiles
         maxHealth = 20;
         health = maxHealth;
     }
 
-    public void pickupItem() {
-
+    public void pickupItem(EntityItem item) {
+        // Game.getInstance().entityController.remove();
+        items[curItem] = item.getItem();
     }
 
     public void dropItem() {
-
+        if (items[curItem] != null) {
+            Game.getInstance().entityController.add(items[curItem].createEntityItem(hitbox.x - 32, hitbox.y));
+            items[curItem] = null;
+        }
     }
 
     public void useItem() {
@@ -54,12 +63,22 @@ public class Player extends Creature {
         }
     }
 
+    public void attemptZombieSpawn() {
+        //attempt zombie spawn
+        if (Game.getInstance().entityController.size < Game.getInstance().entityController.max && Game.getInstance().tick % spawnDelay == 0) {
+            Tile playerTile = this.getTile();
+            int spawnCol = playerTile.col + (Game.getInstance().random.nextInt(2 * spawnZombieRadius + 1) - spawnZombieRadius);
+            int spawnRow = playerTile.row + (Game.getInstance().random.nextInt(2 * spawnZombieRadius + 1) - spawnZombieRadius);
+            if (!Tile.map[spawnCol][spawnRow].collision) {
+                Game.getInstance().entityController.add(new Zombie(spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16));
+            }
+        }
+    }
+
     public void update() {
-
+        attemptZombieSpawn();
         updatePosition();
-
         Game.getInstance().camera.update(hitbox.x, hitbox.y);
-
     }
 
     @Override

@@ -99,7 +99,7 @@ public abstract class Entity implements Collidable {
         return hitbox;
     }
 
-    public abstract void update();
+    public abstract void update(); // false means delete
 
     public abstract void draw(Graphics2D g2d);
 

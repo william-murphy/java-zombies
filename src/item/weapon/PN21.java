@@ -15,8 +15,8 @@ public class PN21 extends Weapon {
     
     static BufferedImage facingWest, facingEast;
 
-    final static int width = 11;
-    final static int height = 9;
+    static final int width = 11;
+    static final int height = 9;
 
     static int range = 4;
     static int damage = 3;
@@ -34,7 +34,22 @@ public class PN21 extends Weapon {
 
     @Override
     public EntityItem createEntityItem(int x, int y) {
-        return new EntityItem(facingWest, x, y, width, height);
+        return new EntityItem(this, x, y);
+    }
+
+    @Override
+    public BufferedImage getDefaultImage() {
+        return facingWest;
+    }
+
+    @Override
+    public final int getWidth() {
+        return width;
+    }
+
+    @Override
+    public final int getHeight() {
+        return height;
     }
 
     @Override

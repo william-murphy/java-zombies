@@ -1,25 +1,34 @@
 package entity;
 
+import game.Game;
 import common.*;
+import item.Item;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 public class EntityItem extends Entity {
     
-    BufferedImage image;
+    Item item;
 
-    public EntityItem(BufferedImage image, int spawnX, int spawnY, int width, int height) {
-        this.image = image;
-        this.hitbox = new Hitbox(spawnX, spawnY, width, height);
+    public EntityItem(Item item, int spawnX, int spawnY) {
+        this.hitbox = new Hitbox(spawnX, spawnY, item.getWidth(), item.getHeight());
+        this.item = item;
+    }
+
+    public Item getItem() {
+        return this.item;
     }
 
     @Override
-    public void update() {}
+    public void update() {
+        if (Game.getInstance().entityController.player.hitbox.intersects(hitbox)) {
+            Game.getInstance().entityController.player.pickupItem(this);
+        }
+    }
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.drawImage(image, hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
+        g2d.drawImage(item.getDefaultImage(), Game.getInstance().camera.calculateScreenX(hitbox.x, 0), Game.getInstance().camera.calculateScreenY(hitbox.y, 0), hitbox.width, hitbox.height, null);
     }
 
 }

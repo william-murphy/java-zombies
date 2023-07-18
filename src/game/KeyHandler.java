@@ -51,6 +51,9 @@ public class KeyHandler {
 
         inputMap.put(KeyStroke.getKeyStroke("released L"), "rl");
         actionMap.put("rl", new StopUseItem());
+
+        inputMap.put(KeyStroke.getKeyStroke("pressed P"), "pp");
+        actionMap.put("pp", new DropItem());
     }
 
     private class Move extends AbstractAction {
@@ -93,6 +96,13 @@ public class KeyHandler {
         @Override
         public void actionPerformed(ActionEvent e) {
             Game.getInstance().entityController.player.stopUseItem();
+        }
+    }
+
+    private class DropItem extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Game.getInstance().entityController.player.dropItem();
         }
     }
 }

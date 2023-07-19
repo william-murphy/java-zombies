@@ -14,7 +14,7 @@ import java.awt.Point;
 
 public class Zombie extends Creature {
 
-    static int numZombies = 0;
+    public static int numZombies = 0;
 
     // zombie specific fields
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;

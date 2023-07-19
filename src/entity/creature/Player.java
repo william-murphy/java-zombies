@@ -63,18 +63,6 @@ public class Player extends Creature {
         }
     }
 
-    public void attemptZombieSpawn() {
-        if (Zombie.numZombies < Zombie.getMaxZombies() && Game.getInstance().tick % spawnDelay == 0) {
-            Tile playerTile = this.getTile();
-            int spawnCol = playerTile.col + (Game.getInstance().random.nextInt(2 * spawnZombieRadius + 1) - spawnZombieRadius);
-            int spawnRow = playerTile.row + (Game.getInstance().random.nextInt(2 * spawnZombieRadius + 1) - spawnZombieRadius);
-            if (!Tile.map[spawnCol][spawnRow].collision) {
-                Game.getInstance().entityController.add(new Zombie(spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16));
-                Zombie.numZombies++;
-            }
-        }
-    }
-
     public void update() {
         updatePosition();
         Game.getInstance().camera.update(hitbox.x, hitbox.y);

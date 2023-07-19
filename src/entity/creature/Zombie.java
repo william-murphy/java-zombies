@@ -14,6 +14,8 @@ import java.awt.Point;
 
 public class Zombie extends Creature {
 
+    static int numZombies = 0;
+
     // zombie specific fields
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
     Pathfinder pathFinder;
@@ -29,6 +31,10 @@ public class Zombie extends Creature {
         maxHealth = 10;
         speed = 3;
         health = maxHealth;
+    }
+
+    public static int getMaxZombies() {
+        return Game.getInstance().round * 2;
     }
 
     @Override

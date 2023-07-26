@@ -23,11 +23,11 @@ public class Hud {
 
     private void drawHealthBar(Graphics2D g2d) {
         int i = 0;
-        while (i < Math.floorDiv(Game.getInstance().entityController.player.health, 2)) {
+        while (i < Math.floorDiv(Game.getInstance().entityList.player.health, 2)) {
             g2d.drawImage(heartFull, heartX + Game.tileSize * i, heartY, heartSize, heartSize, null);
             i += 1;
         }
-        if (!(Game.getInstance().entityController.player.health % 2 == 0)) {
+        if (!(Game.getInstance().entityList.player.health % 2 == 0)) {
             g2d.drawImage(heartHalf, heartX + Game.tileSize * i, heartY, heartSize, heartSize, null);
         }
     }

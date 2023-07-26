@@ -12,8 +12,8 @@ public class Camera {
     private static int cameraBoundaryY = (Game.screenHeight / 2) + (Game.tileSize / 2);
 
     public Camera() {
-        this.x = Game.getInstance().entityController.player.getHitbox().x;
-        this.y = Game.getInstance().entityController.player.getHitbox().y;
+        this.x = Game.getInstance().entityList.player.getHitbox().x;
+        this.y = Game.getInstance().entityList.player.getHitbox().y;
     }
 
     public void update(int worldX, int worldY) {

@@ -2,7 +2,7 @@ package game;
 
 import main.Window;
 import tile.Tile;
-import entity.EntityController;
+import entity.EntityList;
 import item.Item;
 
 import javax.swing.JPanel;
@@ -25,7 +25,7 @@ public class Game extends JPanel implements Runnable {
         Tile.setMapDimensions();
         Tile.initializeMap();
         Tile.loadImages();
-        EntityController.loadImages();
+        EntityList.loadImages();
         Hud.loadImages();
         Item.loadImages();
     }
@@ -40,7 +40,7 @@ public class Game extends JPanel implements Runnable {
     public final Random random = new Random();
 
     public KeyHandler keyHandler;
-    public EntityController entityController;
+    public EntityList entityList;
     public Camera camera;
     public Hud hud;
 
@@ -58,7 +58,7 @@ public class Game extends JPanel implements Runnable {
 
     public void initialize() {
         keyHandler = new KeyHandler();
-        entityController = new EntityController();
+        entityList = new EntityList();
         camera = new Camera();
         hud = new Hud();
     }
@@ -96,7 +96,7 @@ public class Game extends JPanel implements Runnable {
     }
 
     public void update() {
-        entityController.updateEntities();
+        entityList.update();
     }
 
     public void paintComponent(Graphics g) {
@@ -107,7 +107,7 @@ public class Game extends JPanel implements Runnable {
 
         Tile.drawTiles(g2d);
 
-        entityController.drawEntities(g2d);
+        entityList.drawAll(g2d);
 
         hud.drawHud(g2d);
 

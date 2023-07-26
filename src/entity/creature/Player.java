@@ -21,10 +21,7 @@ public class Player extends Creature {
 
     // player specific fields
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
-    int inventorySize = 8;
-    int currentInventorySize = 0;
-    Item[] items = new Item[inventorySize];
-    int curItem = 0;
+    static BufferedImage standingNorthEquipped, walkingNorthEquipped1, walkingNorthEquipped2, standingSouthEquipped, walkingSouthEquipped1, walkingSouthEquipped2, standingEastEquipped, walkingEastEquipped1, walkingEastEquipped2, standingWestEquipped, walkingWestEquipped1, walkingWestEquipped2;
 
     public Player(int spawnX, int spawnY) {
         this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
@@ -37,28 +34,30 @@ public class Player extends Creature {
         moving = false;
         maxHealth = 20;
         health = maxHealth;
+        inventorySize = 8;
+        items = new Item[inventorySize];
     }
 
     public void pickupItem(EntityItem item) {
-        Game.getInstance().entityController.remove(item);
+        Game.getInstance().entityList.remove(item);
         items[curItem] = item.getItem();
     }
 
     public void dropItem() {
-        if (items[curItem] != null) {
-            Game.getInstance().entityController.add(items[curItem].createEntityItem(hitbox.x - 32, hitbox.y));
+        if (isHoldingItem()) {
+            Game.getInstance().entityList.add(items[curItem].createEntityItem(hitbox.x - 32, hitbox.y));
             items[curItem] = null;
         }
     }
 
     public void useItem() {
-        if (items[curItem] != null) {
+        if (isHoldingItem()) {
             items[curItem].use();
         }
     }
 
     public void stopUseItem() {
-        if (items[curItem] != null) {
+        if (isHoldingItem()) {
             items[curItem].stopUse();
         }
     }
@@ -70,9 +69,17 @@ public class Player extends Creature {
 
     @Override
     public Point getHand() {
-        int x = this.direction == Direction.EAST ? (hitbox.x + hitbox.width - 10) : (hitbox.x + 5);
-        int y = hitbox.y + (hitbox.height / 2) - 5;
-        return new Point(x, y);
+        switch(direction) {
+            case NORTH:
+                return new Point(hitbox.x + hitbox.width - 6, hitbox.y - 13);
+            case SOUTH:
+                return new Point(hitbox.x + 11, hitbox.y + hitbox.height - 18);
+            case EAST:
+                return new Point(hitbox.x + hitbox.width + 2, hitbox.y - 5);
+            case WEST:
+                return new Point(hitbox.x - 13, hitbox.y - 3);
+        }
+        return null;
     }
 
     @Override
@@ -84,30 +91,46 @@ public class Player extends Creature {
             
             case NORTH:
                 if (moving) {
-                    image = animationStep ? walkingNorth1  : walkingNorth2;
+                    if (isHoldingItem()) {
+                        image = animationStep ? walkingNorthEquipped1 : walkingNorthEquipped2;
+                    } else {
+                        image = animationStep ? walkingNorth1 : walkingNorth2;
+                    }
                 }else {
-                    image = standingNorth;
+                    image = isHoldingItem() ? standingNorthEquipped : standingNorth;
                 }
                 break;
             case SOUTH:
                 if(moving) {
-                    image = animationStep ? walkingSouth1 : walkingSouth2;
+                    if (isHoldingItem()) {
+                        image = animationStep ? walkingSouthEquipped1 : walkingSouthEquipped2;
+                    } else {
+                        image = animationStep ? walkingSouth1 : walkingSouth2;
+                    }
                 }else {
-                    image = standingSouth;
+                    image = isHoldingItem() ? standingSouthEquipped : standingSouth;
                 }
                 break;
             case EAST:
                 if (moving) {
-                    image = animationStep ? walkingEast1 : walkingEast2;
+                    if (isHoldingItem()) {
+                        image = animationStep ? walkingEastEquipped1 : walkingEastEquipped2;
+                    } else {
+                        image = animationStep ? walkingEast1 : walkingEast2;
+                    }
                 }else {
-                    image = standingEast;
+                    image = isHoldingItem() ? standingEastEquipped : standingEast;
                 }
                 break;
             case WEST:
                 if (moving) {
-                    image = animationStep ? walkingWest1 : walkingWest2;
+                    if (isHoldingItem()) {
+                        image = animationStep ? walkingWestEquipped1 : walkingWestEquipped2;
+                    } else {
+                        image = animationStep ? walkingWest1 : walkingWest2;
+                    }
                 }else {
-                    image = standingWest;
+                    image = isHoldingItem() ? standingWestEquipped : standingWest;
                 }
                 break;
         }
@@ -141,6 +164,19 @@ public class Player extends Creature {
             standingWest = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-w.png"));
             walkingWest1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w1.png"));
             walkingWest2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w2.png"));
+            standingNorthEquipped = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-n-hand-out.png"));
+            walkingNorthEquipped1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-n-hand-out-1.png"));
+            walkingNorthEquipped2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-n-hand-out-2.png"));
+            standingSouthEquipped = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-s-hand-out.png"));
+            walkingSouthEquipped1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-s-hand-out-1.png"));
+            walkingSouthEquipped2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-s-hand-out-2.png"));
+            standingEastEquipped = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-e-hand-out.png"));
+            walkingEastEquipped1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-e-hand-out-1.png"));
+            walkingEastEquipped2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-e-hand-out-2.png"));
+            standingWestEquipped = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-w-hand-out.png"));
+            walkingWestEquipped1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w-hand-out-1.png"));
+            walkingWestEquipped2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w-hand-out-2.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -63,7 +63,7 @@ public class KeyHandler {
         }
         @Override
         public void actionPerformed(ActionEvent e) {
-            Game.getInstance().entityController.player.move(ma);
+            Game.getInstance().entityList.player.move(ma);
         }
     }
 
@@ -74,7 +74,7 @@ public class KeyHandler {
         }
         @Override
         public void actionPerformed(ActionEvent e) {
-            Game.getInstance().entityController.player.stopMove(ma);
+            Game.getInstance().entityList.player.stopMove(ma);
         }
     }
 
@@ -88,21 +88,21 @@ public class KeyHandler {
     private class UseItem extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Game.getInstance().entityController.player.useItem();
+            Game.getInstance().entityList.player.useItem();
         }
     }
 
     private class StopUseItem extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Game.getInstance().entityController.player.stopUseItem();
+            Game.getInstance().entityList.player.stopUseItem();
         }
     }
 
     private class DropItem extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Game.getInstance().entityController.player.dropItem();
+            Game.getInstance().entityList.player.dropItem();
         }
     }
 }

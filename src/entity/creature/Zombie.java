@@ -22,7 +22,7 @@ public class Zombie extends Creature {
 
     public Zombie(int spawnX, int spawnY) {
         this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
-        this.pathFinder = new Pathfinder(this, Game.getInstance().entityController.player);
+        this.pathFinder = new Pathfinder(this, Game.getInstance().entityList.player);
         setDefaultValues();
     }
 

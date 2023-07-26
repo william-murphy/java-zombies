@@ -21,8 +21,8 @@ public class EntityItem extends Entity {
 
     @Override
     public void update() {
-        if (Game.getInstance().entityController.player.hitbox.intersects(hitbox)) {
-            Game.getInstance().entityController.player.pickupItem(this);
+        if (Game.getInstance().entityList.player.hitbox.intersects(hitbox)) {
+            Game.getInstance().entityList.player.pickupItem(this);
         }
     }
 

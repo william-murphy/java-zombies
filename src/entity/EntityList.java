@@ -4,9 +4,7 @@ import java.awt.Graphics2D;
 import java.util.LinkedList;
 
 import entity.creature.*;
-import game.Game;
 import item.weapon.Tac40;
-import tile.Tile;
 
 public class EntityList {
     
@@ -14,6 +12,7 @@ public class EntityList {
 
     LinkedList<Entity> entities = new LinkedList<>();
     LinkedList<Entity> toRemove = new LinkedList<>();
+    LinkedList<Entity> toAdd = new LinkedList<>();
 
     public EntityList() {
         entities.add(player);
@@ -22,7 +21,7 @@ public class EntityList {
     }
 
     public void add(Entity entity) {
-        entities.add(entity);
+        toAdd.add(entity);
     }
 
     public void remove(Entity entity) {
@@ -30,7 +29,8 @@ public class EntityList {
     }
 
     public void update() {
-        // attemptZombieSpawn()
+        entities.addAll(toAdd);
+        toAdd.clear();
         for (Entity entity : entities) {
             entity.update();
         }
@@ -41,18 +41,6 @@ public class EntityList {
     public void drawAll(Graphics2D g2d) {
         for (Entity entity : entities) {
             entity.draw(g2d);
-        }
-    }
-
-    public void attemptZombieSpawn() {
-        if (Zombie.numZombies < Zombie.getMaxZombies() && Game.getInstance().tick % Player.spawnDelay == 0) {
-            Tile playerTile = player.getTile();
-            int spawnCol = playerTile.col + (Game.getInstance().random.nextInt(2 * Player.spawnZombieRadius + 1) - Player.spawnZombieRadius);
-            int spawnRow = playerTile.row + (Game.getInstance().random.nextInt(2 * Player.spawnZombieRadius + 1) - Player.spawnZombieRadius);
-            if (!Tile.map[spawnCol][spawnRow].collision) {
-                entities.add(new Zombie(spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16));
-                Zombie.numZombies++;
-            }
         }
     }
 

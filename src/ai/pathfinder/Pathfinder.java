@@ -55,26 +55,34 @@ public class Pathfinder {
         Direction nextDirection = creature.getDirection(tile);
         switch (nextDirection) {
             case NORTH:
-                if (creature.fitsHorizontally(tile)) {
+                if (fitsHorizontally(creature, tile)) {
                     creature.move(nextDirection);
                 }
             break;
             case SOUTH:
-                if (creature.fitsHorizontally(tile)) {
+                if (fitsHorizontally(creature, tile)) {
                     creature.move(nextDirection);
                 }
             break;
             case EAST:
-                if (creature.fitsVertically(tile)) {
+                if (fitsVertically(creature, tile)) {
                     creature.move(nextDirection);
                 }
             break;
             case WEST:
-                if (creature.fitsVertically(tile)) {
+                if (fitsVertically(creature, tile)) {
                     creature.move(nextDirection);
                 }
             break;
         }
+    }
+
+    private boolean fitsHorizontally(Creature creature, Tile tile) {
+        return (creature.hitbox.x >= tile.hitbox.x && (creature.hitbox.x + creature.hitbox.width) <= (tile.hitbox.x + tile.hitbox.width));
+    }
+
+    private boolean fitsVertically(Creature creature, Tile tile) {
+        return (creature.hitbox.y >= tile.hitbox.y && (creature.hitbox.y + creature.hitbox.height) <= (tile.hitbox.y + tile.hitbox.height));
     }
 
     private static void instantiateNodes() {

@@ -78,14 +78,6 @@ public abstract class Entity implements Collidable {
         }
     }
 
-    public boolean fitsHorizontally(Tile tile) {
-        return (hitbox.x >= tile.hitbox.x && (hitbox.x + hitbox.width) <= (tile.hitbox.x + tile.hitbox.width));
-    }
-
-    public boolean fitsVertically(Tile tile) {
-        return (hitbox.y >= tile.hitbox.y && (hitbox.y + hitbox.height) <= (tile.hitbox.y + tile.hitbox.height));
-    }
-
     @Override 
     public boolean hasCollision() {
         return this.collision;

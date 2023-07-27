@@ -17,9 +17,6 @@ public abstract class Entity implements Collidable {
     public Direction direction;
     public boolean moving = false;
 
-    // IDEA: For entity collision, what if entity list was priority queue by coordinate somehow, then when checking collision you only have to check the two closest in the x prio q and the y prio q
-    // IDEA: make a folder in entity and tile called controller and create a class Controller.java in each with any other classes they may need in there
-
     public Tile getTile() {
         return Tile.getTile((int)hitbox.getCenterX(), (int)hitbox.getCenterY());
     }

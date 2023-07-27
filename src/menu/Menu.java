@@ -40,14 +40,10 @@ public class Menu extends JPanel {
         }
 
         @Override
-        public void keyPressed(KeyEvent e) {
-            // do nothing
-        }
+        public void keyPressed(KeyEvent e) {}
 
         @Override
-        public void keyReleased(KeyEvent e) {
-            // do nothing
-        }
+        public void keyReleased(KeyEvent e) {}
     
     }
 

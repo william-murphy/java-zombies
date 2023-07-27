@@ -31,7 +31,6 @@ public class EntityItem extends Entity {
 
     @Override
     public void update() {
-        // TODO - scan for player rather than entityList being omniscient about player's whereabouts
         if (Game.getInstance().entityList.player.hitbox.intersects(hitbox)) {
             Game.getInstance().entityList.player.pickupItem(this);
         }

@@ -26,7 +26,7 @@ public class Pathfinder {
 
     public Pathfinder(Creature creature, Entity target) {
         this.creature = creature;
-        this.target = target; // TODO - change this to look for a target on first tick after instantiation
+        this.target = target;
         instantiateNodes();
     }
 

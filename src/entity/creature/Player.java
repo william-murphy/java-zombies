@@ -45,7 +45,6 @@ public class Player extends Creature {
 
     public void dropItem() {
         if (isHoldingItem()) {
-            // TODO - should x and y be passed to constructor or passed to spawn()?
             items[curItem].createEntityItem(hitbox.x - 32, hitbox.y).spawn();
             items[curItem] = null;
         }

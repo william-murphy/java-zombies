@@ -114,11 +114,11 @@ public class Game extends JPanel implements Runnable {
         g2d.dispose();
     }
 
-    //called from the window class to start / stop the game
+    // called from the window class to start / stop the game
 
     public void startGameThread() {
         gameThread = new Thread(this);
-        gameThread.start(); //calls the run method on gameThread
+        gameThread.start(); // calls the run method on gameThread
     }
 
     public void stopGameThread() {

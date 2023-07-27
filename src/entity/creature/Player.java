@@ -4,7 +4,6 @@ import game.Game;
 import common.*;
 import item.Item;
 import tile.Tile;
-import entity.EntityItem;
 
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
@@ -36,30 +35,6 @@ public class Player extends Creature {
         health = maxHealth;
         inventorySize = 8;
         items = new Item[inventorySize];
-    }
-
-    public void pickupItem(EntityItem item) {
-        item.despawn();
-        items[curItem] = item.getItem();
-    }
-
-    public void dropItem() {
-        if (isHoldingItem()) {
-            items[curItem].spawnEntityItem(hitbox.x - 32, hitbox.y);
-            items[curItem] = null;
-        }
-    }
-
-    public void useItem() {
-        if (isHoldingItem()) {
-            items[curItem].use();
-        }
-    }
-
-    public void stopUseItem() {
-        if (isHoldingItem()) {
-            items[curItem].stopUse();
-        }
     }
 
     @Override

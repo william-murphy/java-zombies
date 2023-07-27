@@ -20,7 +20,18 @@ public class EntityItem extends Entity {
     }
 
     @Override
+    public void spawn() {
+        Game.getInstance().entityList.add(this);
+    }
+
+    @Override
+    public void despawn() {
+        Game.getInstance().entityList.remove(this);
+    }
+
+    @Override
     public void update() {
+        // TODO - scan for player rather than entityList being omniscient about player's whereabouts
         if (Game.getInstance().entityList.player.hitbox.intersects(hitbox)) {
             Game.getInstance().entityList.player.pickupItem(this);
         }

@@ -45,6 +45,16 @@ public class Zombie extends Creature {
     }
 
     @Override
+    public void spawn() {
+        Game.getInstance().entityList.add(this);
+    }
+
+    @Override
+    public void despawn() {
+        Game.getInstance().entityList.remove(this);
+    }
+
+    @Override
     public void update() {
 
         pathFinder.update();

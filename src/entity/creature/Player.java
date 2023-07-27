@@ -39,13 +39,14 @@ public class Player extends Creature {
     }
 
     public void pickupItem(EntityItem item) {
-        Game.getInstance().entityList.remove(item);
+        item.despawn();
         items[curItem] = item.getItem();
     }
 
     public void dropItem() {
         if (isHoldingItem()) {
-            Game.getInstance().entityList.add(items[curItem].createEntityItem(hitbox.x - 32, hitbox.y));
+            // TODO - should x and y be passed to constructor or passed to spawn()?
+            items[curItem].createEntityItem(hitbox.x - 32, hitbox.y).spawn();
             items[curItem] = null;
         }
     }
@@ -62,11 +63,6 @@ public class Player extends Creature {
         }
     }
 
-    public void update() {
-        updatePosition();
-        Game.getInstance().camera.update(hitbox.x, hitbox.y);
-    }
-
     @Override
     public Point getHand() {
         switch(direction) {
@@ -80,6 +76,22 @@ public class Player extends Creature {
                 return new Point(hitbox.x - 13, hitbox.y - 3);
         }
         return null;
+    }
+
+    @Override
+    public void spawn() {
+        Game.getInstance().entityList.add(this);
+    }
+
+    @Override
+    public void despawn() {
+        Game.getInstance().entityList.remove(this);
+    }
+
+    @Override
+    public void update() {
+        updatePosition();
+        Game.getInstance().camera.update(hitbox.x, hitbox.y);
     }
 
     @Override

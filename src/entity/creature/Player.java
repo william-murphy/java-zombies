@@ -66,6 +66,7 @@ public class Player extends Creature {
     @Override
     public void update() {
         updatePosition();
+        checkCollision();
         attemptZombieSpawn();
         Game.getInstance().camera.update(hitbox.x, hitbox.y);
     }

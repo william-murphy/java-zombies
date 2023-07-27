@@ -8,7 +8,9 @@ import java.awt.Graphics2D;
 
 public class EntityItem extends Entity {
     
+    final static int pickupDelay = Game.FPS * 2; // 2 seconds
     Item item;
+    boolean ready;
 
     public EntityItem(Item item) {
         this.hitbox = new Hitbox(0, 0, item.getWidth(), item.getHeight());
@@ -22,6 +24,7 @@ public class EntityItem extends Entity {
     @Override
     public void spawn(int x, int y) {
         hitbox.setLocation(x, y);
+        ready = false;
         Game.getInstance().entityList.add(this);
     }
 
@@ -32,7 +35,10 @@ public class EntityItem extends Entity {
 
     @Override
     public void update() {
-        if (Game.getInstance().entityList.player.hitbox.intersects(hitbox)) {
+        if (!ready && Game.getInstance().tick % pickupDelay == 0) {
+            ready = true;
+        }
+        if (ready && Game.getInstance().entityList.player.hitbox.intersects(hitbox)) {
             Game.getInstance().entityList.player.pickupItem(this);
         }
     }

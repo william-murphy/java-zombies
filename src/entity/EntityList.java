@@ -8,16 +8,16 @@ import item.weapon.Tac40;
 
 public class EntityList {
     
-    public Player player = new Player(Player.playerSpawnX, Player.playerSpawnY);
+    public Player player = new Player();
 
     LinkedList<Entity> entities = new LinkedList<>();
     LinkedList<Entity> toRemove = new LinkedList<>();
     LinkedList<Entity> toAdd = new LinkedList<>();
 
-    public EntityList() {
-        entities.add(player);
+    public void initialize() {
+        player.spawn(Player.playerSpawnX, Player.playerSpawnY);
         // temp
-        entities.add(new EntityItem(new Tac40(), Player.playerSpawnX - 200, Player.playerSpawnY));
+        new EntityItem(new Tac40()).spawn(Player.playerSpawnX - 200, Player.playerSpawnY);
     }
 
     public void add(Entity entity) {

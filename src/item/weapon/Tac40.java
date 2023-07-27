@@ -32,8 +32,8 @@ public class Tac40 extends Weapon {
     }
 
     @Override
-    public EntityItem createEntityItem(int x, int y) {
-        return new EntityItem(this, x, y);
+    public void spawnEntityItem(int x, int y) {
+        new EntityItem(this).spawn(x, y);
     }
 
     @Override

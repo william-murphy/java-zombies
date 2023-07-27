@@ -20,8 +20,8 @@ public class Zombie extends Creature {
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
     Pathfinder pathFinder;
 
-    public Zombie(int spawnX, int spawnY) {
-        this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
+    public Zombie() {
+        this.hitbox = new Hitbox(0, 0, Game.tileSize / 2, Game.tileSize / 2);
         this.pathFinder = new Pathfinder(this, Game.getInstance().entityList.player);
         setDefaultValues();
     }
@@ -45,7 +45,8 @@ public class Zombie extends Creature {
     }
 
     @Override
-    public void spawn() {
+    public void spawn(int x, int y) {
+        hitbox.setLocation(x, y);
         Game.getInstance().entityList.add(this);
     }
 

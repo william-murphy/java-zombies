@@ -1,6 +1,5 @@
 package item;
 
-import entity.EntityItem;
 import entity.creature.Creature;
 import item.weapon.Weapon;
 
@@ -13,7 +12,7 @@ public abstract class Item  {
 
     public abstract void stopUse();
 
-    public abstract EntityItem createEntityItem(int x, int y);
+    public abstract void spawnEntityItem(int x, int y);
 
     public abstract BufferedImage getDefaultImage();
 

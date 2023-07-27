@@ -10,8 +10,8 @@ public class EntityItem extends Entity {
     
     Item item;
 
-    public EntityItem(Item item, int spawnX, int spawnY) {
-        this.hitbox = new Hitbox(spawnX, spawnY, item.getWidth(), item.getHeight());
+    public EntityItem(Item item) {
+        this.hitbox = new Hitbox(0, 0, item.getWidth(), item.getHeight());
         this.item = item;
     }
 
@@ -20,7 +20,8 @@ public class EntityItem extends Entity {
     }
 
     @Override
-    public void spawn() {
+    public void spawn(int x, int y) {
+        hitbox.setLocation(x, y);
         Game.getInstance().entityList.add(this);
     }
 

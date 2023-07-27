@@ -96,7 +96,7 @@ public abstract class Entity implements Collidable {
         return hitbox;
     }
 
-    public abstract void spawn();
+    public abstract void spawn(int x, int y);
 
     public abstract void despawn();
 

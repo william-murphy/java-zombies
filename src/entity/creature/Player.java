@@ -23,8 +23,8 @@ public class Player extends Creature {
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
     static BufferedImage standingNorthEquipped, walkingNorthEquipped1, walkingNorthEquipped2, standingSouthEquipped, walkingSouthEquipped1, walkingSouthEquipped2, standingEastEquipped, walkingEastEquipped1, walkingEastEquipped2, standingWestEquipped, walkingWestEquipped1, walkingWestEquipped2;
 
-    public Player(int spawnX, int spawnY) {
-        this.hitbox = new Hitbox(spawnX, spawnY, Game.tileSize / 2, Game.tileSize / 2);
+    public Player() {
+        this.hitbox = new Hitbox(0, 0, Game.tileSize / 2, Game.tileSize / 2);
         setDefaultValues();
     }
 
@@ -45,7 +45,7 @@ public class Player extends Creature {
 
     public void dropItem() {
         if (isHoldingItem()) {
-            items[curItem].createEntityItem(hitbox.x - 32, hitbox.y).spawn();
+            items[curItem].spawnEntityItem(hitbox.x - 32, hitbox.y);
             items[curItem] = null;
         }
     }
@@ -78,7 +78,8 @@ public class Player extends Creature {
     }
 
     @Override
-    public void spawn() {
+    public void spawn(int x, int y) {
+        hitbox.setLocation(x, y);
         Game.getInstance().entityList.add(this);
     }
 
@@ -100,7 +101,7 @@ public class Player extends Creature {
             int spawnCol = playerTile.col + (Game.getInstance().random.nextInt(2 * Player.spawnZombieRadius + 1) - Player.spawnZombieRadius);
             int spawnRow = playerTile.row + (Game.getInstance().random.nextInt(2 * Player.spawnZombieRadius + 1) - Player.spawnZombieRadius);
             if (!Tile.map[spawnCol][spawnRow].collision) {
-                Game.getInstance().entityList.add(new Zombie(spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16));
+                new Zombie().spawn(spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16);
                 Zombie.numZombies++;
             }
         }

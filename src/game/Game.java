@@ -59,6 +59,7 @@ public class Game extends JPanel implements Runnable {
     public void initialize() {
         keyHandler = new KeyHandler();
         entityList = new EntityList();
+        entityList.initialize();
         camera = new Camera();
         hud = new Hud();
     }

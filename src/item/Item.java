@@ -2,6 +2,7 @@ package item;
 
 import entity.creature.Creature;
 import item.weapon.Weapon;
+import item.ammo.Ammo;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -26,6 +27,7 @@ public abstract class Item  {
 
     public static void loadImages() {
         Weapon.loadImages();
+        Ammo.loadImages();
     }
 
 }

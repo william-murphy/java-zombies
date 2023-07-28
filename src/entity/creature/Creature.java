@@ -2,8 +2,7 @@ package entity.creature;
 
 import item.Item;
 import entity.*;
-
-import java.awt.Point;
+import common.*;
 
 public abstract class Creature extends MovableEntity {
 
@@ -42,6 +41,6 @@ public abstract class Creature extends MovableEntity {
         }
     }
 
-    public abstract Point getHand();
+    public abstract Hand getHand();
 
 }

@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import java.awt.Color;
-import java.awt.Point;
 
 public class Zombie extends Creature {
 
@@ -38,10 +37,10 @@ public class Zombie extends Creature {
     }
 
     @Override
-    public Point getHand() {
+    public Hand getHand() {
         int x = this.direction == Direction.EAST ? (hitbox.x + 5) : (hitbox.x + hitbox.width - 5);
         int y = hitbox.y + (hitbox.height / 2);
-        return new Point(x, y);
+        return new Hand(x, y);
     }
 
     @Override

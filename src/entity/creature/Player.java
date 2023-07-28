@@ -9,7 +9,6 @@ import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
-import java.awt.Point;
 
 public class Player extends Creature {
     
@@ -50,16 +49,16 @@ public class Player extends Creature {
     }
 
     @Override
-    public Point getHand() {
+    public Hand getHand() {
         switch(direction) {
             case NORTH:
-                return new Point(hitbox.x + hitbox.width - 6, hitbox.y - 13);
+                return new Hand(hitbox.x + hitbox.width - 6, hitbox.y - 13);
             case SOUTH:
-                return new Point(hitbox.x + 11, hitbox.y + hitbox.height - 18);
+                return new Hand(hitbox.x + 11, hitbox.y + hitbox.height - 18);
             case EAST:
-                return new Point(hitbox.x + hitbox.width + 2, hitbox.y - 5);
+                return new Hand(hitbox.x + hitbox.width + 2, hitbox.y - 5);
             case WEST:
-                return new Point(hitbox.x - 13, hitbox.y - 3);
+                return new Hand(hitbox.x - 13, hitbox.y - 3);
         }
         return null;
     }
@@ -149,6 +148,9 @@ public class Player extends Creature {
         if (Game.getInstance().debug) {
             // draw player hitbox
             this.hitbox.draw(g2d);
+            // draw player hand TODO - store hand so we dont have to create a new one every time .. maybe
+            this.getHand().draw(g2d);
+
         }
     }
 
@@ -178,7 +180,6 @@ public class Player extends Creature {
             standingWestEquipped = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-w-hand-out.png"));
             walkingWestEquipped1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w-hand-out-1.png"));
             walkingWestEquipped2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w-hand-out-2.png"));
-
         } catch (IOException e) {
             e.printStackTrace();
         }

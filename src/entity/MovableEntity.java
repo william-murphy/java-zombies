@@ -4,8 +4,6 @@ import common.*;
 import tile.Tile;
 
 public abstract class MovableEntity extends Entity {
-    public int animationCounter = 0;
-    public boolean animationStep = false;
 
     public int speed;
     public Direction direction;
@@ -39,14 +37,6 @@ public abstract class MovableEntity extends Entity {
                     break;
             }
 
-        }
-    }
-
-    protected void updateAnimation() {
-        animationCounter++;
-        if (animationCounter > 15) {
-            animationStep = !animationStep;
-            animationCounter = 0;
         }
     }
 

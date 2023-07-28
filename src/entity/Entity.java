@@ -10,8 +10,19 @@ public abstract class Entity implements Collidable {
     public Hitbox hitbox;
     public boolean collision = true;
 
+    public int animationCounter = 0;
+    public boolean animationStep = false;
+
     public Tile getTile() {
         return Tile.getTile((int)hitbox.getCenterX(), (int)hitbox.getCenterY());
+    }
+
+    protected void updateAnimation() {
+        animationCounter++;
+        if (animationCounter > 15) {
+            animationStep = !animationStep;
+            animationCounter = 0;
+        }
     }
 
     @Override 

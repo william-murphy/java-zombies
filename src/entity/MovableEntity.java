@@ -39,12 +39,14 @@ public abstract class MovableEntity extends Entity {
                     break;
             }
 
-            animationCounter++;
-            if (animationCounter > 15) {
-                animationStep = !animationStep;
-                animationCounter = 0;
-            }
+        }
+    }
 
+    protected void updateAnimation() {
+        animationCounter++;
+        if (animationCounter > 15) {
+            animationStep = !animationStep;
+            animationCounter = 0;
         }
     }
 

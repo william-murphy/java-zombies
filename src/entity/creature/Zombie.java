@@ -59,6 +59,7 @@ public class Zombie extends Creature {
     public void update() {
         pathFinder.update();
         updatePosition();
+        updateAnimation();
         checkCollision();
     }
 

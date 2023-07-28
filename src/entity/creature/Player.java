@@ -37,6 +37,18 @@ public class Player extends Creature {
         items = new Item[inventorySize];
     }
 
+    public void attemptZombieSpawn() {
+        if (Zombie.numZombies < Zombie.getMaxZombies() && Game.getInstance().tick % Player.spawnDelay == 0) {
+            Tile playerTile = this.getTile();
+            int spawnCol = playerTile.col + (Game.getInstance().random.nextInt(2 * Player.spawnZombieRadius + 1) - Player.spawnZombieRadius);
+            int spawnRow = playerTile.row + (Game.getInstance().random.nextInt(2 * Player.spawnZombieRadius + 1) - Player.spawnZombieRadius);
+            if (!Tile.map[spawnCol][spawnRow].collision) {
+                new Zombie().spawn(spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16);
+                Zombie.numZombies++;
+            }
+        }
+    }
+
     @Override
     public Point getHand() {
         switch(direction) {
@@ -66,21 +78,10 @@ public class Player extends Creature {
     @Override
     public void update() {
         updatePosition();
+        updateAnimation();
         checkCollision();
         attemptZombieSpawn();
         Game.getInstance().camera.update(hitbox.x, hitbox.y);
-    }
-
-    public void attemptZombieSpawn() {
-        if (Zombie.numZombies < Zombie.getMaxZombies() && Game.getInstance().tick % Player.spawnDelay == 0) {
-            Tile playerTile = this.getTile();
-            int spawnCol = playerTile.col + (Game.getInstance().random.nextInt(2 * Player.spawnZombieRadius + 1) - Player.spawnZombieRadius);
-            int spawnRow = playerTile.row + (Game.getInstance().random.nextInt(2 * Player.spawnZombieRadius + 1) - Player.spawnZombieRadius);
-            if (!Tile.map[spawnCol][spawnRow].collision) {
-                new Zombie().spawn(spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16);
-                Zombie.numZombies++;
-            }
-        }
     }
 
     @Override

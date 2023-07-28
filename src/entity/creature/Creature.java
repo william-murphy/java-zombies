@@ -1,12 +1,11 @@
 package entity.creature;
 
-import entity.Entity;
-import entity.EntityItem;
 import item.Item;
+import entity.*;
 
 import java.awt.Point;
 
-public abstract class Creature extends Entity {
+public abstract class Creature extends MovableEntity {
 
     public int maxHealth;
     public int health;

@@ -2,7 +2,7 @@ package entity.creature;
 
 import game.Game;
 import common.*;
-import item.Item;
+import item.*;
 import tile.Tile;
 
 import java.awt.Graphics2D;
@@ -33,7 +33,7 @@ public class Player extends Creature {
         maxHealth = 20;
         health = maxHealth;
         inventorySize = 8;
-        items = new Item[inventorySize];
+        inventory = new ItemStack[inventorySize];
     }
 
     public void attemptZombieSpawn() {
@@ -139,8 +139,8 @@ public class Player extends Creature {
         // player
         g2d.drawImage(image, Game.getInstance().camera.calculateScreenX(hitbox.x, Game.tileSize / 4), Game.getInstance().camera.calculateScreenY(hitbox.y, Game.tileSize / 2), Game.tileSize, Game.tileSize, null);
         // item
-        if (items[curItem] != null) {
-            items[curItem].drawInHand(g2d, this);
+        if (inventory[curItem] != null) {
+            inventory[curItem].getItem().drawInHand(g2d, this);
         }
 
         //DEBUG

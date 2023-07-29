@@ -2,23 +2,23 @@ package entity;
 
 import game.Game;
 import common.*;
-import item.Item;
+import item.ItemStack;
 
 import java.awt.Graphics2D;
 
 public class EntityItem extends Entity {
     
     final static int pickupDelay = Game.FPS * 2; // 2 seconds
-    Item item;
+    ItemStack itemStack;
     boolean ready;
 
-    public EntityItem(Item item) {
-        this.hitbox = new Hitbox(0, 0, item.getWidth(), item.getHeight());
-        this.item = item;
+    public EntityItem(ItemStack itemStack) {
+        this.hitbox = new Hitbox(0, 0, itemStack.getItem().width, itemStack.getItem().height);
+        this.itemStack = itemStack;
     }
 
-    public Item getItem() {
-        return this.item;
+    public ItemStack getItemStack() {
+        return this.itemStack;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class EntityItem extends Entity {
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.drawImage(item.getDefaultImage(), Game.getInstance().camera.calculateScreenX(hitbox.x, 0), Game.getInstance().camera.calculateScreenY(hitbox.y, 0), hitbox.width, hitbox.height, null);
+        g2d.drawImage(itemStack.getItem().getDefaultImage(), Game.getInstance().camera.calculateScreenX(hitbox.x, 0), Game.getInstance().camera.calculateScreenY(hitbox.y, 0), hitbox.width, hitbox.height, null);
     }
 
 }

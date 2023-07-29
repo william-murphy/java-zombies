@@ -1,6 +1,6 @@
 package entity.creature;
 
-import item.Item;
+import item.ItemStack;
 import entity.*;
 import common.*;
 
@@ -11,33 +11,33 @@ public abstract class Creature extends MovableEntity {
 
     int inventorySize;
     int curItem = 0;
-    Item[] items;
+    ItemStack[] inventory;
 
     public boolean isHoldingItem() {
-        return items != null && items[this.curItem] != null;
+        return inventory != null && inventory[this.curItem] != null;
     }
 
     public void pickupItem(EntityItem item) {
         item.despawn();
-        items[curItem] = item.getItem();
+        inventory[curItem] = item.getItemStack();
     }
 
     public void dropItem() {
         if (isHoldingItem()) {
-            items[curItem].spawnEntityItem(hitbox.x, hitbox.y);
-            items[curItem] = null;
+            inventory[curItem].spawnEntityItem(hitbox.x, hitbox.y);
+            inventory[curItem] = null;
         }
     }
 
     public void useItem() {
         if (isHoldingItem()) {
-            items[curItem].use();
+            inventory[curItem].getItem().use();
         }
     }
 
     public void stopUseItem() {
         if (isHoldingItem()) {
-            items[curItem].stopUse();
+            inventory[curItem].getItem().stopUse();
         }
     }
 

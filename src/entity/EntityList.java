@@ -4,7 +4,8 @@ import java.awt.Graphics2D;
 import java.util.LinkedList;
 
 import entity.creature.*;
-import item.weapon.Tac40;
+import item.ItemStack;
+import item.weapon.Weapon;
 
 public class EntityList {
     
@@ -17,7 +18,7 @@ public class EntityList {
     public void initialize() {
         player.spawn(Player.playerSpawnX, Player.playerSpawnY);
         // temp
-        new EntityItem(new Tac40()).spawn(Player.playerSpawnX - 200, Player.playerSpawnY);
+        new ItemStack(Weapon.tac40).spawnEntityItem(Player.playerSpawnX - 200, Player.playerSpawnY);
     }
 
     public void add(Entity entity) {

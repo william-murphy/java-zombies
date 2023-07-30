@@ -5,20 +5,24 @@ import entity.EntityItem;
 public class ItemStack {
     
     Item item;
-    int amount;
+    int size;
 
-    public ItemStack(Item item, int amount) {
+    public ItemStack(Item item, int size) {
         this.item = item;
-        this.amount = amount;
+        this.size = size;
     }
 
     public ItemStack(Item item) {
         this.item = item;
-        this.amount = 1;
+        this.size = 1;
     }
 
     public Item getItem() {
         return this.item;
+    }
+
+    public int getSize() {
+        return this.size;
     }
 
     public void spawnEntityItem(int x, int y) {

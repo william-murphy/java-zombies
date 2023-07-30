@@ -25,6 +25,7 @@ public class Weapon extends Item {
         this.height = height;
         this.damage= damage;
         this.capacity = capacity;
+        this.maxStack = 1;
     }
 
     private void loadImages(String name) {

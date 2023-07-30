@@ -3,7 +3,12 @@ package common;
 import entity.livingentity.*;
 import item.ItemStack;
 
+import java.awt.Graphics2D;
+import java.awt.Color;
+
 public class Inventory {
+
+    static final int squareSize = 32;
 
     Player player;
     ItemStack[] items;
@@ -71,6 +76,26 @@ public class Inventory {
             current--;
         } else {
             current = items.length - 1;
+        }
+    }
+
+    public void draw(Graphics2D g2d, int x, int y) {
+        for (int i = 0; i < items.length; i++) {
+            g2d.setColor(Color.LIGHT_GRAY);
+            g2d.fillRect(x + (squareSize + 1) * i, y, squareSize, squareSize);
+            if (i == current) {
+                g2d.setColor(Color.RED);
+            } else {
+                g2d.setColor(Color.BLACK);
+            }
+            g2d.drawRect(x + (squareSize + 1) * i, y, squareSize, squareSize);
+            if (items[i] != null) {
+                g2d.drawImage(items[i].getItem().getDefaultImage(), x + (i * squareSize) + 4, y + 4, items[i].getItem().width, items[i].getItem().height, null);
+                if (items[i].getItem().maxStack > 1) {
+                    g2d.setColor(Color.BLACK);
+                    g2d.drawString(String.valueOf(items[i].getSize()), x + (i * squareSize) + 20, y + 28);
+                }
+            }
         }
     }
 

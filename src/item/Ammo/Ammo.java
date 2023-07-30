@@ -24,6 +24,7 @@ public class Ammo extends Item {
         this.width = width;
         this.height = height;
         this.damage = damage;
+        this.maxStack = 64;
     }
 
     public void drawAsProjectile(Graphics2D g2d, Projectile projectile) {

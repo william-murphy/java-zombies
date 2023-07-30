@@ -1,8 +1,8 @@
-package entity.creature;
+package entity.livingentity;
 
 import game.Game;
 import common.*;
-import item.*;
+import entity.EntityItem;
 import tile.Tile;
 
 import java.awt.Graphics2D;
@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
 
-public class Player extends Creature {
+public class Player extends LivingEntity {
     
     public static final int playerSpawnX = (Tile.worldWidth / 2) - (Game.tileSize / 2);
     public static final int playerSpawnY = (Tile.worldHeight / 2) - (Game.tileSize / 2);
@@ -20,6 +20,8 @@ public class Player extends Creature {
     // player specific fields
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
     static BufferedImage standingNorthEquipped, walkingNorthEquipped1, walkingNorthEquipped2, standingSouthEquipped, walkingSouthEquipped1, walkingSouthEquipped2, standingEastEquipped, walkingEastEquipped1, walkingEastEquipped2, standingWestEquipped, walkingWestEquipped1, walkingWestEquipped2;
+
+    public Inventory inventory;
 
     public Player() {
         this.hitbox = new Hitbox(0, 0, Game.tileSize / 2, Game.tileSize / 2);
@@ -32,8 +34,7 @@ public class Player extends Creature {
         moving = false;
         maxHealth = 20;
         health = maxHealth;
-        inventorySize = 8;
-        inventory = new ItemStack[inventorySize];
+        inventory = new Inventory(this, 8);
     }
 
     public void attemptZombieSpawn() {
@@ -48,7 +49,27 @@ public class Player extends Creature {
         }
     }
 
-    @Override
+    public void pickupItem(EntityItem item) {
+        item.despawn();
+        inventory.add(item.getItemStack());
+    }
+
+    public void dropItem() {
+        inventory.remove();
+    }
+
+    public void useItem() {
+        if (inventory.isHoldingItem()) {
+            inventory.getCurrent().getItem().use();
+        }
+    }
+
+    public void stopUseItem() {
+        if (inventory.isHoldingItem()) {
+            inventory.getCurrent().getItem().stopUse();
+        }
+    }
+
     public Hand getHand() {
         switch(direction) {
             case NORTH:
@@ -79,7 +100,7 @@ public class Player extends Creature {
         updatePosition();
         updateAnimation();
         checkCollision();
-        attemptZombieSpawn();
+        // attemptZombieSpawn();
         Game.getInstance().camera.update(hitbox.x, hitbox.y);
     }
 
@@ -92,46 +113,46 @@ public class Player extends Creature {
             
             case NORTH:
                 if (moving) {
-                    if (isHoldingItem()) {
+                    if (inventory.isHoldingItem()) {
                         image = animationStep ? walkingNorthEquipped1 : walkingNorthEquipped2;
                     } else {
                         image = animationStep ? walkingNorth1 : walkingNorth2;
                     }
                 }else {
-                    image = isHoldingItem() ? standingNorthEquipped : standingNorth;
+                    image = inventory.isHoldingItem() ? standingNorthEquipped : standingNorth;
                 }
                 break;
             case SOUTH:
                 if(moving) {
-                    if (isHoldingItem()) {
+                    if (inventory.isHoldingItem()) {
                         image = animationStep ? walkingSouthEquipped1 : walkingSouthEquipped2;
                     } else {
                         image = animationStep ? walkingSouth1 : walkingSouth2;
                     }
                 }else {
-                    image = isHoldingItem() ? standingSouthEquipped : standingSouth;
+                    image = inventory.isHoldingItem() ? standingSouthEquipped : standingSouth;
                 }
                 break;
             case EAST:
                 if (moving) {
-                    if (isHoldingItem()) {
+                    if (inventory.isHoldingItem()) {
                         image = animationStep ? walkingEastEquipped1 : walkingEastEquipped2;
                     } else {
                         image = animationStep ? walkingEast1 : walkingEast2;
                     }
                 }else {
-                    image = isHoldingItem() ? standingEastEquipped : standingEast;
+                    image = inventory.isHoldingItem() ? standingEastEquipped : standingEast;
                 }
                 break;
             case WEST:
                 if (moving) {
-                    if (isHoldingItem()) {
+                    if (inventory.isHoldingItem()) {
                         image = animationStep ? walkingWestEquipped1 : walkingWestEquipped2;
                     } else {
                         image = animationStep ? walkingWest1 : walkingWest2;
                     }
                 }else {
-                    image = isHoldingItem() ? standingWestEquipped : standingWest;
+                    image = inventory.isHoldingItem() ? standingWestEquipped : standingWest;
                 }
                 break;
         }
@@ -139,8 +160,8 @@ public class Player extends Creature {
         // player
         g2d.drawImage(image, Game.getInstance().camera.calculateScreenX(hitbox.x, Game.tileSize / 4), Game.getInstance().camera.calculateScreenY(hitbox.y, Game.tileSize / 2), Game.tileSize, Game.tileSize, null);
         // item
-        if (inventory[curItem] != null) {
-            inventory[curItem].getItem().drawInHand(g2d, this);
+        if (inventory.isHoldingItem()) {
+            inventory.getCurrent().getItem().drawInHand(g2d, this);
         }
 
         //DEBUG

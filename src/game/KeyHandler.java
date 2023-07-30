@@ -52,8 +52,14 @@ public class KeyHandler {
         inputMap.put(KeyStroke.getKeyStroke("released L"), "rl");
         actionMap.put("rl", new StopUseItem());
 
-        inputMap.put(KeyStroke.getKeyStroke("pressed P"), "pp");
+        inputMap.put(KeyStroke.getKeyStroke("released P"), "pp");
         actionMap.put("pp", new DropItem());
+
+        inputMap.put(KeyStroke.getKeyStroke("pressed LEFT"), "pleft");
+        actionMap.put("pleft", new ScrollInventoryLeft());
+
+        inputMap.put(KeyStroke.getKeyStroke("pressed RIGHT"), "pright");
+        actionMap.put("pright", new ScrollInventoryRight());
     }
 
     private class Move extends AbstractAction {
@@ -103,6 +109,20 @@ public class KeyHandler {
         @Override
         public void actionPerformed(ActionEvent e) {
             Game.getInstance().entityList.player.dropItem();
+        }
+    }
+
+    private class ScrollInventoryLeft extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Game.getInstance().entityList.player.inventory.scrollLeft();
+        }
+    }
+
+    private class ScrollInventoryRight extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Game.getInstance().entityList.player.inventory.scrollRight();
         }
     }
 }

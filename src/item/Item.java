@@ -1,6 +1,6 @@
 package item;
 
-import entity.creature.Creature;
+import entity.livingentity.Player;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -19,6 +19,6 @@ public abstract class Item  {
 
     public abstract void drawInInventory(Graphics2D g2d);
 
-    public abstract void drawInHand(Graphics2D g2d, Creature creature);
+    public abstract void drawInHand(Graphics2D g2d, Player player);
 
 }

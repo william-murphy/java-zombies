@@ -3,8 +3,9 @@ package entity;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
-import entity.creature.*;
+import entity.livingentity.*;
 import item.ItemStack;
+import item.ammo.Ammo;
 import item.weapon.Weapon;
 
 public class EntityList {
@@ -19,6 +20,7 @@ public class EntityList {
         player.spawn(Player.playerSpawnX, Player.playerSpawnY);
         // temp
         new ItemStack(Weapon.tac40).spawnEntityItem(Player.playerSpawnX - 200, Player.playerSpawnY);
+        new ItemStack(Ammo.handgunAmmo, 32).spawnEntityItem(Player.playerSpawnX + 100, Player.playerSpawnY);
     }
 
     public void add(Entity entity) {

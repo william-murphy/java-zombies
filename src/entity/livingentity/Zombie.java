@@ -1,4 +1,4 @@
-package entity.creature;
+package entity.livingentity;
 
 import game.Game;
 import common.*;
@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import java.awt.Color;
 
-public class Zombie extends Creature {
+public class Zombie extends LivingEntity {
 
     public static int numZombies = 0;
 
@@ -34,13 +34,6 @@ public class Zombie extends Creature {
 
     public static int getMaxZombies() {
         return Game.getInstance().round * 2;
-    }
-
-    @Override
-    public Hand getHand() {
-        int x = this.direction == Direction.EAST ? (hitbox.x + 5) : (hitbox.x + hitbox.width - 5);
-        int y = hitbox.y + (hitbox.height / 2);
-        return new Hand(x, y);
     }
 
     @Override

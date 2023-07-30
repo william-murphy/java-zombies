@@ -6,25 +6,23 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import common.Hand;
-import entity.creature.Creature;
+import entity.livingentity.Player;
 import game.Game;
 import item.*;
-import item.ammo.*;
 
 public class Weapon extends Item {
 
-    public static Weapon tac40 = new Weapon("tac40", 16, 16, Ammo.handgunAmmo, 3, 10);
+    public static Weapon tac40 = new Weapon("tac40", 16, 16, 3, 10);
 
     boolean pullingTrigger = false;
     ItemStack magazine;
     int damage;
     int capacity;
 
-    private Weapon(String name, int width, int height, Ammo ammo, int damage, int capacity) {
+    private Weapon(String name, int width, int height, int damage, int capacity) {
         loadImages(name);
         this.width = width;
         this.height = height;
-        this.magazine = new ItemStack(ammo);
         this.damage= damage;
         this.capacity = capacity;
     }
@@ -62,9 +60,9 @@ public class Weapon extends Item {
     public void drawInInventory(Graphics2D g2d) {}
 
     @Override
-    public void drawInHand(Graphics2D g2d, Creature creature) {
-        Hand hand = creature.getHand();
-        switch(creature.direction) {
+    public void drawInHand(Graphics2D g2d, Player player) {
+        Hand hand = player.getHand();
+        switch(player.direction) {
             case NORTH:
                 g2d.drawImage(facingNorth, Game.getInstance().camera.calculateScreenX(hand.x, 0), Game.getInstance().camera.calculateScreenY(hand.y, 0), width, height, null);
                 break;

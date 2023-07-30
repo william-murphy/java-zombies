@@ -3,7 +3,7 @@ package ai.pathfinder;
 import common.*;
 import tile.Tile;
 import entity.Entity;
-import entity.creature.Creature;
+import entity.livingentity.LivingEntity;
 
 import java.util.ArrayList;
 import java.lang.Math;
@@ -11,7 +11,7 @@ import java.lang.Math;
 public class Pathfinder {
     
     Entity target;
-    Creature creature;
+    LivingEntity livingEntity;
     static Node[][] nodeMap;
     ArrayList<Node> openList = new ArrayList<>();
     public ArrayList<Node> pathList = new ArrayList<>();
@@ -24,14 +24,14 @@ public class Pathfinder {
     int pathIndex = 0;
     boolean onPath = false;
 
-    public Pathfinder(Creature creature, Entity target) {
-        this.creature = creature;
+    public Pathfinder(LivingEntity livingEntity, Entity target) {
+        this.livingEntity = livingEntity;
         this.target = target;
         instantiateNodes();
     }
 
     public void update() {
-        Tile current = creature.getTile();
+        Tile current = livingEntity.getTile();
         Tile goal = target.getTile();
         if (current.equals(goal)) {
             return;
@@ -52,37 +52,37 @@ public class Pathfinder {
     }
 
     private void makeNextMove(Tile tile) {
-        Direction nextDirection = creature.getDirection(tile);
+        Direction nextDirection = livingEntity.getDirection(tile);
         switch (nextDirection) {
             case NORTH:
-                if (fitsHorizontally(creature, tile)) {
-                    creature.move(nextDirection);
+                if (fitsHorizontally(livingEntity, tile)) {
+                    livingEntity.move(nextDirection);
                 }
             break;
             case SOUTH:
-                if (fitsHorizontally(creature, tile)) {
-                    creature.move(nextDirection);
+                if (fitsHorizontally(livingEntity, tile)) {
+                    livingEntity.move(nextDirection);
                 }
             break;
             case EAST:
-                if (fitsVertically(creature, tile)) {
-                    creature.move(nextDirection);
+                if (fitsVertically(livingEntity, tile)) {
+                    livingEntity.move(nextDirection);
                 }
             break;
             case WEST:
-                if (fitsVertically(creature, tile)) {
-                    creature.move(nextDirection);
+                if (fitsVertically(livingEntity, tile)) {
+                    livingEntity.move(nextDirection);
                 }
             break;
         }
     }
 
-    private boolean fitsHorizontally(Creature creature, Tile tile) {
-        return (creature.hitbox.x >= tile.hitbox.x && (creature.hitbox.x + creature.hitbox.width) <= (tile.hitbox.x + tile.hitbox.width));
+    private boolean fitsHorizontally(LivingEntity livingEntity, Tile tile) {
+        return (livingEntity.hitbox.x >= tile.hitbox.x && (livingEntity.hitbox.x + livingEntity.hitbox.width) <= (tile.hitbox.x + tile.hitbox.width));
     }
 
-    private boolean fitsVertically(Creature creature, Tile tile) {
-        return (creature.hitbox.y >= tile.hitbox.y && (creature.hitbox.y + creature.hitbox.height) <= (tile.hitbox.y + tile.hitbox.height));
+    private boolean fitsVertically(LivingEntity livingEntity, Tile tile) {
+        return (livingEntity.hitbox.y >= tile.hitbox.y && (livingEntity.hitbox.y + livingEntity.hitbox.height) <= (tile.hitbox.y + tile.hitbox.height));
     }
 
     private static void instantiateNodes() {

@@ -169,7 +169,6 @@ public class Player extends LivingEntity {
         if (Game.getInstance().debug) {
             // draw player hitbox
             this.hitbox.draw(g2d);
-            // draw player hand TODO - store hand so we dont have to create a new one every time .. maybe
             this.getHand().draw(g2d);
 
         }

@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-import common.Hand;
 import entity.livingentity.Player;
 import entity.Projectile;
 import game.Game;
@@ -46,8 +45,7 @@ public class Weapon extends Item {
     public void use(Player player) {
         if (!pullingTrigger) {
             pullingTrigger = true;
-            Hand hand = player.getHand();
-            new Projectile(this.ammo, this.damage, player.direction).spawn(hand.x, hand.y);
+            new Projectile(this.ammo, this.damage, player.direction).spawn(player.hand.x, player.hand.y);
         }
     }
 
@@ -66,19 +64,18 @@ public class Weapon extends Item {
 
     @Override
     public void drawInHand(Graphics2D g2d, Player player) {
-        Hand hand = player.getHand();
         switch(player.direction) {
             case NORTH:
-                g2d.drawImage(facingNorth, Game.getInstance().camera.calculateScreenX(hand.x, 0), Game.getInstance().camera.calculateScreenY(hand.y, 0), width, height, null);
+                g2d.drawImage(facingNorth, Game.getInstance().camera.calculateScreenX(player.hand.x - width / 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - height + 2, 0), width, height, null);
                 break;
             case SOUTH:
-                g2d.drawImage(facingSouth, Game.getInstance().camera.calculateScreenX(hand.x, 0), Game.getInstance().camera.calculateScreenY(hand.y, 0), width, height, null);
+                g2d.drawImage(facingSouth, Game.getInstance().camera.calculateScreenX(player.hand.x - width / 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - 2, 0), width, height, null);
                 break;
             case EAST:
-                g2d.drawImage(facingEast, Game.getInstance().camera.calculateScreenX(hand.x, 0), Game.getInstance().camera.calculateScreenY(hand.y, 0), width, height, null);
+                g2d.drawImage(facingEast, Game.getInstance().camera.calculateScreenX(player.hand.x - 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - height / 2, 0), width, height, null);
                 break;
             case WEST:
-                g2d.drawImage(facingWest, Game.getInstance().camera.calculateScreenX(hand.x, 0), Game.getInstance().camera.calculateScreenY(hand.y, 0), width, height, null);
+                g2d.drawImage(facingWest, Game.getInstance().camera.calculateScreenX(player.hand.x - width + 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - height / 2, 0), width, height, null);
                 break;
         }
     }

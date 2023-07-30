@@ -59,10 +59,6 @@ public class Inventory {
         }
     }
 
-    public ItemStack getCurrent() {
-        return items[current];
-    }
-
     public void scrollRight() {
         if (current < items.length - 1) {
             current++;

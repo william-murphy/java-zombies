@@ -21,7 +21,8 @@ public class Player extends LivingEntity {
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
     static BufferedImage standingNorthEquipped, walkingNorthEquipped1, walkingNorthEquipped2, standingSouthEquipped, walkingSouthEquipped1, walkingSouthEquipped2, standingEastEquipped, walkingEastEquipped1, walkingEastEquipped2, standingWestEquipped, walkingWestEquipped1, walkingWestEquipped2;
 
-    public Inventory inventory;
+    public Inventory inventory = new Inventory(this, 8);
+    public Hand hand = new Hand(this);
 
     public Player() {
         this.hitbox = new Hitbox(0, 0, Game.tileSize / 2, Game.tileSize / 2);
@@ -34,7 +35,6 @@ public class Player extends LivingEntity {
         moving = false;
         maxHealth = 20;
         health = maxHealth;
-        inventory = new Inventory(this, 8);
     }
 
     public void attemptZombieSpawn() {
@@ -60,28 +60,14 @@ public class Player extends LivingEntity {
 
     public void useItem() {
         if (inventory.isHoldingItem()) {
-            inventory.getCurrent().getItem().use(this);
+            inventory.getCurrentItemStack().getItem().use(this);
         }
     }
 
     public void stopUseItem() {
         if (inventory.isHoldingItem()) {
-            inventory.getCurrent().getItem().stopUse();
+            inventory.getCurrentItemStack().getItem().stopUse();
         }
-    }
-
-    public Hand getHand() {
-        switch(direction) {
-            case NORTH:
-                return new Hand(hitbox.x + hitbox.width - 6, hitbox.y - 13);
-            case SOUTH:
-                return new Hand(hitbox.x + 11, hitbox.y + hitbox.height - 18);
-            case EAST:
-                return new Hand(hitbox.x + hitbox.width + 2, hitbox.y - 5);
-            case WEST:
-                return new Hand(hitbox.x - 13, hitbox.y - 3);
-        }
-        return null;
     }
 
     @Override
@@ -100,6 +86,9 @@ public class Player extends LivingEntity {
         updatePosition();
         updateAnimation();
         checkCollision();
+        if (inventory.isHoldingItem()) {
+            hand.update();
+        }
         // attemptZombieSpawn();
         Game.getInstance().camera.update(hitbox.x, hitbox.y);
     }
@@ -161,7 +150,7 @@ public class Player extends LivingEntity {
         g2d.drawImage(image, Game.getInstance().camera.calculateScreenX(hitbox.x, Game.tileSize / 4), Game.getInstance().camera.calculateScreenY(hitbox.y, Game.tileSize / 2), Game.tileSize, Game.tileSize, null);
         // item
         if (inventory.isHoldingItem()) {
-            inventory.getCurrent().getItem().drawInHand(g2d, this);
+            inventory.getCurrentItemStack().getItem().drawInHand(g2d, this);
         }
 
         //DEBUG
@@ -169,7 +158,7 @@ public class Player extends LivingEntity {
         if (Game.getInstance().debug) {
             // draw player hitbox
             this.hitbox.draw(g2d);
-            this.getHand().draw(g2d);
+            this.hand.draw(g2d);
 
         }
     }

@@ -7,22 +7,25 @@ import javax.imageio.ImageIO;
 
 import common.Hand;
 import entity.livingentity.Player;
+import entity.Projectile;
 import game.Game;
 import item.*;
+import item.ammo.*;
 
 public class Weapon extends Item {
 
-    public static Weapon tac40 = new Weapon("tac40", 16, 16, 3, 10);
+    public static Weapon tac40 = new Weapon("tac40", Ammo.handgunAmmo, 16, 16, 10, 10);
 
     boolean pullingTrigger = false;
-    ItemStack magazine;
+    Ammo ammo;
     int damage;
     int capacity;
 
-    private Weapon(String name, int width, int height, int damage, int capacity) {
+    private Weapon(String name, Ammo ammo, int width, int height, int damage, int capacity) {
         loadImages(name);
         this.width = width;
         this.height = height;
+        this.ammo = ammo;
         this.damage= damage;
         this.capacity = capacity;
         this.maxStack = 1;
@@ -40,10 +43,11 @@ public class Weapon extends Item {
     }
 
     @Override
-    public void use() {
+    public void use(Player player) {
         if (!pullingTrigger) {
             pullingTrigger = true;
-            
+            Hand hand = player.getHand();
+            new Projectile(this.ammo, this.damage, player.direction).spawn(hand.x, hand.y);
         }
     }
 

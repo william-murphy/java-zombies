@@ -56,7 +56,7 @@ public class Ammo extends Item {
     }
 
     @Override
-    public void use() {}
+    public void use(Player player) {}
 
     @Override
     public void stopUse() {}

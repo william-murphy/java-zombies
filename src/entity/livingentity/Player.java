@@ -60,7 +60,7 @@ public class Player extends LivingEntity {
 
     public void useItem() {
         if (inventory.isHoldingItem()) {
-            inventory.getCurrent().getItem().use();
+            inventory.getCurrent().getItem().use(this);
         }
     }
 

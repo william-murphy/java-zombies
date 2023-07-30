@@ -11,7 +11,7 @@ public abstract class Item  {
     public int maxStack;
     protected BufferedImage facingNorth, facingSouth, facingEast, facingWest;
 
-    public abstract void use();
+    public abstract void use(Player player);
 
     public abstract void stopUse();
 

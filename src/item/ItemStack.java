@@ -3,7 +3,7 @@ package item;
 import entity.EntityItem;
 
 public class ItemStack {
-    
+
     Item item;
     int size;
 
@@ -23,6 +23,22 @@ public class ItemStack {
 
     public int getSize() {
         return this.size;
+    }
+
+    public void add(int amount) {
+        this.size += amount;
+    }
+
+    public void subtract(int amount) {
+        if (amount > size) {
+            this.size = 0;
+        } else {
+            this.size -= amount;
+        }
+    }
+
+    public boolean isEmpty() {
+        return size <= 0;
     }
 
     public void spawnEntityItem(int x, int y) {

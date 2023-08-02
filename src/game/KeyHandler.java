@@ -46,11 +46,17 @@ public class KeyHandler {
         inputMap.put(KeyStroke.getKeyStroke("pressed BACK_QUOTE"), "bq");
         actionMap.put("bq", new EnableDebug());
 
+        inputMap.put(KeyStroke.getKeyStroke("pressed K"), "pk");
+        actionMap.put("pk", new PrimaryAction());
+
+        inputMap.put(KeyStroke.getKeyStroke("released K"), "rk");
+        actionMap.put("rk", new StopPrimaryAction());
+
         inputMap.put(KeyStroke.getKeyStroke("pressed L"), "pl");
-        actionMap.put("pl", new UseItem());
+        actionMap.put("pl", new SecondaryAction());
 
         inputMap.put(KeyStroke.getKeyStroke("released L"), "rl");
-        actionMap.put("rl", new StopUseItem());
+        actionMap.put("rl", new StopSecondaryAction());
 
         inputMap.put(KeyStroke.getKeyStroke("released P"), "pp");
         actionMap.put("pp", new DropItem());
@@ -91,17 +97,31 @@ public class KeyHandler {
         }
     }
 
-    private class UseItem extends AbstractAction {
+    private class PrimaryAction extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Game.getInstance().entityList.player.useItem();
+            Game.getInstance().entityList.player.primaryAction();
         }
     }
 
-    private class StopUseItem extends AbstractAction {
+    private class StopPrimaryAction extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Game.getInstance().entityList.player.stopUseItem();
+            Game.getInstance().entityList.player.stopPrimaryAction();
+        }
+    }
+
+    private class SecondaryAction extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Game.getInstance().entityList.player.secondaryAction();
+        }
+    }
+
+    private class StopSecondaryAction extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Game.getInstance().entityList.player.stopSecondaryAction();
         }
     }
 

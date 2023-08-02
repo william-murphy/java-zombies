@@ -59,12 +59,15 @@ public class Ammo extends Item {
     public void stopUse() {}
 
     @Override
+    public void secondaryUse(Player player) {}
+
+    @Override
+    public void stopSecondaryUse() {}
+
+    @Override
     public BufferedImage getDefaultImage() {
         return facingWest;
     }
-
-    @Override
-    public void drawInInventory(Graphics2D g2d) {}
 
     @Override
     public void drawInHand(Graphics2D g2d, Player player) {

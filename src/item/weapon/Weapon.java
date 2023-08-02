@@ -16,15 +16,15 @@ public class Weapon extends Item {
     public static Weapon tac40 = new Weapon("tac40", Ammo.handgunAmmo, 16, 16, 10, 10);
 
     boolean pullingTrigger = false;
-    Ammo ammo;
+    ItemStack magazine;
     int damage;
     int capacity;
 
     private Weapon(String name, Ammo ammo, int width, int height, int damage, int capacity) {
         loadImages(name);
+        this.magazine = new ItemStack(ammo, 0);
         this.width = width;
         this.height = height;
-        this.ammo = ammo;
         this.damage= damage;
         this.capacity = capacity;
         this.maxStack = 1;
@@ -45,7 +45,10 @@ public class Weapon extends Item {
     public void use(Player player) {
         if (!pullingTrigger) {
             pullingTrigger = true;
-            new Projectile(this.ammo, this.damage, player.direction).spawn(player.hand.x, player.hand.y);
+            if (!magazine.isEmpty()) {
+                magazine.subtract(1);
+                new Projectile((Ammo)this.magazine.getItem(), this.damage, player.direction).spawn(player.hand.x, player.hand.y);
+            }
         }
     }
 
@@ -55,12 +58,19 @@ public class Weapon extends Item {
     }
 
     @Override
-    public BufferedImage getDefaultImage() {
-        return facingWest;
+    public void secondaryUse(Player player) {
+        if (magazine.isEmpty()) {
+            player.inventory.transfer(magazine, capacity);
+        }
     }
 
     @Override
-    public void drawInInventory(Graphics2D g2d) {}
+    public void stopSecondaryUse() {}
+
+    @Override
+    public BufferedImage getDefaultImage() {
+        return facingWest;
+    }
 
     @Override
     public void drawInHand(Graphics2D g2d, Player player) {

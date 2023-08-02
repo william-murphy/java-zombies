@@ -29,6 +29,28 @@ public class Inventory {
         return items[current];
     }
 
+    public void transfer(ItemStack receiver, int amount) {
+        int stackSize;
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] != null && items[i].getItem().equals(receiver.getItem())) {
+                if (items[i].getSize() < amount) {
+                    stackSize = items[i].getSize();
+                    items[i] = null;
+                    receiver.add(stackSize);
+                    amount -= stackSize;
+                } else if (items[i].getSize() == amount) {
+                    items[i] = null;
+                    receiver.add(amount);
+                    return;
+                } else {
+                    items[i].subtract(amount);
+                    receiver.add(amount);
+                    return;
+                }
+            } 
+        }
+    }
+
     public void add(ItemStack toAdd) {
         if (!isFull) {
             items[next] = toAdd;

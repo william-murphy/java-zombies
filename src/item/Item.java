@@ -15,9 +15,11 @@ public abstract class Item  {
 
     public abstract void stopUse();
 
-    public abstract BufferedImage getDefaultImage();
+    public abstract void secondaryUse(Player player);
 
-    public abstract void drawInInventory(Graphics2D g2d);
+    public abstract void stopSecondaryUse();
+
+    public abstract BufferedImage getDefaultImage();
 
     public abstract void drawInHand(Graphics2D g2d, Player player);
 

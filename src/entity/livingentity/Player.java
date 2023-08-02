@@ -58,15 +58,27 @@ public class Player extends LivingEntity {
         inventory.remove();
     }
 
-    public void useItem() {
+    public void primaryAction() {
         if (inventory.isHoldingItem()) {
             inventory.getCurrentItemStack().getItem().use(this);
         }
     }
 
-    public void stopUseItem() {
+    public void stopPrimaryAction() {
         if (inventory.isHoldingItem()) {
             inventory.getCurrentItemStack().getItem().stopUse();
+        }
+    }
+
+    public void secondaryAction() {
+        if (inventory.isHoldingItem()) {
+            inventory.getCurrentItemStack().getItem().secondaryUse(this);
+        }
+    }
+
+    public void stopSecondaryAction() {
+        if (inventory.isHoldingItem()) {
+            inventory.getCurrentItemStack().getItem().stopSecondaryUse();
         }
     }
 

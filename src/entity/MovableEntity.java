@@ -40,7 +40,7 @@ public abstract class MovableEntity extends Entity {
         }
     }
 
-    protected void checkCollision() {
+    protected boolean checkCollision() {
         if (moving) {
             switch(direction) {
                 case NORTH:
@@ -48,6 +48,8 @@ public abstract class MovableEntity extends Entity {
                         hitbox.setLocation(hitbox.x, (int)Tile.getTile(hitbox.x, hitbox.y).getHitbox().getMaxY());
                     } else if (collides(Tile.getTile(hitbox.x + hitbox.width, hitbox.y))) {
                         hitbox.setLocation(hitbox.x, (int)Tile.getTile(hitbox.x + hitbox.width, hitbox.y).getHitbox().getMaxY());
+                    } else {
+                        return false;
                     }
                     break;
                 case SOUTH:
@@ -55,6 +57,8 @@ public abstract class MovableEntity extends Entity {
                         hitbox.setLocation(hitbox.x, Tile.getTile(hitbox.x, hitbox.y + hitbox.height).getHitbox().y - hitbox.height);
                     } else if (collides(Tile.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height))) {
                         hitbox.setLocation(hitbox.x, Tile.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getHitbox().y - hitbox.height);
+                    } else {
+                        return false;
                     }
                     break;
                 case EAST:
@@ -62,6 +66,8 @@ public abstract class MovableEntity extends Entity {
                         hitbox.setLocation(Tile.getTile(hitbox.x + hitbox.width, hitbox.y).getHitbox().x - hitbox.width, hitbox.y);
                     } else if (collides(Tile.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height))) {
                         hitbox.setLocation(Tile.getTile(hitbox.x + hitbox.width, hitbox.y + hitbox.height).getHitbox().x - hitbox.width, hitbox.y);
+                    } else {
+                        return false;
                     }
                     break;
                 case WEST:
@@ -69,11 +75,14 @@ public abstract class MovableEntity extends Entity {
                         hitbox.setLocation((int)Tile.getTile(hitbox.x, hitbox.y).getHitbox().getMaxX(), hitbox.y);
                     } else if (collides(Tile.getTile(hitbox.x, hitbox.y + hitbox.height))) {
                         hitbox.setLocation((int)Tile.getTile(hitbox.x, hitbox.y + hitbox.height).getHitbox().getMaxX(), hitbox.y);
+                    } else {
+                        return false;
                     }
                     break;
             }
-
+            return true;
         }
+        return false;
     }
 
 }

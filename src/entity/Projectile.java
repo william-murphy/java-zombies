@@ -37,6 +37,9 @@ public class Projectile extends MovableEntity {
     @Override
     public void update() {
         updatePosition();
+        if (checkCollision()) {
+            despawn();
+        }
     }
 
 }

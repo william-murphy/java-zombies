@@ -85,4 +85,13 @@ public abstract class MovableEntity extends Entity {
         return false;
     }
 
+    protected void updateTile() {
+        Tile newTile = this.getTile();
+        if (!newTile.equals(this.tile)) {
+            newTile.entities.add(this);
+            this.tile.entities.remove(this);
+            this.tile = newTile;
+        }
+    }
+
 }

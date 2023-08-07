@@ -2,6 +2,7 @@ package entity;
 
 import common.*;
 import tile.Tile;
+import entity.livingentity.*;
 
 import java.awt.Graphics2D;
 
@@ -10,6 +11,7 @@ public abstract class Entity implements Collidable {
     public Hitbox hitbox;
     public boolean collision = true;
 
+    public Tile tile;
     public int animationCounter = 0;
     public boolean animationStep = false;
 
@@ -34,6 +36,8 @@ public abstract class Entity implements Collidable {
     public Hitbox getHitbox() {
         return hitbox;
     }
+
+    public abstract void damage(LivingEntity entity);
 
     public abstract void spawn(int x, int y);
 

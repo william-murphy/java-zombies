@@ -13,7 +13,7 @@ import item.ammo.*;
 
 public class Weapon extends Item {
 
-    public static Weapon tac40 = new Weapon("tac40", Ammo.handgunAmmo, 16, 16, 10, 10);
+    public static Weapon tac40 = new Weapon("tac40", Ammo.handgunAmmo, 16, 16, 8, 10);
 
     boolean pullingTrigger = false;
     ItemStack magazine;

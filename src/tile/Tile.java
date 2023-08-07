@@ -2,6 +2,7 @@ package tile;
 
 import game.Game;
 import common.*;
+import entity.Entity;
 
 import java.awt.Graphics2D;
 import java.awt.Color;
@@ -10,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class Tile implements Collidable {
     
@@ -27,6 +29,7 @@ public class Tile implements Collidable {
 
     public final int imageIndex;
     public final int col, row;
+    public LinkedList<Entity> entities = new LinkedList<>();
     public Hitbox hitbox;
     public boolean collision;
 
@@ -65,9 +68,6 @@ public class Tile implements Collidable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
         if (!(o instanceof Tile)) {
             return false;
         }

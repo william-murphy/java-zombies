@@ -30,29 +30,51 @@ public class Zombie extends LivingEntity {
         maxHealth = 10;
         speed = 3;
         health = maxHealth;
+        strength = 5;
     }
 
     public static int getMaxZombies() {
-        return Game.getInstance().round * 2;
+        // return Game.getInstance().round * 2;
+        return 1;
+    }
+
+    @Override
+    public void damage(LivingEntity entity) {
+        entity.receiveDamage(this.strength);
+    }
+
+    @Override
+    public void receiveDamage(int amount) {
+        this.health -= amount;
+        if (this.health <= 0) {
+            dead = true;
+            despawn();
+        }
     }
 
     @Override
     public void spawn(int x, int y) {
         hitbox.setLocation(x, y);
+        tile = getTile();
+        tile.entities.add(this);
         Game.getInstance().entityList.add(this);
     }
 
     @Override
     public void despawn() {
+        tile.entities.remove(this);
         Game.getInstance().entityList.remove(this);
     }
 
     @Override
     public void update() {
         pathFinder.update();
-        updatePosition();
+        if (pathFinder.goalReached) {
+            updatePosition();
+            checkCollision();
+            updateTile();
+        }
         updateAnimation();
-        checkCollision();
     }
 
     @Override

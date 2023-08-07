@@ -3,6 +3,7 @@ package entity;
 import item.ammo.Ammo;
 import common.*;
 import game.Game;
+import entity.livingentity.*;
 
 import java.awt.Graphics2D;
 
@@ -18,14 +19,33 @@ public class Projectile extends MovableEntity {
     }
 
     @Override
+    public void damage(LivingEntity entity) {
+        entity.receiveDamage((ammo.damage + this.speed) / 2);
+    }
+    
+    public void checkZombieCollision() {
+        if (this.tile.entities.size() > 1) {
+            for (Entity entity : this.tile.entities) {
+                if (entity.getClass().equals(Zombie.class) && this.collides(entity)) {
+                    this.damage((LivingEntity)entity);
+                    this.despawn();
+                }
+        }
+        }
+    }
+
+    @Override
     public void spawn(int x, int y) {
         hitbox.setLocation(x, y);
+        tile = getTile();
+        tile.entities.add(this);
         this.moving = true;
         Game.getInstance().entityList.add(this);
     }
 
     @Override
     public void despawn() {
+        tile.entities.remove(this);
         Game.getInstance().entityList.remove(this);
     }
 
@@ -37,9 +57,11 @@ public class Projectile extends MovableEntity {
     @Override
     public void update() {
         updatePosition();
+        checkZombieCollision();
         if (checkCollision()) {
             despawn();
         }
+        updateTile();
     }
 
 }

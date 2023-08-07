@@ -12,9 +12,9 @@ import javax.imageio.ImageIO;
 
 public class Ammo extends Item {
     
-    public static Ammo handgunAmmo = new Ammo("handgun", 8, 8, 5);
+    public static Ammo handgunAmmo = new Ammo("handgun", 8, 8, 2);
 
-    int damage;
+    public int damage;
 
     private Ammo(String name, int width, int height, int damage) {
         loadImages(name);

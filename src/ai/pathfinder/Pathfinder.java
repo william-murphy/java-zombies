@@ -17,7 +17,7 @@ public class Pathfinder {
     public ArrayList<Node> pathList = new ArrayList<>();
 
     Node startNode, goalNode, currentNode;
-    boolean goalReached = false;
+    public boolean goalReached = false;
     int step = 0;
 
     Tile currentGoal;
@@ -33,9 +33,6 @@ public class Pathfinder {
     public void update() {
         Tile current = livingEntity.getTile();
         Tile goal = target.getTile();
-        if (current.equals(goal)) {
-            return;
-        }
         if (!goal.equals(currentGoal)) {
             pathIndex = 0;
             currentGoal = goal;
@@ -44,10 +41,15 @@ public class Pathfinder {
         }
         if (onPath) {
             Tile next = this.pathList.get(pathIndex).toTile();
-            if (current.equals(next)) {
+            if (current.equals(next) && !current.equals(currentGoal)) {
                 pathIndex++;
             }
-            makeNextMove(next);
+            if (!livingEntity.hitbox.intersects(target.hitbox)) {
+                makeNextMove(next);
+            } else {
+                livingEntity.stopMove(livingEntity.direction);
+            }
+            
         }
     }
 

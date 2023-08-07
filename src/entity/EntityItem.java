@@ -3,6 +3,7 @@ package entity;
 import game.Game;
 import common.*;
 import item.ItemStack;
+import entity.livingentity.LivingEntity;
 
 import java.awt.Graphics2D;
 
@@ -22,14 +23,20 @@ public class EntityItem extends Entity {
     }
 
     @Override
+    public void damage(LivingEntity entity) {}
+
+    @Override
     public void spawn(int x, int y) {
         hitbox.setLocation(x, y);
+        tile = getTile();
+        tile.entities.add(this);
         ready = false;
         Game.getInstance().entityList.add(this);
     }
 
     @Override
     public void despawn() {
+        tile.entities.remove(this);
         Game.getInstance().entityList.remove(this);
     }
 

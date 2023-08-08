@@ -19,13 +19,17 @@ public interface Collidable {
         } else if ((angle < -135 && angle >= -180) || (angle <= 180 && angle >= 135)) {
             return Direction.WEST;
         } else {
-            System.out.println(angle);
+            System.out.println("Something went wrong with getDirection(), angle is " + angle);
             return null;
         }
     }
 
     public default boolean collides(Collidable other) {
         return this.hasCollision() && other.hasCollision() && this.getHitbox().intersects(other.getHitbox());
+    }
+
+    public default boolean contains(Collidable other) {
+        return this.getHitbox().contains(other.getHitbox());
     }
 
 }

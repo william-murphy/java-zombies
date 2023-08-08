@@ -1,6 +1,5 @@
 package ai.pathfinder;
 
-import common.*;
 import tile.Tile;
 import entity.Entity;
 import entity.livingentity.LivingEntity;
@@ -44,47 +43,26 @@ public class Pathfinder {
             if (current.equals(next) && !current.equals(currentGoal)) {
                 pathIndex++;
             }
-            if (!livingEntity.hitbox.intersects(target.hitbox)) {
-                makeNextMove(next);
-            } else {
-                livingEntity.stopMove(livingEntity.direction);
-            }
+            makeNextMove(current, next);
+            // if (!livingEntity.hitbox.intersects(target.hitbox)) {
+            //     makeNextMove(next);
+            // } else {
+            //     livingEntity.stopMove(livingEntity.direction);
+            // }
             
         }
     }
 
-    private void makeNextMove(Tile tile) {
-        Direction nextDirection = livingEntity.getDirection(tile);
-        switch (nextDirection) {
-            case NORTH:
-                if (fitsHorizontally(livingEntity, tile)) {
-                    livingEntity.move(nextDirection);
-                }
-            break;
-            case SOUTH:
-                if (fitsHorizontally(livingEntity, tile)) {
-                    livingEntity.move(nextDirection);
-                }
-            break;
-            case EAST:
-                if (fitsVertically(livingEntity, tile)) {
-                    livingEntity.move(nextDirection);
-                }
-            break;
-            case WEST:
-                if (fitsVertically(livingEntity, tile)) {
-                    livingEntity.move(nextDirection);
-                }
-            break;
+    private void makeNextMove(Tile current, Tile next) {
+        if (!livingEntity.hitbox.intersects(target.hitbox)) {
+            if (!current.contains(livingEntity)) {
+                livingEntity.move(livingEntity.direction);
+            } else {
+                livingEntity.move(livingEntity.getDirection(next));
+            }
+        } else {
+            livingEntity.stopMove(livingEntity.direction);
         }
-    }
-
-    private boolean fitsHorizontally(LivingEntity livingEntity, Tile tile) {
-        return (livingEntity.hitbox.x >= tile.hitbox.x && (livingEntity.hitbox.x + livingEntity.hitbox.width) <= (tile.hitbox.x + tile.hitbox.width));
-    }
-
-    private boolean fitsVertically(LivingEntity livingEntity, Tile tile) {
-        return (livingEntity.hitbox.y >= tile.hitbox.y && (livingEntity.hitbox.y + livingEntity.hitbox.height) <= (tile.hitbox.y + tile.hitbox.height));
     }
 
     private static void instantiateNodes() {

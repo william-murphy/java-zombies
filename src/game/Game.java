@@ -32,7 +32,6 @@ public class Game extends JPanel implements Runnable {
 
     public static final int FPS = 60;
     public int tick = 0;
-    private static final int ticksBeforeReset = 10 * FPS; // 10 seconds
 
     private Thread gameThread;
     public final Random random = new Random();
@@ -86,12 +85,9 @@ public class Game extends JPanel implements Runnable {
     }
 
     private void tick() {
-        tick++;
         update();
         repaint();
-        if (tick >= ticksBeforeReset) {
-            tick = 0;
-        }
+        tick++;
     }
 
     public void update() {

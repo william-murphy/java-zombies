@@ -34,22 +34,12 @@ public class Zombie extends LivingEntity {
     }
 
     public static int getMaxZombies() {
-        // return Game.getInstance().round * 2;
-        return 1;
+        return Game.getInstance().round * 2;
     }
 
     @Override
     public void damage(LivingEntity entity) {
         entity.receiveDamage(this.strength);
-    }
-
-    @Override
-    public void receiveDamage(int amount) {
-        this.health -= amount;
-        if (this.health <= 0) {
-            dead = true;
-            despawn();
-        }
     }
 
     @Override

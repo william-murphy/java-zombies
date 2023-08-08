@@ -89,15 +89,6 @@ public class Player extends LivingEntity {
     }
 
     @Override
-    public void receiveDamage(int amount) {
-        this.health -= amount;
-        if (this.health <= 0) {
-            dead = true;
-            despawn();
-        }
-    }
-
-    @Override
     public void spawn(int x, int y) {
         hitbox.setLocation(x, y);
         tile = getTile();

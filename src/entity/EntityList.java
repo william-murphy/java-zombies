@@ -20,8 +20,8 @@ public class EntityList {
         player.spawn(Player.playerSpawnX, Player.playerSpawnY);
         // temp
         new ItemStack(Weapon.tac40).spawnEntityItem(Player.playerSpawnX - 200, Player.playerSpawnY);
-        new ItemStack(Ammo.handgunAmmo, 15).spawnEntityItem(Player.playerSpawnX + 100, Player.playerSpawnY);
-        new ItemStack(Ammo.handgunAmmo, 15).spawnEntityItem(Player.playerSpawnX + 100, Player.playerSpawnY - 100);
+        new ItemStack(Ammo.handgunAmmo, 32).spawnEntityItem(Player.playerSpawnX + 100, Player.playerSpawnY);
+        new ItemStack(Ammo.handgunAmmo, 33).spawnEntityItem(Player.playerSpawnX + 100, Player.playerSpawnY - 100);
     }
 
     public void add(Entity entity) {

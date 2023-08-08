@@ -14,7 +14,6 @@ public class Inventory {
     ItemStack[] items;
     int current = 0;
     int next = 0;
-    boolean isFull = false;
 
     public Inventory(Player player, int size) {
         this.player = player;
@@ -51,21 +50,23 @@ public class Inventory {
         }
     }
 
-    public void add(ItemStack toAdd) {
-        if (!isFull) {
-            items[next] = toAdd;
-            int i = 0;
-            while (i < items.length) {
-                if (items[i] == null) {
-                    next = i;
-                    break;
-                }
-                i++;
+    public void add(ItemStack itemStack) {
+        int nullIndex = -1;
+        int remaining = itemStack.getSize();
+        for (int i = 0; i < items.length; i++) {
+            if (itemStack.getItem().maxStack > 1 && items[i] != null && items[i].getItem().equals(itemStack.getItem())) {
+                // if the same item exists in the inventory add to it
+                remaining = items[i].add(remaining);
+                itemStack.subtract(itemStack.getSize() - remaining);
+                if (remaining <= 0) return;
+            } else if (nullIndex == -1 && items[i] == null) {
+                // find a null index so if the above condition is never met we have a backup open slot to add itemStack to
+                nullIndex = i;
             }
-            if (i >= items.length) {
-                isFull = true;
-                next = i;
-            }
+        }
+        if (nullIndex != -1 && remaining > 0) {
+            // if we've gotten this far without returning try to add itemStack at the null index if we found one
+            items[nullIndex] = itemStack;
         }
     }
 
@@ -73,7 +74,6 @@ public class Inventory {
         if (isHoldingItem()) {
             ItemStack removed = items[current];
             items[current] = null;
-            isFull = false;
             if (current < next) {
                 next = current;
             }

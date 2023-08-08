@@ -25,15 +25,27 @@ public class ItemStack {
         return this.size;
     }
 
-    public void add(int amount) {
-        this.size += amount;
+    // Add given amount to itemStack and return any leftover
+    public int add(int amount) {
+        if (amount > item.maxStack - size) {
+            int leftover = amount - (item.maxStack - size);
+            size = item.maxStack;
+            return leftover;
+        } else {
+            size += amount;
+            return 0;
+        }
     }
 
-    public void subtract(int amount) {
+    // Subtract given amount from itemStack and return any leftover
+    public int subtract(int amount) {
         if (amount > size) {
-            this.size = 0;
+            int leftover = amount - size;
+            size = 0;
+            return leftover;
         } else {
-            this.size -= amount;
+            size -= amount;
+            return 0;
         }
     }
 

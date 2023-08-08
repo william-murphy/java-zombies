@@ -109,6 +109,10 @@ public class Game extends JPanel implements Runnable {
         g2d.dispose();
     }
 
+    public void gameOver() {
+        Window.launchMenu();
+    }
+
     // called from the window class to start / stop the game
 
     public void startGameThread() {
@@ -117,6 +121,10 @@ public class Game extends JPanel implements Runnable {
     }
 
     public void stopGameThread() {
+        keyHandler = null;
+        entityList = null;
+        camera = null;
+        hud = null;
         gameThread = null;
     }
 

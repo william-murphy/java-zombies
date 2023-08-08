@@ -17,13 +17,8 @@ public class Projectile extends MovableEntity {
         this.speed = initialSpeed;
         this.direction = direction;
     }
-
-    @Override
-    public void damage(LivingEntity entity) {
-        entity.receiveDamage((ammo.damage + this.speed) / 2);
-    }
     
-    public void checkZombieCollision() {
+    private void checkZombieCollision() {
         if (this.tile.entities.size() > 1) {
             for (Entity entity : this.tile.entities) {
                 if (entity.getClass().equals(Zombie.class) && this.collides(entity)) {
@@ -32,6 +27,11 @@ public class Projectile extends MovableEntity {
                 }
         }
         }
+    }
+
+    @Override
+    public void damage(LivingEntity entity) {
+        entity.receiveDamage((ammo.damage + this.speed) / 2);
     }
 
     @Override

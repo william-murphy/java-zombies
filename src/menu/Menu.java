@@ -36,7 +36,7 @@ public class Menu extends JPanel {
 
         @Override
         public void keyTyped(KeyEvent e) {
-           Window.launchGame();
+            Window.launchGame();
         }
 
         @Override

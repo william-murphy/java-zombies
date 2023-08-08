@@ -35,11 +35,13 @@ public class Window extends JFrame {
     public static void launchMenu() {
         game.stopGameThread();
         cards.show(container, "menu");
+        menu.requestFocus();
     }
 
     public static void launchGame() {
         game.initialize();
         cards.show(container, "game");
+        game.requestFocus();
         game.startGameThread();
     }
 

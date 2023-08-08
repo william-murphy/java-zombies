@@ -100,6 +100,7 @@ public class Player extends LivingEntity {
     public void despawn() {
         tile.entities.remove(this);
         Game.getInstance().entityList.remove(this);
+        Game.getInstance().gameOver();
     }
 
     @Override

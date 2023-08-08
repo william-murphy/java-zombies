@@ -37,6 +37,12 @@ public class Zombie extends LivingEntity {
         return Game.getInstance().round * 2;
     }
 
+    private void checkPlayerCollision() {
+        if (this.hitbox.intersects(Game.getInstance().entityList.player.hitbox)) {
+            damage(Game.getInstance().entityList.player);
+        }
+    }
+
     @Override
     public void damage(LivingEntity entity) {
         entity.receiveDamage(this.strength);
@@ -59,11 +65,10 @@ public class Zombie extends LivingEntity {
     @Override
     public void update() {
         pathFinder.update();
-        if (pathFinder.goalReached) {
-            updatePosition();
-            checkCollision();
-            updateTile();
-        }
+        updatePosition();
+        checkCollision();
+        checkPlayerCollision();
+        updateTile();
         updateAnimation();
     }
 

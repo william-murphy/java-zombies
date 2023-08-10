@@ -84,11 +84,6 @@ public class Player extends LivingEntity {
     }
 
     @Override
-    public void damage(LivingEntity entity) {
-        entity.receiveDamage(this.strength);
-    }
-
-    @Override
     public void spawn(int x, int y) {
         hitbox.setLocation(x, y);
         tile = getTile();
@@ -105,6 +100,7 @@ public class Player extends LivingEntity {
 
     @Override
     public void update() {
+        regenerateHealth();
         updatePosition();
         updateAnimation();
         checkCollision();

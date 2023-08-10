@@ -22,16 +22,11 @@ public class Projectile extends MovableEntity {
         if (this.tile.entities.size() > 1) {
             for (Entity entity : this.tile.entities) {
                 if (entity.getClass().equals(Zombie.class) && this.collides(entity)) {
-                    this.damage((LivingEntity)entity);
+                    this.damage((LivingEntity)entity, (ammo.damage + this.speed) / 2);
                     this.despawn();
                 }
         }
         }
-    }
-
-    @Override
-    public void damage(LivingEntity entity) {
-        entity.receiveDamage((ammo.damage + this.speed) / 2);
     }
 
     @Override

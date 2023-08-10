@@ -3,17 +3,23 @@ package entity;
 import common.*;
 import tile.Tile;
 import entity.livingentity.*;
+import game.Game;
 
 import java.awt.Graphics2D;
 
 public abstract class Entity implements Collidable {
 
+    public static final int attackDelay = Game.FPS;
+
     public Hitbox hitbox;
     public boolean collision = true;
 
     public Tile tile;
-    public int animationCounter = 0;
-    public boolean animationStep = false;
+
+    protected int animationCounter = 0;
+    protected boolean animationStep = false;
+
+    protected int lastAttackTick;
 
     public Tile getTile() {
         return Tile.getTile((int)hitbox.getCenterX(), (int)hitbox.getCenterY());
@@ -27,6 +33,13 @@ public abstract class Entity implements Collidable {
         }
     }
 
+    protected void damage(LivingEntity entity, int amount) {
+        if (Game.getInstance().tick - this.lastAttackTick >= attackDelay) {
+            this.lastAttackTick = Game.getInstance().tick;
+            entity.receiveDamage(amount);
+        }
+    }
+
     @Override 
     public boolean hasCollision() {
         return this.collision;
@@ -36,8 +49,6 @@ public abstract class Entity implements Collidable {
     public Hitbox getHitbox() {
         return hitbox;
     }
-
-    public abstract void damage(LivingEntity entity);
 
     public abstract void spawn(int x, int y);
 

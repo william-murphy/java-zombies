@@ -39,13 +39,8 @@ public class Zombie extends LivingEntity {
 
     private void checkPlayerCollision() {
         if (this.hitbox.intersects(Game.getInstance().entityList.player.hitbox)) {
-            damage(Game.getInstance().entityList.player);
+            damage(Game.getInstance().entityList.player, strength);
         }
-    }
-
-    @Override
-    public void damage(LivingEntity entity) {
-        entity.receiveDamage(this.strength);
     }
 
     @Override

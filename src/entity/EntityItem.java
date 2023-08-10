@@ -3,7 +3,6 @@ package entity;
 import game.Game;
 import common.*;
 import item.ItemStack;
-import entity.livingentity.LivingEntity;
 
 import java.awt.Graphics2D;
 
@@ -21,9 +20,6 @@ public class EntityItem extends Entity {
     public ItemStack getItemStack() {
         return this.itemStack;
     }
-
-    @Override
-    public void damage(LivingEntity entity) {}
 
     @Override
     public void spawn(int x, int y) {

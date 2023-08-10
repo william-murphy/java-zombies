@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.lang.Math;
 import java.awt.Font;
 
 public class Hud {
@@ -22,12 +21,12 @@ public class Hud {
 
     private void drawHealthBar(Graphics2D g2d) {
         int i = 0;
-        while (i < Math.floorDiv(Game.getInstance().entityList.player.health, 2)) {
-            g2d.drawImage(heartFull, heartX + (Game.tileSize / 2 + 4) * i, heartY, heartSize, heartSize, null);
-            i += 1;
+        while (i + 2 <= Game.getInstance().entityList.player.health) {
+            g2d.drawImage(heartFull, heartX + (Game.tileSize / 2 + 4) * (i / 2), heartY, heartSize, heartSize, null); 
+            i += 2;
         }
-        if (!(Game.getInstance().entityList.player.health % 2 == 0)) {
-            g2d.drawImage(heartHalf, heartX + Game.tileSize * i, heartY, heartSize, heartSize, null);
+        if (i < Game.getInstance().entityList.player.health) {
+            g2d.drawImage(heartHalf, heartX + (Game.tileSize / 2 + 4) * (i / 2), heartY, heartSize, heartSize, null);
         }
     }
 

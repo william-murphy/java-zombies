@@ -1,10 +1,10 @@
-package entity;
+package game;
 
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
 import entity.livingentity.*;
-import game.Game;
+import entity.*;
 import item.ItemStack;
 import item.ammo.Ammo;
 import item.weapon.Weapon;

@@ -2,7 +2,6 @@ package game;
 
 import main.Window;
 import tile.Tile;
-import entity.EntityList;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;

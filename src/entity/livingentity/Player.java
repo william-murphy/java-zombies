@@ -12,10 +12,10 @@ import java.awt.image.BufferedImage;
 
 public class Player extends LivingEntity {
     
+    static { loadImages(); }
+
     public static final int playerSpawnX = (Tile.worldWidth / 2) - (Game.tileSize / 2);
     public static final int playerSpawnY = (Tile.worldHeight / 2) - (Game.tileSize / 2);
-    public static final int spawnZombieRadius = 5;
-    public static final int spawnDelay = 5 * Game.FPS;
 
     // player specific fields
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
@@ -36,18 +36,6 @@ public class Player extends LivingEntity {
         maxHealth = 20;
         health = maxHealth;
         strength = 5;
-    }
-
-    public void attemptZombieSpawn() {
-        if (Zombie.numZombies < Zombie.getMaxZombies() && Game.getInstance().tick % Player.spawnDelay == 0) {
-            Tile playerTile = this.getTile();
-            int spawnCol = playerTile.col + (Game.getInstance().random.nextInt(2 * Player.spawnZombieRadius + 1) - Player.spawnZombieRadius);
-            int spawnRow = playerTile.row + (Game.getInstance().random.nextInt(2 * Player.spawnZombieRadius + 1) - Player.spawnZombieRadius);
-            if (!Tile.map[spawnCol][spawnRow].collision) {
-                new Zombie().spawn(spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16);
-                Zombie.numZombies++;
-            }
-        }
     }
 
     public void pickupItem(EntityItem item) {
@@ -84,6 +72,16 @@ public class Player extends LivingEntity {
     }
 
     @Override
+    public void receiveDamage(int amount) {
+        this.health -= amount;
+        if (this.health <= 0) {
+            this.dead = true;
+            this.despawn();
+            Game.getInstance().gameOver();
+        }
+    }
+
+    @Override
     public void spawn(int x, int y) {
         hitbox.setLocation(x, y);
         tile = getTile();
@@ -95,7 +93,6 @@ public class Player extends LivingEntity {
     public void despawn() {
         tile.entities.remove(this);
         Game.getInstance().entityList.remove(this);
-        Game.getInstance().gameOver();
     }
 
     @Override
@@ -108,7 +105,6 @@ public class Player extends LivingEntity {
         if (inventory.isHoldingItem()) {
             hand.update();
         }
-        attemptZombieSpawn();
         Game.getInstance().camera.update(hitbox.x, hitbox.y);
     }
 
@@ -182,7 +178,7 @@ public class Player extends LivingEntity {
         }
     }
 
-    public static void loadImages() {
+    private static void loadImages() {
         try {
             standingNorth = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-n.png"));
             walkingNorth1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-n1.png"));

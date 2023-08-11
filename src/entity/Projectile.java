@@ -25,7 +25,7 @@ public class Projectile extends MovableEntity {
                     this.damage((LivingEntity)entity, (ammo.damage + this.speed) / 2);
                     this.despawn();
                 }
-        }
+            }
         }
     }
 

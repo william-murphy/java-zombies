@@ -13,7 +13,7 @@ import java.awt.Color;
 
 public class Zombie extends LivingEntity {
 
-    public static int numZombies = 0;
+    static { loadImages(); }
 
     // zombie specific fields
     static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
@@ -33,13 +33,19 @@ public class Zombie extends LivingEntity {
         strength = 5;
     }
 
-    public static int getMaxZombies() {
-        return Game.getInstance().round * 2;
-    }
-
     private void checkPlayerCollision() {
         if (this.hitbox.intersects(Game.getInstance().entityList.player.hitbox)) {
             damage(Game.getInstance().entityList.player, strength);
+        }
+    }
+
+    @Override
+    public void receiveDamage(int amount) {
+        this.health -= amount;
+        if (this.health <= 0) {
+            this.dead = true;
+            this.despawn();
+            Game.getInstance().entityList.decrementZombieCount();
         }
     }
 
@@ -117,7 +123,7 @@ public class Zombie extends LivingEntity {
         }
     }
 
-    public static void loadImages() {
+    private static void loadImages() {
         try {
             standingNorth = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/standing-n.png"));
             walkingNorth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-n1.png"));

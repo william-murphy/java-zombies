@@ -20,14 +20,6 @@ public class Game extends JPanel implements Runnable {
     public static final int screenWidth = screenCols * tileSize;
     public static final int screenHeight = screenRows * tileSize;
 
-    static {
-        Tile.setMapDimensions();
-        Tile.initializeMap();
-        Tile.loadImages();
-        EntityList.loadImages();
-        Hud.loadImages();
-    }
-
     public boolean debug = false;
 
     public static final int FPS = 60;
@@ -40,8 +32,6 @@ public class Game extends JPanel implements Runnable {
     public EntityList entityList;
     public Camera camera;
     public Hud hud;
-
-    public int round = 1;
 
     public Game() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -121,10 +111,6 @@ public class Game extends JPanel implements Runnable {
     }
 
     public void stopGameThread() {
-        keyHandler = null;
-        entityList = null;
-        camera = null;
-        hud = null;
         gameThread = null;
     }
 

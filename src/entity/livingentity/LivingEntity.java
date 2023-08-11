@@ -13,13 +13,7 @@ public abstract class LivingEntity extends MovableEntity {
     public int maxHealth;
     public int health;
 
-    public void receiveDamage(int amount) {
-        this.health -= amount;
-        if (this.health <= 0) {
-            this.dead = true;
-            this.despawn();
-        }
-    }
+    public abstract void receiveDamage(int amount);
 
     public void regenerateHealth() {
         if (this.health < this.maxHealth && Game.getInstance().tick - this.lastHealthRegenTick >= healthRegenDelay) {

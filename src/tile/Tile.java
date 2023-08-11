@@ -15,6 +15,12 @@ import java.util.LinkedList;
 
 public class Tile implements Collidable {
     
+    static { 
+        setMapDimensions();
+        initializeMap();
+        loadImages();
+    }
+    
     //images
     static BufferedImage[] tileImages;
 
@@ -114,7 +120,7 @@ public class Tile implements Collidable {
         }
     }
 
-    public static void setMapDimensions() {
+    private static void setMapDimensions() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(Tile.class.getResourceAsStream("/res/map/map.txt")));
             String line = reader.readLine();
@@ -133,7 +139,7 @@ public class Tile implements Collidable {
         }
     }
 
-    public static void initializeMap() {
+    private static void initializeMap() {
         map = new Tile[mapCols][mapRows];
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(Tile.class.getResourceAsStream("/res/map/map.txt")));
@@ -150,7 +156,7 @@ public class Tile implements Collidable {
         }
     }
 
-    public static void loadImages() {
+    private static void loadImages() {
         tileImages = new BufferedImage[2];
         try {
             tileImages[0] = ImageIO.read(Tile.class.getResourceAsStream("/res/tile/cobblestone.png"));

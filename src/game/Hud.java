@@ -8,6 +8,8 @@ import java.awt.Font;
 
 public class Hud {
 
+    static { loadImages(); }
+
     static BufferedImage heartFull, heartHalf;
     final static int heartSize = Game.tileSize / 2;
     final static int heartX = Game.tileSize * 3;
@@ -32,7 +34,7 @@ public class Hud {
 
     private void drawCurrentRound(Graphics2D g2d) {
         g2d.setFont(roundFont);
-        g2d.drawString(String.valueOf(Game.getInstance().round), roundX, roundY);
+        g2d.drawString(String.valueOf(Game.getInstance().entityList.round), roundX, roundY);
     }
 
     private void drawInventory(Graphics2D g2d) {
@@ -46,7 +48,7 @@ public class Hud {
         drawInventory(g2d);
     }
 
-    public static void loadImages() {
+    private static void loadImages() {
         try {
             heartFull = ImageIO.read(Hud.class.getResourceAsStream("/res/hud/heart-full.png"));
             heartHalf = ImageIO.read(Hud.class.getResourceAsStream("/res/hud/heart-half.png"));

@@ -94,8 +94,26 @@ public class Tile implements Collidable {
         }
     }
 
-     //calculate manhattan distance between two tiles
-     public static int getDistance(Tile one, Tile two) {
+    private static Tile getRandomSpawnableTile(int radius, Tile playerTile, int step) {
+        if (step > mapCols * mapRows) {
+            return null;
+        }
+        int row = playerTile.col + (Game.getInstance().random.nextInt(2 * radius + 1) - radius);
+        int col = playerTile.row + (Game.getInstance().random.nextInt(2 * radius + 1) - radius);
+        if (!map[row][col].collision /* TODO - make this check if the tile is outside the world border as well */) {
+            return map[row][col];
+        } else {
+            return getRandomSpawnableTile(radius, playerTile, step + 1);
+        }
+    }
+
+    public static Tile getRandomSpawnableTile(int radius) {
+        Tile playerTile = Game.getInstance().entityList.player.getTile();
+        return getRandomSpawnableTile(radius, playerTile, 0);
+    }
+
+    // calculate manhattan distance between two tiles
+    public static int getDistance(Tile one, Tile two) {
         return (Math.abs(one.col - two.col) + Math.abs(one.row - two.row));
     }
 

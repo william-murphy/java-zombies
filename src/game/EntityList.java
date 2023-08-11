@@ -7,7 +7,6 @@ import entity.livingentity.*;
 import entity.*;
 import item.ItemStack;
 import item.ammo.Ammo;
-import item.weapon.Weapon;
 import tile.Tile;
 
 public class EntityList {
@@ -22,16 +21,12 @@ public class EntityList {
     int totalZombies;
     int numZombies;
     int zombiesLeftToSpawn;
-    static final int spawnZombieRadius = 5;
+    static final int spawnRadius = 5;
     static final int spawnZombieDelay = 5 * Game.FPS;
     int lastSpawnZombieTick;
 
     public void initialize() {
         player.spawn(Player.playerSpawnX, Player.playerSpawnY);
-        // temp
-        new ItemStack(Weapon.tac40).spawnEntityItem(Player.playerSpawnX - 200, Player.playerSpawnY);
-        new ItemStack(Ammo.handgunAmmo, 32).spawnEntityItem(Player.playerSpawnX + 100, Player.playerSpawnY);
-        new ItemStack(Ammo.handgunAmmo, 33).spawnEntityItem(Player.playerSpawnX + 100, Player.playerSpawnY - 100);
         newRound();
     }
 
@@ -48,6 +43,7 @@ public class EntityList {
         totalZombies = round * 2;
         numZombies = 0;
         zombiesLeftToSpawn = totalZombies;
+        attemptAmmoSpawn();
     }
 
     public void decrementZombieCount() {
@@ -57,14 +53,19 @@ public class EntityList {
         }
     }
 
+    private void attemptAmmoSpawn() {
+        Tile spawnTile = Tile.getRandomSpawnableTile(spawnRadius);
+        if (spawnTile != null) {
+            new EntityItem(new ItemStack(Ammo.handgunAmmo, 16 + Game.getInstance().random.nextInt(48))).spawn(spawnTile.col * Game.tileSize + 16, spawnTile.row * Game.tileSize + 16);
+        }
+    }
+
     private void attemptZombieSpawn() {
         if (zombiesLeftToSpawn > 0 && Game.getInstance().tick - lastSpawnZombieTick > spawnZombieDelay) {
-            Tile playerTile = this.player.getTile();
-            int spawnCol = playerTile.col + (Game.getInstance().random.nextInt(2 * spawnZombieRadius + 1) - spawnZombieRadius);
-            int spawnRow = playerTile.row + (Game.getInstance().random.nextInt(2 * spawnZombieRadius + 1) - spawnZombieRadius);
-            if (!Tile.map[spawnCol][spawnRow].collision) {
+            Tile spawnTile = Tile.getRandomSpawnableTile(spawnRadius);
+            if (spawnTile != null) {
                 lastSpawnZombieTick = Game.getInstance().tick;
-                new Zombie().spawn(spawnCol * Game.tileSize + 16, spawnRow * Game.tileSize + 16);
+                new Zombie().spawn(spawnTile.col * Game.tileSize + 16, spawnTile.row * Game.tileSize + 16);
                 numZombies++;
                 zombiesLeftToSpawn--;
             }
@@ -73,7 +74,6 @@ public class EntityList {
 
     private void updateWorld() {
         attemptZombieSpawn();
-        // TODO - implement random ammo spawns
     }
 
     public void update() {

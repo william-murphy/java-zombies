@@ -1,6 +1,8 @@
 package entity.livingentity;
 
 import game.Game;
+import item.ItemStack;
+import item.weapon.Weapon;
 import common.*;
 import entity.EntityItem;
 import tile.Tile;
@@ -26,6 +28,7 @@ public class Player extends LivingEntity {
 
     public Player() {
         this.hitbox = new Hitbox(0, 0, Game.tileSize / 2, Game.tileSize / 2);
+        inventory.add(new ItemStack(Weapon.tac40));
         setDefaultValues();
     }
 

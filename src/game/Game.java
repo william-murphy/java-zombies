@@ -99,7 +99,7 @@ public class Game extends JPanel implements Runnable {
     }
 
     public void gameOver() {
-        Window.launchMenu();
+        Window.launchGameOver();
     }
 
     // called from the window class to start / stop the game

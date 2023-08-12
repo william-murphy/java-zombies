@@ -4,13 +4,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
 
-import menu.Menu;
+import menu.*;
 import game.Game;
 
 public class Window extends JFrame {
     
     public static Menu menu = new Menu();
     public static Game game = new Game();
+    public static GameOver gameOver = new GameOver();
 
     static CardLayout cards = new CardLayout();
     static JPanel container = new JPanel(cards);
@@ -25,6 +26,7 @@ public class Window extends JFrame {
 
         container.add(menu, "menu");
         container.add(game, "game");
+        container.add(gameOver, "gameOver");
 
         launchMenu();
 
@@ -33,7 +35,6 @@ public class Window extends JFrame {
     }
 
     public static void launchMenu() {
-        game.stopGameThread();
         cards.show(container, "menu");
         menu.requestFocus();
     }
@@ -43,6 +44,12 @@ public class Window extends JFrame {
         cards.show(container, "game");
         game.requestFocus();
         game.startGameThread();
+    }
+
+    public static void launchGameOver() {
+        game.stopGameThread();
+        cards.show(container, "gameOver");
+        gameOver.requestFocus();
     }
 
 }

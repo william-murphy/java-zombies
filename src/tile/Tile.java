@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.lang.Math;
 
 public class Tile implements Collidable {
     
@@ -29,6 +30,7 @@ public class Tile implements Collidable {
     public static int mapCols;
     public static int worldWidth;
     public static int worldHeight;
+    static int minSpawnableRow, minSpawnableCol, maxSpawnableRow, maxSpawnableCol;
 
     //map
     public static Tile[][] map;
@@ -74,6 +76,9 @@ public class Tile implements Collidable {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
         if (!(o instanceof Tile)) {
             return false;
         }
@@ -95,12 +100,12 @@ public class Tile implements Collidable {
     }
 
     private static Tile getRandomSpawnableTile(int radius, Tile playerTile, int step) {
-        if (step > mapCols * mapRows) {
+        if (step > 20) {
             return null;
         }
         int row = playerTile.col + (Game.getInstance().random.nextInt(2 * radius + 1) - radius);
         int col = playerTile.row + (Game.getInstance().random.nextInt(2 * radius + 1) - radius);
-        if (!map[row][col].collision /* TODO - make this check if the tile is outside the world border as well */) {
+        if (!map[row][col].collision && row >= minSpawnableRow && row <= maxSpawnableRow && col >= minSpawnableCol && col <= maxSpawnableCol) {
             return map[row][col];
         } else {
             return getRandomSpawnableTile(radius, playerTile, step + 1);
@@ -152,6 +157,10 @@ public class Tile implements Collidable {
             mapRows = count;
             worldWidth = mapCols * Game.tileSize;
             worldHeight = mapRows * Game.tileSize;
+            minSpawnableCol = 4;
+            minSpawnableRow = 4;
+            maxSpawnableCol = mapCols - 4;
+            maxSpawnableRow = mapRows - 4;
         } catch (Exception e) {
             e.printStackTrace();
         }

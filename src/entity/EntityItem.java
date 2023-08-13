@@ -9,8 +9,8 @@ import java.awt.Graphics2D;
 public class EntityItem extends Entity {
     
     final static int pickupDelay = Game.FPS * 2; // 2 seconds
+    int spawnTick;
     ItemStack itemStack;
-    boolean ready;
 
     public EntityItem(ItemStack itemStack) {
         this.hitbox = new Hitbox(0, 0, itemStack.getItem().width, itemStack.getItem().height);
@@ -26,7 +26,7 @@ public class EntityItem extends Entity {
         hitbox.setLocation(x, y);
         tile = getTile();
         tile.entities.add(this);
-        ready = false;
+        spawnTick = Game.getInstance().tick;
         Game.getInstance().entityList.add(this);
     }
 
@@ -38,10 +38,7 @@ public class EntityItem extends Entity {
 
     @Override
     public void update() {
-        if (!ready && Game.getInstance().tick % pickupDelay == 0) {
-            ready = true;
-        }
-        if (ready && Game.getInstance().entityList.player.hitbox.intersects(hitbox)) {
+        if (tile.entities.size() > 1 && Game.getInstance().tick - spawnTick >= pickupDelay && Game.getInstance().entityList.player.hitbox.intersects(hitbox)) {
             Game.getInstance().entityList.player.pickupItem(this);
         }
     }

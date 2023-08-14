@@ -26,7 +26,8 @@ public class EntityList {
     int lastSpawnZombieTick;
 
     public void initialize() {
-        player.spawn(Player.playerSpawnX, Player.playerSpawnY);
+        Tile playerSpawn = Tile.getRandomSpawnableTile();
+        player.spawn(playerSpawn.row * Game.tileSize, playerSpawn.col * Game.tileSize);
         newRound();
     }
 
@@ -54,7 +55,7 @@ public class EntityList {
     }
 
     private void attemptAmmoSpawn() {
-        Tile spawnTile = Tile.getRandomSpawnableTile(spawnRadius);
+        Tile spawnTile = Tile.getRandomSpawnableTile(player.getTile(), spawnRadius);
         if (spawnTile != null) {
             new EntityItem(new ItemStack(Ammo.handgunAmmo, 16 + Game.getInstance().random.nextInt(48))).spawn(spawnTile.col * Game.tileSize + 16, spawnTile.row * Game.tileSize + 16);
         }
@@ -62,7 +63,7 @@ public class EntityList {
 
     private void attemptZombieSpawn() {
         if (zombiesLeftToSpawn > 0 && Game.getInstance().tick - lastSpawnZombieTick > spawnZombieDelay) {
-            Tile spawnTile = Tile.getRandomSpawnableTile(spawnRadius);
+            Tile spawnTile = Tile.getRandomSpawnableTile(player.getTile(), spawnRadius);
             if (spawnTile != null) {
                 lastSpawnZombieTick = Game.getInstance().tick;
                 new Zombie().spawn(spawnTile.col * Game.tileSize + 16, spawnTile.row * Game.tileSize + 16);

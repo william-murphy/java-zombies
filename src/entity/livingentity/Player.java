@@ -5,7 +5,6 @@ import item.ItemStack;
 import item.weapon.Weapon;
 import common.*;
 import entity.EntityItem;
-import tile.Tile;
 
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
@@ -16,12 +15,8 @@ public class Player extends LivingEntity {
     
     static { loadImages(); }
 
-    public static final int playerSpawnX = (Tile.worldWidth / 2) - (Game.tileSize / 2);
-    public static final int playerSpawnY = (Tile.worldHeight / 2) - (Game.tileSize / 2);
-
-    // player specific fields
-    static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
-    static BufferedImage standingNorthEquipped, walkingNorthEquipped1, walkingNorthEquipped2, standingSouthEquipped, walkingSouthEquipped1, walkingSouthEquipped2, standingEastEquipped, walkingEastEquipped1, walkingEastEquipped2, standingWestEquipped, walkingWestEquipped1, walkingWestEquipped2;
+    static BufferedImage north, movingNorth1, movingNorth2, south, movingSouth1, movingSouth2, east, movingEast1, movingEast2, west, movingWest1, movingWest2;
+    static BufferedImage equippedNorth, movingEquippedNorth1, movingEquippedNorth2, equippedSouth, movingEquippedSouth1, movingEquippedSouth2, equippedEast, movingEquippedEast1, movingEquippedEast2, equippedWest, movingEquippedWest1, movingEquippedWest2;
 
     public Inventory inventory = new Inventory(this, 8);
     public Hand hand = new Hand(this);
@@ -121,45 +116,45 @@ public class Player extends LivingEntity {
             case NORTH:
                 if (moving) {
                     if (inventory.isHoldingItem()) {
-                        image = animationStep ? walkingNorthEquipped1 : walkingNorthEquipped2;
+                        image = animationStep ? movingEquippedNorth1 : movingEquippedNorth2;
                     } else {
-                        image = animationStep ? walkingNorth1 : walkingNorth2;
+                        image = animationStep ? movingNorth1 : movingNorth2;
                     }
                 }else {
-                    image = inventory.isHoldingItem() ? standingNorthEquipped : standingNorth;
+                    image = inventory.isHoldingItem() ? equippedNorth : north;
                 }
                 break;
             case SOUTH:
                 if(moving) {
                     if (inventory.isHoldingItem()) {
-                        image = animationStep ? walkingSouthEquipped1 : walkingSouthEquipped2;
+                        image = animationStep ? movingEquippedSouth1 : movingEquippedSouth2;
                     } else {
-                        image = animationStep ? walkingSouth1 : walkingSouth2;
+                        image = animationStep ? movingSouth1 : movingSouth2;
                     }
                 }else {
-                    image = inventory.isHoldingItem() ? standingSouthEquipped : standingSouth;
+                    image = inventory.isHoldingItem() ? equippedSouth : south;
                 }
                 break;
             case EAST:
                 if (moving) {
                     if (inventory.isHoldingItem()) {
-                        image = animationStep ? walkingEastEquipped1 : walkingEastEquipped2;
+                        image = animationStep ? movingEquippedEast1 : movingEquippedEast2;
                     } else {
-                        image = animationStep ? walkingEast1 : walkingEast2;
+                        image = animationStep ? movingEast1 : movingEast2;
                     }
                 }else {
-                    image = inventory.isHoldingItem() ? standingEastEquipped : standingEast;
+                    image = inventory.isHoldingItem() ? equippedEast : east;
                 }
                 break;
             case WEST:
                 if (moving) {
                     if (inventory.isHoldingItem()) {
-                        image = animationStep ? walkingWestEquipped1 : walkingWestEquipped2;
+                        image = animationStep ? movingEquippedWest1 : movingEquippedWest2;
                     } else {
-                        image = animationStep ? walkingWest1 : walkingWest2;
+                        image = animationStep ? movingWest1 : movingWest2;
                     }
                 }else {
-                    image = inventory.isHoldingItem() ? standingWestEquipped : standingWest;
+                    image = inventory.isHoldingItem() ? equippedWest : west;
                 }
                 break;
         }
@@ -183,30 +178,30 @@ public class Player extends LivingEntity {
 
     private static void loadImages() {
         try {
-            standingNorth = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-n.png"));
-            walkingNorth1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-n1.png"));
-            walkingNorth2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-n2.png"));
-            standingSouth = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-s.png"));
-            walkingSouth1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-s1.png"));
-            walkingSouth2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-s2.png"));
-            standingEast = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-e.png"));
-            walkingEast1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-e1.png"));
-            walkingEast2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-e2.png"));
-            standingWest = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-w.png"));
-            walkingWest1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w1.png"));
-            walkingWest2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w2.png"));
-            standingNorthEquipped = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-n-hand-out.png"));
-            walkingNorthEquipped1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-n-hand-out-1.png"));
-            walkingNorthEquipped2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-n-hand-out-2.png"));
-            standingSouthEquipped = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-s-hand-out.png"));
-            walkingSouthEquipped1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-s-hand-out-1.png"));
-            walkingSouthEquipped2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-s-hand-out-2.png"));
-            standingEastEquipped = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-e-hand-out.png"));
-            walkingEastEquipped1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-e-hand-out-1.png"));
-            walkingEastEquipped2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-e-hand-out-2.png"));
-            standingWestEquipped = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/standing-w-hand-out.png"));
-            walkingWestEquipped1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w-hand-out-1.png"));
-            walkingWestEquipped2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/walk-w-hand-out-2.png"));
+            north = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/north.png"));
+            movingNorth1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingNorth1.png"));
+            movingNorth2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingNorth2.png"));
+            south = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/south.png"));
+            movingSouth1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingSouth1.png"));
+            movingSouth2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingSouth2.png"));
+            east = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/east.png"));
+            movingEast1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingEast1.png"));
+            movingEast2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingEast2.png"));
+            west = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/west.png"));
+            movingWest1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingWest1.png"));
+            movingWest2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingWest2.png"));
+            equippedNorth = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/equippedNorth.png"));
+            movingEquippedNorth1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingEquippedNorth1.png"));
+            movingEquippedNorth2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingEquippedNorth2.png"));
+            equippedSouth = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/equippedSouth.png"));
+            movingEquippedSouth1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingEquippedSouth1.png"));
+            movingEquippedSouth2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingEquippedSouth2.png"));
+            equippedEast = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/equippedEast.png"));
+            movingEquippedEast1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingEquippedEast1.png"));
+            movingEquippedEast2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingEquippedEast2.png"));
+            equippedWest = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/equippedWest.png"));
+            movingEquippedWest1 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingEquippedWest1.png"));
+            movingEquippedWest2 = ImageIO.read(Player.class.getResourceAsStream("/res/entity/player/movingEquippedWest2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

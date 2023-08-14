@@ -15,8 +15,7 @@ public class Zombie extends LivingEntity {
 
     static { loadImages(); }
 
-    // zombie specific fields
-    static BufferedImage standingNorth, walkingNorth1, walkingNorth2, standingSouth, walkingSouth1, walkingSouth2, standingEast, walkingEast1, walkingEast2, standingWest, walkingWest1, walkingWest2;
+    static BufferedImage north, movingNorth1, movingNorth2, south, movingSouth1, movingSouth2, east, movingEast1, movingEast2, west, movingWest1, movingWest2;
     Pathfinder pathFinder;
 
     public Zombie() {
@@ -81,30 +80,30 @@ public class Zombie extends LivingEntity {
         switch(direction) {
             case NORTH:
                 if (moving) {
-                    image = animationStep ? walkingNorth1  : walkingNorth2;
+                    image = animationStep ? movingNorth1  : movingNorth2;
                 }else {
-                    image = standingNorth;
+                    image = north;
                 }
                 break;
             case SOUTH:
                 if(moving) {
-                    image = animationStep ? walkingSouth1 : walkingSouth2;
+                    image = animationStep ? movingSouth1 : movingSouth2;
                 }else {
-                    image = standingSouth;
+                    image = south;
                 }
                 break;
             case EAST:
                 if (moving) {
-                    image = animationStep ? walkingEast1 : walkingEast2;
+                    image = animationStep ? movingEast1 : movingEast2;
                 }else {
-                    image = standingEast;
+                    image = east;
                 }
                 break;
             case WEST:
                 if (moving) {
-                    image = animationStep ? walkingWest1 : walkingWest2;
+                    image = animationStep ? movingWest1 : movingWest2;
                 }else {
-                    image = standingWest;
+                    image = west;
                 }
                 break;
         }
@@ -125,18 +124,18 @@ public class Zombie extends LivingEntity {
 
     private static void loadImages() {
         try {
-            standingNorth = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/standing-n.png"));
-            walkingNorth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-n1.png"));
-            walkingNorth2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-n2.png"));
-            standingSouth = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/standing-s.png"));
-            walkingSouth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-s1.png"));
-            walkingSouth2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-s2.png"));
-            standingEast = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/standing-e.png"));
-            walkingEast1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-e1.png"));
-            walkingEast2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-e2.png"));
-            standingWest = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/standing-w.png"));
-            walkingWest1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-w1.png"));
-            walkingWest2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/walk-w2.png"));
+            north = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/north.png"));
+            movingNorth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/movingNorth1.png"));
+            movingNorth2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/movingNorth2.png"));
+            south = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/south.png"));
+            movingSouth1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/movingSouth1.png"));
+            movingSouth2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/movingSouth2.png"));
+            east = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/east.png"));
+            movingEast1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/movingEast1.png"));
+            movingEast2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/movingEast2.png"));
+            west = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/west.png"));
+            movingWest1 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/movingWest1.png"));
+            movingWest2 = ImageIO.read(Zombie.class.getResourceAsStream("/res/entity/zombie/movingWest2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

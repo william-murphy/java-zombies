@@ -99,22 +99,26 @@ public class Tile implements Collidable {
         }
     }
 
-    private static Tile getRandomSpawnableTile(int radius, Tile playerTile, int step) {
-        if (step > 20) {
-            return null;
+    public static Tile getRandomSpawnableTile(Tile center, int radius) {
+        for (int step = 0; step < 32; step++) {
+            int row = center.col + (Game.getInstance().random.nextInt(2 * radius + 1) - radius);
+            int col = center.row + (Game.getInstance().random.nextInt(2 * radius + 1) - radius);
+            if (row >= minSpawnableRow && row <= maxSpawnableRow && col >= minSpawnableCol && col <= maxSpawnableCol && !map[row][col].collision) {
+                return map[row][col];
+            }
         }
-        int row = playerTile.col + (Game.getInstance().random.nextInt(2 * radius + 1) - radius);
-        int col = playerTile.row + (Game.getInstance().random.nextInt(2 * radius + 1) - radius);
-        if (!map[row][col].collision && row >= minSpawnableRow && row <= maxSpawnableRow && col >= minSpawnableCol && col <= maxSpawnableCol) {
-            return map[row][col];
-        } else {
-            return getRandomSpawnableTile(radius, playerTile, step + 1);
-        }
+        return null;
     }
 
-    public static Tile getRandomSpawnableTile(int radius) {
-        Tile playerTile = Game.getInstance().entityList.player.getTile();
-        return getRandomSpawnableTile(radius, playerTile, 0);
+    public static Tile getRandomSpawnableTile() {
+        for (int step = 0; step < 32; step++) {
+            int row = Game.getInstance().random.nextInt(mapRows);
+            int col = Game.getInstance().random.nextInt(mapCols);
+            if (row >= minSpawnableRow && row <= maxSpawnableRow && col >= minSpawnableCol && col <= maxSpawnableCol && !map[row][col].collision) {
+                return map[row][col];
+            }
+        }
+        return null;
     }
 
     // calculate manhattan distance between two tiles

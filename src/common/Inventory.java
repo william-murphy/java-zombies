@@ -116,7 +116,7 @@ public class Inventory {
             }
             g2d.drawRect(x + (squareSize + 1) * i, y, squareSize, squareSize);
             if (items[i] != null) {
-                g2d.drawImage(items[i].getItem().getDefaultImage(), x + (i * squareSize) + 4, y + 4, items[i].getItem().width, items[i].getItem().height, null);
+                items[i].getItem().draw(g2d, x + (i * squareSize) + 4, y + 4);
                 if (items[i].getItem().maxStack > 1) {
                     g2d.setColor(Color.BLACK);
                     g2d.drawString(String.valueOf(items[i].getSize()), x + (i * squareSize) + 20, y + 28);

@@ -12,7 +12,7 @@ public class Projectile extends MovableEntity {
     Ammo ammo;
 
     public Projectile(Ammo ammo, int initialSpeed, Direction direction) {
-        this.hitbox = new Hitbox(0, 0, ammo.width, ammo.height);
+        this.hitbox = new Hitbox(0, 0, ammo.projectileWidth, ammo.projectileHeight);
         this.ammo = ammo;
         this.speed = initialSpeed;
         this.direction = direction;

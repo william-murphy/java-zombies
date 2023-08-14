@@ -2,7 +2,7 @@ package entity;
 
 import game.Game;
 import common.*;
-import item.ItemStack;
+import item.*;
 
 import java.awt.Graphics2D;
 
@@ -13,7 +13,7 @@ public class EntityItem extends Entity {
     ItemStack itemStack;
 
     public EntityItem(ItemStack itemStack) {
-        this.hitbox = new Hitbox(0, 0, itemStack.getItem().width, itemStack.getItem().height);
+        this.hitbox = new Hitbox(0, 0, Item.width, Item.height);
         this.itemStack = itemStack;
     }
 
@@ -45,7 +45,7 @@ public class EntityItem extends Entity {
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.drawImage(itemStack.getItem().getDefaultImage(), Game.getInstance().camera.calculateScreenX(hitbox.x, 0), Game.getInstance().camera.calculateScreenY(hitbox.y, 0), hitbox.width, hitbox.height, null);
+        itemStack.getItem().draw(g2d, Game.getInstance().camera.calculateScreenX(hitbox.x, 0), Game.getInstance().camera.calculateScreenY(hitbox.y, 0));
     }
 
 }

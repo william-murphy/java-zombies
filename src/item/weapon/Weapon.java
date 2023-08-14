@@ -13,18 +13,17 @@ import item.ammo.*;
 
 public class Weapon extends Item {
 
-    public static Weapon tac40 = new Weapon("tac40", Ammo.handgunAmmo, 16, 16, 8, 10);
+    public static Weapon tac40 = new Weapon("tac40", Ammo.handgunAmmo, 8, 10);
 
+    BufferedImage itemNorth, itemSouth, itemEast, itemWest;
     boolean pullingTrigger = false;
     ItemStack magazine;
     int damage;
     int capacity;
 
-    private Weapon(String name, Ammo ammo, int width, int height, int damage, int capacity) {
+    private Weapon(String name, Ammo ammo, int damage, int capacity) {
         loadImages(name);
         this.magazine = new ItemStack(ammo, 0);
-        this.width = width;
-        this.height = height;
         this.damage= damage;
         this.capacity = capacity;
         this.maxStack = 1;
@@ -32,10 +31,10 @@ public class Weapon extends Item {
 
     private void loadImages(String name) {
         try {
-            facingNorth = ImageIO.read(Weapon.class.getResourceAsStream(String.format("/res/item/weapon/%s/facingNorth.png", name)));
-            facingSouth = ImageIO.read(Weapon.class.getResourceAsStream(String.format("/res/item/weapon/%s/facingSouth.png", name)));
-            facingEast = ImageIO.read(Weapon.class.getResourceAsStream(String.format("/res/item/weapon/%s/facingEast.png", name)));
-            facingWest = ImageIO.read(Weapon.class.getResourceAsStream(String.format("/res/item/weapon/%s/facingWest.png", name)));
+            itemNorth = ImageIO.read(Weapon.class.getResourceAsStream(String.format("/res/item/weapon/%s/itemNorth.png", name)));
+            itemSouth = ImageIO.read(Weapon.class.getResourceAsStream(String.format("/res/item/weapon/%s/itemSouth.png", name)));
+            itemEast = ImageIO.read(Weapon.class.getResourceAsStream(String.format("/res/item/weapon/%s/itemEast.png", name)));
+            itemWest = ImageIO.read(Weapon.class.getResourceAsStream(String.format("/res/item/weapon/%s/itemWest.png", name)));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,24 +67,24 @@ public class Weapon extends Item {
     public void stopSecondaryUse() {}
 
     @Override
-    public BufferedImage getDefaultImage() {
-        return facingWest;
+    public void draw(Graphics2D g2d, int x, int y) {
+        g2d.drawImage(itemWest, x, y, width, height, null);
     }
 
     @Override
     public void drawInHand(Graphics2D g2d, Player player) {
         switch(player.direction) {
             case NORTH:
-                g2d.drawImage(facingNorth, Game.getInstance().camera.calculateScreenX(player.hand.x - width / 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - height + 2, 0), width, height, null);
+                g2d.drawImage(itemNorth, Game.getInstance().camera.calculateScreenX(player.hand.x - width / 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - height + 2, 0), width, height, null);
                 break;
             case SOUTH:
-                g2d.drawImage(facingSouth, Game.getInstance().camera.calculateScreenX(player.hand.x - width / 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - 2, 0), width, height, null);
+                g2d.drawImage(itemSouth, Game.getInstance().camera.calculateScreenX(player.hand.x - width / 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - 2, 0), width, height, null);
                 break;
             case EAST:
-                g2d.drawImage(facingEast, Game.getInstance().camera.calculateScreenX(player.hand.x - 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - height / 2, 0), width, height, null);
+                g2d.drawImage(itemEast, Game.getInstance().camera.calculateScreenX(player.hand.x - 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - height / 2, 0), width, height, null);
                 break;
             case WEST:
-                g2d.drawImage(facingWest, Game.getInstance().camera.calculateScreenX(player.hand.x - width + 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - height / 2, 0), width, height, null);
+                g2d.drawImage(itemWest, Game.getInstance().camera.calculateScreenX(player.hand.x - width + 2, 0), Game.getInstance().camera.calculateScreenY(player.hand.y - height / 2, 0), width, height, null);
                 break;
         }
     }

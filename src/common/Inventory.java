@@ -2,6 +2,7 @@ package common;
 
 import entity.livingentity.*;
 import item.ItemStack;
+import item.Item;
 
 import java.awt.Graphics2D;
 import java.awt.Color;
@@ -26,6 +27,13 @@ public class Inventory {
 
     public ItemStack getCurrentItemStack() {
         return items[current];
+    }
+
+    public Item getCurrentItem() {
+        if (isHoldingItem()) {
+            return items[current].getItem();
+        }
+        return null;
     }
 
     public void transfer(ItemStack receiver, int amount) {

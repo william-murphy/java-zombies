@@ -87,4 +87,7 @@ public class Ammo extends Item {
         }
     }
 
+    @Override
+    public void drawHud(Graphics2D g2d, int x, int y) {}
+
 }

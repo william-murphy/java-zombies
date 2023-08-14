@@ -21,6 +21,8 @@ public abstract class Item  {
 
     public abstract BufferedImage getDefaultImage();
 
+    public abstract void drawHud(Graphics2D g2d, int x, int y);
+
     public abstract void drawInHand(Graphics2D g2d, Player player);
 
 }

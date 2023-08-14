@@ -20,6 +20,9 @@ public class Hud {
     final static int inventoryX = heartX;
     final static int inventoryY = heartY + heartSize + 4;
     final static Font inventoryFont = new Font("Arial", Font.PLAIN, 10);
+    final static int itemHudX = inventoryX + Game.tileSize * 5;
+    final static int itemHudY = inventoryY + Game.tileSize / 2;
+    final static Font itemHudFont = new Font("Arial", Font.ITALIC, Game.tileSize / 2);
 
     private void drawHealthBar(Graphics2D g2d) {
         int i = 0;
@@ -42,10 +45,18 @@ public class Hud {
         Game.getInstance().entityList.player.inventory.draw(g2d, inventoryX, inventoryY);
     }
 
+    private void drawItemHud(Graphics2D g2d) {
+        if (Game.getInstance().entityList.player.inventory.isHoldingItem()) {
+            g2d.setFont(itemHudFont);
+            Game.getInstance().entityList.player.inventory.getCurrentItem().drawHud(g2d, itemHudX, itemHudY);
+        }
+    }
+
     public void drawHud(Graphics2D g2d) {
         drawHealthBar(g2d);
         drawCurrentRound(g2d);
         drawInventory(g2d);
+        drawItemHud(g2d);
     }
 
     private static void loadImages() {

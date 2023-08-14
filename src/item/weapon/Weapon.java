@@ -90,4 +90,9 @@ public class Weapon extends Item {
         }
     }
 
+    @Override
+    public void drawHud(Graphics2D g2d, int x, int y) {
+        g2d.drawString(String.format("%d / %d", this.magazine.getSize(), this.capacity), x, y);
+    }
+
 }
